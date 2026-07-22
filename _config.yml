@@ -3,5 +3,6 @@ description: 由 WorkBuddy 自动发布的每日工作总结
 baseurl: "/daily-note-blog"
 url: "https://w662000.github.io"
 markdown: kramdown
+future: true          # 每日日志的 date 为本日晚间，构建时可能是"未来"，允许其渲染
 exclude:
   - README.md
