@@ -313,6 +313,11 @@ def send_mail(subject, body):
 
 # ------------------------------------------------------------------ 主流程
 def main():
+    # 诊断：确认 Secret 是否到位（只打印布尔状态与服务器地址，绝不打印凭证值）
+    print("[启动] 配置自检: MAIL_USER=%s MAIL_AUTH=%s SERV00_USER=%s AUTO_REGISTER=%s"
+          % (bool(MAIL_USER), bool(MAIL_AUTH), bool(SERV00_USER), AUTO_REGISTER))
+    print("[启动] 邮件服务器: SMTP=%s:%s IMAP=%s:%s"
+          % (SMTP_HOST, SMTP_PORT, IMAP_HOST, IMAP_PORT))
     html, status = fetch(SERV00_URL)
     if not is_open(html, status):
         print("[未开放] HTTP %s，10 分钟后重试" % status)
@@ -337,4 +342,16 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        import traceback as _tb
+        _tb.print_exc()
+        print("[致命错误] %s" % e)
+        try:
+            if MAIL_USER and MAIL_AUTH:
+                send_mail("❌ Serv00 监控脚本异常", "异常: %s\n\n%s" % (e, _tb.format_exc()))
+        except Exception:
+            pass
+        # 探测型脚本：异常也正常退出，避免定时任务每次标红（详情见上方 traceback）
+        sys.exit(0)
