@@ -24,6 +24,13 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: 诊断环境（Python / 文件）
+        run: |
+          echo "python: $(python --version 2>&1)"
+          echo "python3: $(python3 --version 2>&1)"
+          echo "pwd: $(pwd)"
+          ls -la
+
       - name: 探测 Serv00 注册开放 → 自动注册并发邮件通知
         env:
           # 注册 Serv00 用的邮箱（同时作为收通知 + IMAP/SMTP 登录账号）
