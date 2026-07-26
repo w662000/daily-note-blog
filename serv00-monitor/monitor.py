@@ -72,17 +72,18 @@ PROVIDER_MAP = {
 }
 
 def _mail_servers():
-    """显式配置了 host 就用显式；否则按 MAIL_USER 域名自动推断。"""
-    sh = os.environ.get("MAIL_SMTP_HOST", "").strip()
-    sp = int(os.environ.get("MAIL_SMTP_PORT", "465"))
-    ih = os.environ.get("MAIL_IMAP_HOST", "").strip()
-    ip = int(os.environ.get("MAIL_IMAP_PORT", "993"))
+    """显式配置了 host 就用显式；否则按 MAIL_USER 域名自动推断。
+    注意：Secret 留空时环境变量会是空字符串，必须当作"未设置"兜底，否则 int('') 崩。"""
+    sh = (os.environ.get("MAIL_SMTP_HOST") or "").strip()
+    sp = (os.environ.get("MAIL_SMTP_PORT") or "465").strip() or "465"
+    ih = (os.environ.get("MAIL_IMAP_HOST") or "").strip()
+    ip = (os.environ.get("MAIL_IMAP_PORT") or "993").strip() or "993"
     if sh and ih:
-        return sh, sp, ih, ip
+        return sh, int(sp), ih, int(ip)
     domain = MAIL_USER.split("@")[-1].lower() if "@" in MAIL_USER else ""
     if domain in PROVIDER_MAP:
         return PROVIDER_MAP[domain]
-    return sh or "smtp.qq.com", sp, ih or "imap.qq.com", ip
+    return sh or "smtp.qq.com", int(sp), ih or "imap.qq.com", int(ip)
 
 SMTP_HOST, SMTP_PORT, IMAP_HOST, IMAP_PORT = _mail_servers()
 
