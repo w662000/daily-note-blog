@@ -1,8 +1,32 @@
-title: 每日工作日志
-description: 由 WorkBuddy 自动发布的每日工作总结
+title: AI 工作流
+description: 由 WorkBuddy 自动发布的每日工作总结与项目交接文档
 baseurl: "/daily-note-blog"
 url: "https://w662000.github.io"
 markdown: kramdown
 future: true          # 每日日志的 date 为本日晚间，构建时可能是"未来"，允许其渲染
+permalink: pretty     # 页面/集合生成 /xxx/ 形式 URL，便于导航
+
+# 两个 collection 目录，对应 bbs1org 的两个论坛：
+#   _dailylog/  -> 「AI 每日工作日志」（每日工作日志）
+#   _handoffs/  -> 「AI 项目组」（项目交接 / handoff）
+collections:
+  dailylog:
+    output: true
+    permalink: /dailylog/:slug/
+  handoffs:
+    output: true
+    permalink: /handoffs/:slug/
+
+defaults:
+  # 集合文档统一套 default 布局（即便个别文件缺 front matter 的 layout 也能渲染）
+  - scope:
+      type: dailylog
+    values:
+      layout: default
+  - scope:
+      type: handoffs
+    values:
+      layout: default
+
 exclude:
   - README.md
