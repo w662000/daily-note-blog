@@ -16,10 +16,9 @@ Serv00 免费注册开放监控（邮件通道，支持全套自动化）
 配置（GitHub Secrets / 本机环境变量）：
   MAIL_USER       注册 Serv00 用的邮箱（同时作为收通知 + IMAP/SMTP 登录账号）
   MAIL_AUTH       该邮箱的 IMAP/SMTP 授权码（不是登录密码）
-  MAIL_SMTP_HOST  SMTP 服务器（默认 smtp.qq.com）
-  MAIL_SMTP_PORT  SMTP 端口（默认 465，SSL）
-  MAIL_IMAP_HOST  IMAP 服务器（默认 imap.qq.com）
-  MAIL_IMAP_PORT  IMAP 端口（默认 993，SSL）
+  MAIL_SMTP_HOST / MAIL_SMTP_PORT / MAIL_IMAP_HOST / MAIL_IMAP_PORT
+                  【通常不用填】按 MAIL_USER 域名自动识别（qq/126/163/gmail/outlook
+                  已内置）；仅当用其它邮箱时才需手动指定。
   SERV00_USER     Serv00 用户名（自定义，字母开头，如 w662000）
   SERV00_PASS     Serv00 密码（自定义，强密码）
   AUTO_REGISTER   on / off（默认 on；设 off 则只发通知不自动注册）
@@ -56,14 +55,36 @@ BLOCK_KEYWORDS = [
 # 邮件配置（从环境变量读）
 MAIL_USER = os.environ.get("MAIL_USER", "").strip()
 MAIL_AUTH = os.environ.get("MAIL_AUTH", "").strip()
-SMTP_HOST = os.environ.get("MAIL_SMTP_HOST", "smtp.qq.com").strip()
-SMTP_PORT = int(os.environ.get("MAIL_SMTP_PORT", "465"))
-IMAP_HOST = os.environ.get("MAIL_IMAP_HOST", "imap.qq.com").strip()
-IMAP_PORT = int(os.environ.get("MAIL_IMAP_PORT", "993"))
 SERV00_USER = os.environ.get("SERV00_USER", "").strip()
 SERV00_PASS = os.environ.get("SERV00_PASS", "").strip()
 AUTO_REGISTER = os.environ.get("AUTO_REGISTER", "on").strip().lower() == "on"
 NOTIFY_TO = os.environ.get("NOTIFY_TO", MAIL_USER).strip()
+
+# 常见邮箱服务商的 IMAP/SMTP 配置（按邮箱域名自动识别，无需手动填 host/port）
+PROVIDER_MAP = {
+    "qq.com":      ("smtp.qq.com", 465, "imap.qq.com", 993),
+    "foxmail.com": ("smtp.qq.com", 465, "imap.qq.com", 993),
+    "126.com":     ("smtp.126.com", 465, "imap.126.com", 993),
+    "163.com":     ("smtp.163.com", 465, "imap.163.com", 993),
+    "gmail.com":   ("smtp.gmail.com", 465, "imap.gmail.com", 993),
+    "outlook.com": ("smtp.office365.com", 587, "imap.outlook.com", 993),
+    "hotmail.com": ("smtp.office365.com", 587, "imap.outlook.com", 993),
+}
+
+def _mail_servers():
+    """显式配置了 host 就用显式；否则按 MAIL_USER 域名自动推断。"""
+    sh = os.environ.get("MAIL_SMTP_HOST", "").strip()
+    sp = int(os.environ.get("MAIL_SMTP_PORT", "465"))
+    ih = os.environ.get("MAIL_IMAP_HOST", "").strip()
+    ip = int(os.environ.get("MAIL_IMAP_PORT", "993"))
+    if sh and ih:
+        return sh, sp, ih, ip
+    domain = MAIL_USER.split("@")[-1].lower() if "@" in MAIL_USER else ""
+    if domain in PROVIDER_MAP:
+        return PROVIDER_MAP[domain]
+    return sh or "smtp.qq.com", sp, ih or "imap.qq.com", ip
+
+SMTP_HOST, SMTP_PORT, IMAP_HOST, IMAP_PORT = _mail_servers()
 
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/124.0 Safari/537.36")
@@ -270,14 +291,19 @@ def send_mail(subject, body):
         return False
     ctx = ssl.create_default_context()
     try:
-        with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, context=ctx, timeout=20) as s:
-            s.login(MAIL_USER, MAIL_AUTH)
-            msg = email.message.EmailMessage()
-            msg["From"] = MAIL_USER
-            msg["To"] = NOTIFY_TO or MAIL_USER
-            msg["Subject"] = subject
-            msg.set_content(body)
-            s.send_message(msg)
+        if SMTP_PORT == 465:
+            s = smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, context=ctx, timeout=20)
+        else:
+            s = smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=20)
+            s.starttls(context=ctx)
+        s.login(MAIL_USER, MAIL_AUTH)
+        msg = email.message.EmailMessage()
+        msg["From"] = MAIL_USER
+        msg["To"] = NOTIFY_TO or MAIL_USER
+        msg["Subject"] = subject
+        msg.set_content(body)
+        s.send_message(msg)
+        s.quit()
         print("[邮件] 已发送至 %s" % (NOTIFY_TO or MAIL_USER))
         return True
     except Exception as e:
