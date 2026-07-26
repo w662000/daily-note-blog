@@ -1,0 +1,36 @@
+name: Serv00 注册开放监控
+
+# 复用 daily-note-blog 仓库已有的 GitHub 远端（与 handoff 博客源/语雀同一套）。
+# 每 10 分钟探测一次 Serv00 免费注册是否开放，开放则经 ClawBot 推送到微信。
+on:
+  schedule:
+    - cron: '*/10 * * * *'        # 每 10 分钟（GitHub Actions 支持的最小粒度）
+  workflow_dispatch: {}           # 允许在 Actions 页面手动点 Run workflow 测试
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: serv00-monitor
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 探测 Serv00 注册开放 → 开放则经 ClawBot 推送到微信
+        env:
+          # 主通道：ClawBot（已绑定微信）。只需填这一个 Secret。
+          CLAW_BOT_TOKEN: ${{ secrets.CLAW_BOT_TOKEN }}
+          # 可选：你的微信 user_id / 上下文 token；不填则自动从最近一条消息取
+          CLAW_TO_USER: ${{ secrets.CLAW_TO_USER }}
+          CLAW_CONTEXT_TOKEN: ${{ secrets.CLAW_CONTEXT_TOKEN }}
+          # 兜底：若配了通用 webhook，则优先走 webhook（一般不用）
+          CLAW_WEBHOOK: ${{ secrets.CLAW_WEBHOOK }}
+        run: python push_claw.py
