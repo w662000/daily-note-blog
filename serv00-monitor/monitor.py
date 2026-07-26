@@ -319,7 +319,7 @@ def main():
           % (bool(MAIL_USER), bool(MAIL_AUTH), bool(SERV00_USER), AUTO_REGISTER))
     print("[启动] 邮件服务器: SMTP=%s:%s IMAP=%s:%s"
           % (SMTP_HOST, SMTP_PORT, IMAP_HOST, IMAP_PORT))
-    html, status = fetch(SERV00_URL)
+    html, status, _ = fetch(SERV00_URL)
     if not is_open(html, status):
         print("[未开放] HTTP %s，10 分钟后重试" % status)
         return
