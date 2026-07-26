@@ -1,7 +1,7 @@
 name: Serv00 注册开放监控
 
 # 复用 daily-note-blog 仓库已有的 GitHub 远端（与 handoff 博客源/语雀同一套）。
-# 每 10 分钟探测一次 Serv00 免费注册是否开放，开放则经 ClawBot 推送到微信。
+# 每 10 分钟探测一次 Serv00 免费注册是否开放；开放则自动注册并把账户信息发邮件通知。
 on:
   schedule:
     - cron: '*/10 * * * *'        # 每 10 分钟（GitHub Actions 支持的最小粒度）
@@ -13,7 +13,7 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     defaults:
       run:
         working-directory: serv00-monitor
@@ -24,13 +24,17 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: 探测 Serv00 注册开放 → 开放则经 ClawBot 推送到微信
+      - name: 探测 Serv00 注册开放 → 自动注册并发邮件通知
         env:
-          # 主通道：ClawBot（已绑定微信）。只需填这一个 Secret。
-          CLAW_BOT_TOKEN: ${{ secrets.CLAW_BOT_TOKEN }}
-          # 可选：你的微信 user_id / 上下文 token；不填则自动从最近一条消息取
-          CLAW_TO_USER: ${{ secrets.CLAW_TO_USER }}
-          CLAW_CONTEXT_TOKEN: ${{ secrets.CLAW_CONTEXT_TOKEN }}
-          # 兜底：若配了通用 webhook，则优先走 webhook（一般不用）
-          CLAW_WEBHOOK: ${{ secrets.CLAW_WEBHOOK }}
-        run: python push_claw.py
+          # 注册 Serv00 用的邮箱（同时作为收通知 + IMAP/SMTP 登录账号）
+          MAIL_USER: ${{ secrets.MAIL_USER }}
+          MAIL_AUTH: ${{ secrets.MAIL_AUTH }}          # 该邮箱的 IMAP/SMTP 授权码
+          MAIL_SMTP_HOST: ${{ secrets.MAIL_SMTP_HOST }} # 默认 smtp.qq.com
+          MAIL_SMTP_PORT: ${{ secrets.MAIL_SMTP_PORT }} # 默认 465
+          MAIL_IMAP_HOST: ${{ secrets.MAIL_IMAP_HOST }} # 默认 imap.qq.com
+          MAIL_IMAP_PORT: ${{ secrets.MAIL_IMAP_PORT }} # 默认 993
+          SERV00_USER: ${{ secrets.SERV00_USER }}       # Serv00 用户名
+          SERV00_PASS: ${{ secrets.SERV00_PASS }}       # Serv00 密码
+          AUTO_REGISTER: ${{ secrets.AUTO_REGISTER }}   # on / off
+          NOTIFY_TO: ${{ secrets.NOTIFY_TO }}           # 通知收件人（可留空=MAIL_USER）
+        run: python monitor.py
