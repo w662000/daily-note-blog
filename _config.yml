@@ -12,10 +12,11 @@ permalink: pretty     # 页面/集合生成 /xxx/ 形式 URL，便于导航
 collections:
   dailylog:
     output: true
-    permalink: /dailylog/:slug/
+    # 用 :name（完整文件名，含日期前缀）保证每天独立 URL，避免 :slug 把日期剥掉导致全部撞车到 /dailylog/daily-summary/
+    permalink: /dailylog/:name/
   handoffs:
     output: true
-    permalink: /handoffs/:slug/
+    permalink: /handoffs/:name/
 
 defaults:
   # 集合文档统一套 default 布局（即便个别文件缺 front matter 的 layout 也能渲染）
