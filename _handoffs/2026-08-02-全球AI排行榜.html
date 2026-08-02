@@ -1,0 +1,311 @@
+---
+layout: none
+title: 全球AI排行榜
+date: 2026-08-02 23:30:00 +0800
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全球AI排行榜</title>
+<style>
+  :root{
+    --bg:#f5f7fa; --card:#ffffff; --ink:#1f2933; --sub:#6b7785;
+    --line:#e3e8ef; --accent:#2f6df6; --accent-soft:#eaf1ff;
+    --open:#0a9d6b; --closed:#e06c2b; --gold:#f5b301;
+    --shadow:0 1px 3px rgba(16,24,40,.08),0 1px 2px rgba(16,24,40,.04);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.5}
+  .wrap{max-width:1100px;margin:0 auto;padding:24px 18px 60px}
+  header h1{font-size:24px;margin:0 0 6px}
+  header .meta{color:var(--sub);font-size:13px;margin:0 0 4px}
+  header .warn{margin-top:10px;padding:10px 14px;border-radius:10px;background:#fff7e6;border:1px solid #ffe2a8;
+    color:#8a5a00;font-size:13px}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 14px}
+  .tab{padding:9px 16px;border:1px solid var(--line);background:var(--card);border-radius:999px;cursor:pointer;
+    font-size:14px;color:var(--sub);transition:.15s;user-select:none}
+  .tab:hover{border-color:var(--accent)}
+  .tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:12px}
+  .toolbar .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .toolbar .seg button{border:0;background:var(--card);padding:7px 14px;cursor:pointer;font-size:13px;color:var(--sub)}
+  .toolbar .seg button.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+  .toolbar .hint{font-size:12px;color:var(--sub)}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  thead th{position:sticky;top:0;background:#fafbfc;text-align:left;padding:11px 14px;font-weight:600;
+    color:var(--sub);border-bottom:1px solid var(--line);cursor:pointer;white-space:nowrap;user-select:none}
+  thead th .arrow{opacity:.4;font-size:11px;margin-left:3px}
+  thead th.sorted .arrow{opacity:1;color:var(--accent)}
+  tbody td{padding:11px 14px;border-bottom:1px solid var(--line)}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:#fafcff}
+  .rank{font-weight:700;color:var(--sub);width:46px}
+  .rank.top{color:var(--gold)}
+  .model{font-weight:600}
+  .vendor{color:var(--sub);font-size:13px}
+  .score{font-weight:700;font-variant-numeric:tabular-nums}
+  .bar{height:6px;border-radius:3px;background:var(--accent);margin-top:5px;min-width:4px}
+  .tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:600}
+  .tag.open{background:#e6f7f0;color:var(--open)}
+  .tag.closed{background:#fdeee3;color:var(--closed)}
+  .champ{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:18px 0 4px}
+  .champ .c{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;box-shadow:var(--shadow)}
+  .champ .c .p{font-size:12px;color:var(--sub);margin-bottom:4px}
+  .champ .c .m{font-weight:700;font-size:15px}
+  .champ .c .v{font-size:12px;color:var(--sub);margin-top:3px}
+  .note{font-size:12px;color:var(--sub);margin:10px 2px 0}
+  footer{margin-top:28px;font-size:12px;color:var(--sub);border-top:1px solid var(--line);padding-top:14px}
+  footer a{color:var(--accent);text-decoration:none}
+  .badge{display:inline-block;background:var(--accent-soft);color:var(--accent);font-size:11px;padding:2px 7px;border-radius:6px;margin-left:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🏆 全球AI排行榜 <span class="badge">2026-08 校正版</span></h1>
+    <p class="meta">数据截止：LMArena 2026-08-01 · Artificial Analysis 2026-07-25 · OpenCompass 2026-05-13 · SuperCLUE 2026-05-28 · LiveBench 2026-06-25</p>
+    <p class="meta">数据来源：LMArena (HuggingFace)、Artificial Analysis、OpenCompass 司南、SuperCLUE、LiveBench 官方榜单（经 WorkBuddy 联网重抓校正）</p>
+    <div class="warn">⚠️ 本看板由 WorkBuddy 基于公开榜单联网重抓校正，纠正了原始报告中过时的模型名与分数（如 LiveBench 真实榜首为 GPT-5.6 Sol，而非报告中写的 Gemini 2.5 Pro）。榜单更新频率高，使用前请以各平台官网实时数据为准。</div>
+  </header>
+
+  <div class="tabs" id="tabs"></div>
+
+  <div class="toolbar">
+    <div class="seg" id="filterSeg">
+      <button data-f="all" class="on">全部</button>
+      <button data-f="open">仅开源</button>
+      <button data-f="closed">仅闭源</button>
+    </div>
+    <span class="hint">点击表头可排序 · 表头右侧箭头表示当前排序方向</span>
+  </div>
+
+  <div class="panel">
+    <table id="tbl">
+      <thead><tr id="head"></tr></thead>
+      <tbody id="body"></tbody>
+    </table>
+  </div>
+
+  <h2 style="font-size:17px;margin:28px 0 0">各平台冠军一览</h2>
+  <div class="champ" id="champs"></div>
+  <p class="note">说明：不同平台评测维度不同（人类偏好 / 客观能力 / 中文场景 / 防污染），冠军模型不具直接可比性。「性价比」相关指标见 LiveBench 的 Cost per task 与 Artificial Analysis 价格列。</p>
+
+  <footer>
+    <p>流程说明：本看板由 <b>Tabbit</b> 思考产出需求 → <b>WorkBuddy</b> 联网抓取真实数据并构建交互看板，落盘于 <code>tabbit-handoff/outbox/</code>。</p>
+    <p>官方榜单：<a href="https://lmarena.ai/leaderboard" target="_blank">LMArena</a> · <a href="https://artificialanalysis.ai/" target="_blank">Artificial Analysis</a> · <a href="https://rank.opencompass.org.cn/" target="_blank">OpenCompass</a> · <a href="https://www.superclueai.com/" target="_blank">SuperCLUE</a> · <a href="https://livebench.ai/" target="_blank">LiveBench</a></p>
+    <p>仅供研究参考，不构成选型或投资建议。</p>
+  </footer>
+</div>
+
+<script>
+const DATA = {
+  lmarena:{
+    name:"LMArena（ELO 人类偏好）", date:"2026-08-01",
+    cols:[{k:"rank",t:"排名"},{k:"model",t:"模型"},{k:"vendor",t:"厂商"},{k:"score",t:"ELO 分",num:true},{k:"open",t:"类型",tag:true}],
+    rows:[
+      {rank:1,model:"Claude Opus 5 Max",vendor:"Anthropic",score:1511.6,open:false},
+      {rank:2,model:"Claude Opus 5 High",vendor:"Anthropic",score:1504.7,open:false},
+      {rank:3,model:"Claude Opus 4.6 Thinking",vendor:"Anthropic",score:1502.6,open:false},
+      {rank:4,model:"Claude Opus 4.6",vendor:"Anthropic",score:1496.6,open:false},
+      {rank:5,model:"Claude Fable 5",vendor:"Anthropic",score:1494.1,open:false},
+      {rank:6,model:"Claude Opus 4.7 Thinking",vendor:"Anthropic",score:1489.8,open:false},
+      {rank:7,model:"Claude Opus 4.7",vendor:"Anthropic",score:1481.9,open:false},
+      {rank:8,model:"Gemini 3.5 Flash High",vendor:"Google",score:1480.4,open:false},
+      {rank:9,model:"Gemini 3 Pro",vendor:"Google",score:1479.5,open:false},
+      {rank:10,model:"Gemini 3.1 Pro Preview",vendor:"Google",score:1479.5,open:false},
+      {rank:11,model:"Muse Spark 1.1",vendor:"Meta",score:1479.1,open:true},
+      {rank:12,model:"Gemini 3.6 Flash",vendor:"Google",score:1477.5,open:false},
+      {rank:13,model:"Qwen3.7 Max Preview",vendor:"Alibaba",score:1475.1,open:false},
+      {rank:14,model:"Kimi K3 Max",vendor:"Moonshot",score:1473.3,open:false},
+      {rank:15,model:"Muse Spark",vendor:"Meta",score:1473.1,open:true}
+    ]
+  },
+  aa:{
+    name:"Artificial Analysis 智能指数 (AAII v4.0)", date:"2026-07-25",
+    cols:[{k:"rank",t:"排名"},{k:"model",t:"模型"},{k:"vendor",t:"厂商"},{k:"score",t:"指数(0-100)",num:true},{k:"open",t:"类型",tag:true}],
+    rows:[
+      {rank:1,model:"Claude Fable 5",vendor:"Anthropic",score:65,open:false},
+      {rank:2,model:"Claude Opus 4.8",vendor:"Anthropic",score:61,open:false},
+      {rank:3,model:"GPT-5.5",vendor:"OpenAI",score:60,open:false},
+      {rank:4,model:"Claude Opus 4.7",vendor:"Anthropic",score:57,open:false},
+      {rank:5,model:"Gemini 3.1 Pro Preview",vendor:"Google",score:57,open:false},
+      {rank:6,model:"GPT-5.4",vendor:"OpenAI",score:56.8,open:false},
+      {rank:7,model:"Qwen3.7 Max Preview",vendor:"Alibaba",score:56.6,open:false},
+      {rank:8,model:"Gemini 3.5 Flash",vendor:"Google",score:55.3,open:false},
+      {rank:9,model:"MiniMax M3",vendor:"MiniMax",score:55,open:true},
+      {rank:10,model:"Kimi K2.6",vendor:"Moonshot",score:53.9,open:true},
+      {rank:11,model:"MiMo-V2.5-Pro",vendor:"Xiaomi",score:53.8,open:true},
+      {rank:12,model:"GPT-5.3-Codex",vendor:"OpenAI",score:53.6,open:false},
+      {rank:13,model:"Grok 4.3",vendor:"xAI",score:53.2,open:false},
+      {rank:14,model:"Claude Opus 4.6",vendor:"Anthropic",score:53,open:false},
+      {rank:15,model:"Muse Spark",vendor:"Meta",score:52.1,open:true},
+      {rank:16,model:"Qwen 3.6 Max Preview",vendor:"Alibaba",score:51.8,open:false},
+      {rank:17,model:"DeepSeek V4 Pro",vendor:"DeepSeek",score:51.5,open:true},
+      {rank:18,model:"GLM-5.1",vendor:"Z.ai",score:51.4,open:true},
+      {rank:19,model:"GPT-5.2",vendor:"OpenAI",score:51.3,open:false},
+      {rank:20,model:"GLM-5",vendor:"Z.ai",score:49.8,open:true}
+    ]
+  },
+  opencompass:{
+    name:"OpenCompass 司南（综合均分）", date:"2026-05-13",
+    cols:[{k:"rank",t:"排名"},{k:"model",t:"模型"},{k:"vendor",t:"厂商"},{k:"score",t:"均分",num:true},{k:"open",t:"类型",tag:true}],
+    rows:[
+      {rank:1,model:"GPT-5.4 (high)",vendor:"OpenAI",score:67.3,open:false},
+      {rank:2,model:"DeepSeek-V4-Pro",vendor:"DeepSeek",score:65.1,open:true},
+      {rank:3,model:"Claude Opus 4.7 (high)",vendor:"Anthropic",score:64.0,open:false},
+      {rank:4,model:"Doubao-Seed-2.0-Pro (high)",vendor:"ByteDance",score:63.5,open:false},
+      {rank:5,model:"Kimi-K2.6",vendor:"Moonshot",score:63.4,open:true},
+      {rank:6,model:"Gemini-3.1-Pro-Preview",vendor:"Google",score:63.2,open:false},
+      {rank:7,model:"Qwen3.6-Max-Preview",vendor:"Alibaba",score:60.8,open:false},
+      {rank:8,model:"DeepSeek-V4-Flash",vendor:"DeepSeek",score:60.4,open:true},
+      {rank:9,model:"Doubao-Seed-2.0-Lite (high)",vendor:"ByteDance",score:60.4,open:false},
+      {rank:10,model:"GLM-5.1",vendor:"Zhipu AI",score:59.0,open:true},
+      {rank:11,model:"Claude Sonnet 4.6 (high)",vendor:"Anthropic",score:57.5,open:false},
+      {rank:12,model:"Qwen3.5-397B-A17B",vendor:"Alibaba",score:57.5,open:true},
+      {rank:13,model:"Hy3-preview (high)",vendor:"Tencent",score:56.5,open:true},
+      {rank:14,model:"Ring-2.5-1T",vendor:"Ant Group",score:54.5,open:true},
+      {rank:15,model:"GPT-5.4-mini (high)",vendor:"OpenAI",score:54.4,open:false}
+    ]
+  },
+  superclue:{
+    name:"SuperCLUE 中文大模型（总分）", date:"2026-05-28",
+    cols:[{k:"rank",t:"排名"},{k:"model",t:"模型"},{k:"vendor",t:"厂商"},{k:"score",t:"总分",num:true},
+      {k:"math",t:"数学",num:true},{k:"sci",t:"科学",num:true},{k:"code",t:"代码",num:true},
+      {k:"agent",t:"智能体",num:true},{k:"open",t:"类型",tag:true}],
+    rows:[
+      {rank:1,model:"Qwen3.7-Max (Thinking)",vendor:"Alibaba",score:70.22,math:82.46,sci:82.91,code:73.68,agent:71.16,open:false},
+      {rank:2,model:"Doubao-Seed-2.0-Pro (high)",vendor:"ByteDance",score:69.96,math:77.19,sci:79.92,code:75.44,agent:75.77,open:false},
+      {rank:3,model:"Kimi-K2.6-Thinking",vendor:"Moonshot",score:68.66,math:75.93,sci:78.66,code:70.18,agent:80.95,open:true},
+      {rank:4,model:"DeepSeek-V4-Flash (max)",vendor:"DeepSeek",score:67.49,math:82.69,sci:70.90,code:71.93,agent:75.56,open:true},
+      {rank:5,model:"Qwen3.6-Max-Preview (Thinking)",vendor:"Alibaba",score:67.04,math:66.67,sci:85.14,code:68.42,agent:83.41,open:false},
+      {rank:6,model:"Doubao-Seed-2.0-Lite (high)",vendor:"ByteDance",score:66.12,math:75.44,sci:78.86,code:71.93,agent:72.92,open:false},
+      {rank:7,model:"Qwen3.6-27B (Thinking)",vendor:"Alibaba",score:61.95,math:68.42,sci:77.11,code:68.42,agent:73.39,open:true},
+      {rank:8,model:"Hy3-preview (high)",vendor:"Tencent",score:49.61,math:50.88,sci:67.63,code:57.89,agent:56.43,open:true}
+    ],
+    extraNote:"注：据媒体（2026-05）报道，海外模型 Gemini 3.1 Pro、GPT-5.5、Claude Opus 4.8、Gemini Flash 稳居全球总榜前四；国产三强（DeepSeek-V4-Pro / Qwen3.7-Max / 豆包 Seed 2.0 Pro）全球排名集中在第五附近。"
+  },
+  livebench:{
+    name:"LiveBench（污染-Free 综合）", date:"2026-06-25",
+    cols:[{k:"rank",t:"排名"},{k:"model",t:"模型"},{k:"vendor",t:"厂商"},{k:"score",t:"Overall",num:true},
+      {k:"cost",t:"单任务成本$",num:true},{k:"open",t:"类型",tag:true}],
+    rows:[
+      {rank:1,model:"GPT-5.6 Sol (Max Effort)",vendor:"OpenAI",score:82.4,cost:0.589,open:false},
+      {rank:2,model:"Claude Fable 5 (Max Effort)",vendor:"Anthropic",score:80.8,cost:1.573,open:false},
+      {rank:3,model:"GPT-5.5 Thinking (xHigh)",vendor:"OpenAI",score:79.9,cost:0.530,open:false},
+      {rank:4,model:"GPT-5.6 Terra (Max Effort)",vendor:"OpenAI",score:79.8,cost:0.497,open:false},
+      {rank:5,model:"Claude 4.8 Opus Thinking (xHigh)",vendor:"Anthropic",score:78.9,cost:0.688,open:false},
+      {rank:6,model:"Kimi K3",vendor:"Moonshot",score:78.5,cost:0.379,open:true},
+      {rank:7,model:"GPT-5.4 Thinking (xHigh)",vendor:"OpenAI",score:78.0,cost:0.387,open:false},
+      {rank:8,model:"Gemini 3.1 Pro Preview (High)",vendor:"Google",score:77.1,cost:0.262,open:false},
+      {rank:9,model:"Claude 4.7 Opus Thinking (xHigh)",vendor:"Anthropic",score:76.5,cost:0.528,open:false},
+      {rank:10,model:"Grok 4.5",vendor:"xAI",score:76.3,cost:0.128,open:false},
+      {rank:11,model:"Muse Spark 1.1 (xHigh)",vendor:"Meta",score:76.2,cost:0.234,open:true},
+      {rank:12,model:"Claude Sonnet 5 (xHigh)",vendor:"Anthropic",score:74.8,cost:0.492,open:false},
+      {rank:13,model:"Gemini 3.5 Flash (High)",vendor:"Google",score:74.6,cost:0.249,open:false},
+      {rank:14,model:"GPT-5.2 (High)",vendor:"OpenAI",score:74.6,cost:0.234,open:false},
+      {rank:15,model:"Claude 4.6 Opus Thinking (High)",vendor:"Anthropic",score:74.5,cost:0.404,open:false},
+      {rank:16,model:"GLM-5.2",vendor:"Z.ai",score:73.2,cost:0.195,open:true},
+      {rank:17,model:"Qwen 3.7 Max",vendor:"Alibaba",score:73.1,cost:0.182,open:false},
+      {rank:18,model:"DeepSeek V4 Pro",vendor:"DeepSeek",score:71.6,cost:0.050,open:true}
+    ]
+  }
+};
+
+let cur = "lmarena";
+let sortKey = "rank";
+let sortDir = 1;          // 1 升序, -1 降序
+let filter = "all";
+
+const tabsEl = document.getElementById("tabs");
+const headEl = document.getElementById("head");
+const bodyEl = document.getElementById("body");
+const champsEl = document.getElementById("champs");
+
+// 构建 tabs
+Object.keys(DATA).forEach(k=>{
+  const b=document.createElement("div");
+  b.className="tab"+(k===cur?" active":"");
+  b.textContent=DATA[k].name.split("（")[0];
+  b.onclick=()=>{cur=k;sortKey="rank";sortDir=1;filter="all";syncFilter();renderTabs();render();renderChamps();};
+  tabsEl.appendChild(b);
+});
+
+// filter 段
+const seg=document.getElementById("filterSeg");
+seg.querySelectorAll("button").forEach(btn=>{
+  btn.onclick=()=>{filter=btn.dataset.f;syncFilter();render();};
+});
+function syncFilter(){
+  seg.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.f===filter));
+}
+
+function renderTabs(){[...tabsEl.children].forEach((t,i)=>t.classList.toggle("active",Object.keys(DATA)[i]===cur));}
+
+function render(){
+  const d=DATA[cur];
+  // head
+  headEl.innerHTML="";
+  d.cols.forEach(c=>{
+    const th=document.createElement("th");
+    th.textContent=c.t;
+    if(c.num) th.innerHTML+=' <span class="arrow">↕</span>';
+    if(c.k===sortKey && c.num) th.classList.add("sorted");
+    if(c.num) th.onclick=()=>{
+      if(sortKey===c.k) sortDir*=-1; else {sortKey=c.k;sortDir=1;}
+      render();
+    };
+    headEl.appendChild(th);
+  });
+  // rows
+  let rows=d.rows.filter(r=> filter==="all" || (filter==="open"&&r.open) || (filter==="closed"&&!r.open));
+  rows.sort((a,b)=>{
+    let x=a[sortKey], y=b[sortKey];
+    if(typeof x==="string") return x.localeCompare(y)*sortDir;
+    return (x-y)*sortDir;
+  });
+  const maxScore=Math.max(...d.rows.map(r=>r.score||0));
+  bodyEl.innerHTML="";
+  rows.forEach(r=>{
+    const tr=document.createElement("tr");
+    d.cols.forEach(c=>{
+      const td=document.createElement("td");
+      if(c.k==="rank"){td.className="rank"+(r.rank<=3?" top":"");td.textContent=r.rank;}
+      else if(c.k==="model"){td.className="model";td.textContent=r.model;
+        if(r.score!=null){const bar=document.createElement("div");bar.className="bar";bar.style.width=Math.max(4,(r.score/maxScore)*160)+"px";td.appendChild(bar);}}
+      else if(c.k==="vendor"){td.className="vendor";td.textContent=r.vendor;}
+      else if(c.k==="score"){td.className="score";td.textContent=r.score;}
+      else if(c.k==="cost"){td.textContent="$"+r.cost.toFixed(3);}
+      else if(c.k==="open"){td.innerHTML=r.open?'<span class="tag open">开源</span>':'<span class="tag closed">闭源</span>';}
+      else {td.textContent=r[c.k];}
+      tr.appendChild(td);
+    });
+    bodyEl.appendChild(tr);
+  });
+  if(d.extraNote){const n=document.createElement("p");n.className="note";n.textContent=d.extraNote;
+    // remove previous
+    const old=document.querySelector(".extra-note"); if(old) old.remove();
+    n.classList.add("extra-note"); bodyEl.parentElement.parentElement.appendChild(n);}
+  else {const old=document.querySelector(".extra-note"); if(old) old.remove();}
+}
+
+function renderChamps(){
+  champsEl.innerHTML="";
+  Object.keys(DATA).forEach(k=>{
+    const d=DATA[k]; const top=d.rows[0];
+    const c=document.createElement("div"); c.className="c";
+    c.innerHTML=`<div class="p">${d.name.split("（")[0]}</div>
+      <div class="m">${top.model}</div>
+      <div class="v">${d.cols.find(x=>x.k==="score").t}：${top.score}${top.cost!=null?" · $"+top.cost.toFixed(3):""} · ${top.vendor}</div>`;
+    champsEl.appendChild(c);
+  });
+}
+
+render();renderChamps();
+</script>
+</body>
+</html>
