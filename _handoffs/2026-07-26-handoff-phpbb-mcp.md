@@ -1,6 +1,6 @@
 ---
 layout: default
-title: phpBB 免费主机论坛 + MCP 扩展 · 交接文档
+title: 交接文档 · phpBB 免费主机论坛 + MCP 扩展
 date: 2026-07-26 23:30:00 +0800
 ---
 

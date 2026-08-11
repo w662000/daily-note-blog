@@ -1,6 +1,6 @@
 ---
 layout: default
-title: model-speed-radar 看板 A 计划收尾与 handoff 自动发布链路修复 · 交接文档
+title: 交接文档 · model-speed-radar 看板 A 计划收尾与 handoff 自动发布链路修复
 date: 2026-08-02 23:30:00 +0800
 ---
 

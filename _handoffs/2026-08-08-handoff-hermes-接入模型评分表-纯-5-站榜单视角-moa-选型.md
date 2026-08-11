@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Hermes 接入模型评分表（纯 5 站榜单视角 · MoA 选型） · 交接文档
+title: 交接文档 · Hermes 接入模型评分表（纯 5 站榜单视角 · MoA 选型）
 date: 2026-08-10 23:30:00 +0800
 ---
 

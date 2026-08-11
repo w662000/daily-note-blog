@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Gaming4Free sing-box 注入部署 · 交接文档
+title: 交接文档 · Gaming4Free sing-box 注入部署
 date: 2026-07-26 23:30:00 +0800
 ---
 

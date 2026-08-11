@@ -1,6 +1,6 @@
 ---
 layout: default
-title: bbs1org 免费主机论坛 + MCP 知识库 · 交接文档
+title: 交接文档 · bbs1org 免费主机论坛 + MCP 知识库
 date: 2026-07-26 23:30:00 +0800
 ---
 

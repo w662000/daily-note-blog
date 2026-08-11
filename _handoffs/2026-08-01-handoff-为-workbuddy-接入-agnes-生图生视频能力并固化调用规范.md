@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 为 WorkBuddy 接入 Agnes 生图生视频能力并固化调用规范 · 交接文档
+title: 交接文档 · 为 WorkBuddy 接入 Agnes 生图生视频能力并固化调用规范
 date: 2026-08-02 23:30:00 +0800
 ---
 

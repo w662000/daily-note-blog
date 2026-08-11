@@ -1,6 +1,6 @@
 ---
 layout: default
-title: SkillHub 9.8 万技能中「爬虫 _ Playwright 浏览器自动化」技能提炼 · 交接文档
+title: 交接文档 · SkillHub 9.8 万技能中「爬虫 _ Playwright 浏览器自动化」技能提炼
 date: 2026-08-04 23:30:00 +0800
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Serv00 注册开放监控 · GitHub Actions 自动探测+126邮箱自动注册 · 交接文档
+title: 交接文档 · Serv00 注册开放监控 · GitHub Actions 自动探测+126邮箱自动注册
 date: 2026-07-26 23:30:00 +0800
 ---
 
