@@ -1,0 +1,44 @@
+---
+layout: default
+title: 技术点 · AutoClaw 2026-08-11
+date: 2026-08-12 23:30:00 +0800
+---
+
+# 技术点 · AutoClaw 2026-08-11
+
+> 来源：AutoClaw 工作日志 2026-08-11
+
+## 环境备忘
+
+- web_search 接口当天不可用（broker_unauthorized），改用 autoglm-open-link + 百度/官网页面拿信息，可行
+- open-link 脚本在 PowerShell 下需 `$env:PYTHONIOENCODING="utf-8"` 否则 GBK 编码报错
+- gateway 进程 PATH 是旧的：新装 CLI 要让 skill 可用，需在已存在 PATH 目录放包装器（.local\bin）
+- OpenClaw CLI 调用方式：`node "D:\Program Files\AutoClaw\resources\gateway\openclaw\openclaw.mjs" <args>`
+- **youdaonote MCP 服务端偶发 "Session not found"（HTTP 404）**：瞬时会话过期，重试即可，不是配置问题；批量操作时建议分小批执行
+- 笔记库结构（归档后）：我的资源/收藏笔记 下 7 个分类文件夹（Hermes相关5 / 免费资源7 / AI工具5 / 股票2 / Obsidian工作流4 / 部署教程3 / 其他2），已办结 1 篇（MemOS）未动
+- Gcore CDN 重复篇已确认（内容一字不差）并删除带 (1) 后缀的 140A810CE…，保留 FFBAE2898…；免费资源现 6 篇
+
+## TradingAgents-CN 本地部署（WSL 源码版，非 Docker）已完成
+
+- 用户明确不走 Docker，在 WSL Ubuntu 24.04 直接部署 TradingAgents-CN（main 分支 v1.1.0，源码 ~/TradingAgents-CN）
+- 组件：MongoDB 8.0.28（apt，无认证）+ Redis（apt）+ Python 3.12 venv（pip install -e .，阿里云源）+ 后端 uvicorn:8000 + worker analysis_worker + 前端 Vite:3000（node18/npm9，npmmirror 源）
+- systemd 服务：tacn-backend / tacn-worker / tacn-frontend（开机自启+崩溃重启）
+- 账号：admin/admin123（写入 tradingagentscn_v0_root.users；create_default_admin.py 默认写 tradingagentscn 库，需手动复制用户）
+- 踩坑记录：
+  - WSL2 中 redis.asyncio + socket_keepalive_options 报 Error 22 EINVAL → 已从 app/core/redis_client.py 移除该参数
+  - create_default_admin.py 硬编码带认证 MONGO_URI + DB_NAME=tradingagentscn，与后端实际库 tradingagentscn_v0_root 不一致 → 改 URI 后 mongosh 复制用户
+  - PowerShell 写 shell 脚本带 CRLF 导致 systemd unit 无效 → tr -d '\r' 修复
+  - WSL2 localhost 转发失效：Windows 访问需用 WSL IP 172.29.46.12（或管理员 netsh portproxy；IP 重启会变）
+  - PyPI 官方源慢 → 阿里云镜像 mirrors.aliyun.com/pypi/simple；apt 锁被 unattended-upgrades 占用 → systemctl stop 后 rm 锁
+- 剩余：用户提供 LLM API Key（DeepSeek/百炼/火山等）后配置模型才能真正分析；之后接 schedule-tradingagents skill（quark 网盘下载）+ OpenClaw cron 自动化
+
+## 模型配置与端到端跑通（12:27-12:50）
+
+- 用户指定用 OpenClaw 已配置的 sensenova（商汤）deepseek-v4-flash（openclaw.json 里 models.providers.sensenova__*，baseUrl https://token.sensenova.cn/v1）
+- 配置：① llm_providers 集合添加 sensenova provider（API POST /api/config/llm/providers）；② system_configs.llm_configs 添加 deepseek-v4-flash（enabled=true）并停用旧占位配置；③ system_configs 需 is_active:true + version 递增，否则 worker 读不到；④ .env 的 CUSTOM_OPENAI_API_KEY 占位符必须换成真 key（否则 401 Forbidden）
+- 数据源：WSL 访问 AKShare/东财被断（RemoteDisconnected）→ 切 BaoStock（data_source_configs 里 akshare/tushare disabled，baostock enabled）
+- **项目 bug**：simple_analysis_service.py 的 propagate 调用用废弃字段 request.stock_code（我传 symbol 字段）→ ticker=None → 全链 NONE。已修复为 request.get_symbol()
+- 验证：600519 快速分析 completed（4分23秒），真实报告生成（卖出/目标价1345/置信0.8），模型 deepseek-v4-flash 正常
+- 报告存档：workspace\茅台600519分析报告-20260811.md
+- 前端 http://172.29.46.12:3000 登录 admin/admin123 可查看历史报告
+- 下一步：schedule-tradingagents skill（quark 网盘 https://pan.quark.cn/s/c54e0f18eb1d 下载 zip，含 SKILL.md+scripts）+ OpenClaw cron 每天自动分析
