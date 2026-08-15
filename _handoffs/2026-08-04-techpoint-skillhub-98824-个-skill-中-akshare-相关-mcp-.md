@@ -6,74 +6,53 @@ date: 2026-08-04 23:30:00 +0800
 
 # 技术点 · skillhub 98824 个 skill 中「akshare 相关 MCP Skill」重筛清单
 
-> 来源：交接文档《skillhub 98824 个 skill 中「akshare 相关 MCP Skill」重筛清单》（2026-08-04）
-
----
+> 来源：handoff《skillhub 98824 个 skill 中「akshare 相关 MCP Skill」重筛清单》（2026-08-04）
 
 ## 一、技术选型
 
-本项目要解决的核心问题是：在 SkillHub 将近 10 万个 skill 里，快速、准确地找出真正与 akshare 相关的 MCP Skill，并给出可安装的优先级清单。
-
-选型结论：
-- **数据源**：`skillhub_all.json`（98,824 条 skill 元数据）作为全量检索池。
-- **匹配引擎**：本地 Python 脚本做字段级文本匹配，不依赖外部 API，避免二次限流与费用。
-- **匹配策略**：双口径——
-  - **精确口径**：在 `name / slug / description / description_zh / tags / labels / category / source / upstream_url / homepage` 中大小写不敏感匹配 `akshare`，得到 102 个。
-  - **宽口径**：用金融数据类关键词做同类能力扩展，得到 14,447 个（仅作主题分布参考）。
-- **排序依据**：按 GitHub stars 降序，辅助安装量，得到 TOP 20 精选列表。
-
----
+- **数据来源**：SkillHub 全站 skill 元数据（`skillhub_all.json`，98,824 条）。
+- **匹配策略**：对 `name / slug / description / description_zh / tags / labels / category / source / upstream_url / homepage` 做大小写不敏感匹配，命中 `akshare` 即计入。
+- **输出口径**：
+  - 精确命中 `akshare`：102 个；
+  - 宽口径金融数据类（akshare 同类能力）：14,447 个，其中仅命中宽口径的 3,656 个。
+- **筛选工具链**：Python + JSON 批量处理 + 正则/子串匹配，结果落盘为 `akshare_mcp_matches.json`。
 
 ## 二、实施要点与关键技术
 
-1. **字段全覆盖匹配**：不能只看 `name` 或 `description`，因为很多 skill 的 akshare 关联藏在 `upstream_url`、`homepage` 或 `tags` 里。
-2. **大小写与符号归一化**：`akshare`、`AKShare`、`AkShare` 必须视为同一个词，避免漏检。
-3. **去重与清洗**：`node_modules` 与重复目录要剔除；同名但不同路径的 skill 要标记重复来源。
-4. **可信度分层**：输出必须标注 T0（官方/财报/公开课）/ T1（权威第三方）/ T2（媒体估算），不能把所有数字混为一谈。
-5. **TOP 列表聚焦**：102 个结果仍太多，按 stars 取 TOP 20 并展开官方说明，便于读者直接决策安装哪一个。
-
----
+1. **多字段联合匹配**：不能只看 `name`，很多 skill 在 `description` 或 `upstream_url` 里才暴露 akshare 依赖。
+2. **去重与分级**：
+   - 严格匹配（strict_akshare）才是可直接替代/对接 akshare 的 skill；
+   - 宽口径只能作为「同类能力」参考池，不能等同 akshare。
+3. **TOP 排序**：按 `stars` 降序取前 20 做展开说明，避免 102 条平铺无法阅读。
+4. **可信度标注**：所有数据来自 SkillHub API 元数据（一手来源），未做运行时验证；安装量、认证状态以元数据为准。
 
 ## 三、模块职责划分
 
-| 模块 | 职责 | 输出 |
-|---|---|---|
-| 数据加载层 | 读取 `skillhub_all.json` | 98,824 条结构化 skill 记录 |
-| 匹配引擎层 | 多字段正则/子串匹配 | 精确命中 102 条 + 宽口径 14,447 条 |
-| 排序与精选层 | 按 stars 降序、安装量辅助 | TOP 20 列表及官方说明 |
-| 主题分布层 | 对宽口径结果做关键词聚合 | 选股/量化、A股/行情、美股等子主题命中数 |
-| 报告输出层 | Markdown 表格 + 机器可读 JSON | `akshare_mcp_matches.json` + handoff 文档 |
-
----
+| 模块 | 职责 |
+|---|---|
+| 数据采集 | 导出/获取 `skillhub_all.json` |
+| 匹配引擎 | 多字段子串匹配，输出 strict / broad 两类 |
+| 精选展示 | 按 stars 排序，TOP 20 提取官方 description |
+| 分布统计 | 宽口径按主题分类计数 |
+| 产物输出 | `akshare_mcp_matches.json` + 人类可读 Markdown 清单 |
 
 ## 四、如何选型（方法论）
 
-面对「海量 skill 中找某一类能力」的通用问题，可按以下步骤执行：
-
-1. **明确关键词**：不仅看核心库名（akshare），还要看同类能力关键词（量化、选股、A股行情等）。
-2. **多字段扫描**：name、slug、description、tags、upstream_url、homepage 一个都不能少。
-3. **双口径设计**：精确口径保证「确实是它」；宽口径保证「功能等价也不漏」。
-4. **用 stars + installs 排序**：开源社区用脚投票，比官方描述更真实。
-5. **输出双格式**：人看 Markdown，机器读 JSON，方便下游自动化安装或看板展示。
-6. **标注可信度**：凡是数字都要标 T0/T1/T2，避免读者把估算当官方。
-
----
+- 若目标是「直接用 akshare 能力」：只从严匹配 102 个里挑，优先看 `akshare-stock`（235 stars，13,337 安装）。
+- 若目标是「金融数据能力全覆盖」：把 14,447 个宽口径结果当候选池，再按 stars/安装量/认证状态二次过滤。
+- 若做量化选股/回测：重点关注 `quant-backtest-strategy`、`a-stock-multi-factor-screener`、`quant-stock-selector`。
+- 若做每日复盘/资金流：关注 `csm-20260430`、`china-etf-flow-premarket`、`china-margin-financing-premarket-akshare`。
 
 ## 五、深化学习指引
 
-| 方向 | 推荐来源 | 可信度 |
-|---|---|---|
-| SkillHub 官方 API 与数据格式 | SkillHub 官方文档 / api.skillhub.cn | T0 |
-| akshare 库本身用法 | akshare 官方文档（akshare.akfamily.xyz） | T0 |
-| 中文金融数据接口对比 | 「china-stock-data」skill 作者 @kekewater 的 MCP 实现 | T1 |
-| 量化选股实践 | 《A股量化 AkShare》skill 官方说明 | T1 |
-| MCP 协议基础 | modelcontextprotocol.io 官方规范 | T0 |
-
----
+- **akshare 官方文档**：https://www.akshare.xyz/（T0，一手来源）
+- **SkillHub 技能广场**：https://skillhub.cn/（T0，数据来源）
+- **量化相关 UP/博主**：B站/知乎搜索「akshare 量化」「AKShare 教程」，注意甄别是否用最新版（akshare 接口变动频繁，优先看 2025–2026 年内容）。
+- **回测框架对比**：Backtrader、VeighNa、Qlib 与 skill 中宣称的 OneQuant/米筐/聚宽接口需实测匹配度。
 
 ## 六、技术结合点（1+1>2）
 
-- **本清单 + china-stock-data skill**：先在 SkillHub 找到合适的数据 skill，再通过 `china-stock-data` 做多源校验（通达信 + 腾讯财经 + AKShare + iWencai）。
-- **本清单 + model-rate-limit-radar skill**：对筛选出的高 stars skill 做限流探测，确认免费档是否稳定可用。
-- **本清单 + task-implement skill**：把「安装并实测某个 akshare skill」写成 `.task/` 契约，让 agent 自动执行验收。
-- **本清单 + tri-agent-investigation skill**：对陌生 skill 的三方来源、版本、作者做快速安全审计后再安装。
+- **akshare + 通达信/同花顺**：用 akshare 拉盘后数据，通达信做公式选股，实现「数据获取—策略筛选—可视化」闭环。
+- **akshare skill + WorkBuddy MCP**：把筛选出的 MCP skill 接入 WorkBuddy，直接在对话中查行情/财报/资金流。
+- **重筛方法可复用**：把 `akshare` 关键词替换成 `tushare`、`jqdata`、`akshare`、`eastmoney`，即可批量筛选其他金融数据源 skill。
+- **榜单固化**：把 TOP 20 写成「全球AI排行榜」类文章，每日/每周自动更新，成为可沉淀的内容资产。
