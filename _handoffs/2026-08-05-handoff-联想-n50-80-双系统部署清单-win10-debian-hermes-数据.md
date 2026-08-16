@@ -1,13 +1,18 @@
 ---
 layout: default
 title: 交接文档 · 联想 N50-80 双系统部署清单：Win10 + Debian + Hermes 数据共享
-date: 2026-08-10 23:30:00 +0800
+date: 2026-08-16 23:30:00 +0800
 ---
+
+# 联想 N50-80 双系统部署清单：Win10 + Debian + Hermes 数据共享
+
+- **日期**：2026-08-05
+- **状态**：✅ 已完结（新方法重生成）
+- **来源**：handoff\bak\260805_联想 N50-80 双系统部署清单：Win10 + Debian + Hermes 数据共享_handoff.md（编码探测：utf-8）
 
 > 来源：2026-08-05-20-56-42\N50-80_Win10+Debian双系统_Hermes共享部署清单.md
 > 由 handoff_flow.py（scan 阶段）自动收集/提炼，标题取自文档 H1 或日志小节标题，待 publish 阶段分发到 Gridea / 博客 / 语雀 / 论坛。
 
-# 联想 N50-80 双系统部署清单：Win10 + Debian + Hermes 数据共享
 
 > 机器：联想 N50-80（5 代 Intel 低压双核 i3-4030U / i5-5200U，4GB DDR3，128GB SSD，2015 年）
 > 目标：双系统（Win10 应急 + Debian 常开跑 agent），NTFS 共享盘互通数据，Hermes 两边都能用、记忆互通
