@@ -1,12 +1,15 @@
 ---
 layout: default
 title: 交接文档 · autoclaw-模型评分表_Hermes-MoA选型
-date: 2026-08-12 23:30:00 +0800
+date: 2026-08-16 23:30:00 +0800
 ---
 
 # 模型评分表_Hermes-MoA选型（AutoClaw 项目表）— 交接文档
 
-# 已接入 84 模型综合评分表（5 大平台）· Hermes MoA 选型
+- **日期**：2026-08-12
+- **状态**：✅ 已完结（新方法重生成）
+- **来源**：handoff\bak\260812_autoclaw-模型评分表_Hermes-MoA选型_handoff.md（编码探测：utf-8）
+
 
 > **数据日期**：平台分数 2026-08-02（上次评分表口径）｜模型清单 2026-08-08（openclaw.json 快照）
 > **评分来源**：LMArena（ELO）｜Artificial Analysis（Intelligence Index）｜OpenCompass 司南（综合均分）｜SuperCLUE（中文总分）｜LiveBench（防污染任务分）
