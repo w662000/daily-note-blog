@@ -1,10 +1,14 @@
 ---
 layout: default
 title: 交接文档 · 联想N50-80双系统部署Win10与Debian共享Hermes数据
-date: 2026-08-05 23:30:00 +0800
+date: 2026-08-16 23:30:00 +0800
 ---
 
 # Handoff 文档 · 联想 N50-80 双系统部署（Win10 + Debian + Hermes 共享）
+
+- **日期**：2026-08-05
+- **状态**：✅ 已完结（新方法重生成）
+- **来源**：handoff\bak\260805_联想N50-80双系统部署Win10与Debian共享Hermes数据_handoff.md（编码探测：utf-8）
 
 > **文档类型**：Handoff（工作交接 / 续做上下文）
 > **创建日期**：2026-08-05
@@ -205,7 +209,6 @@ date: 2026-08-05 23:30:00 +0800
 
 **Debian 侧（主用）：**
 ```bash
-# 前置（安装器需要 git/curl/xz-utils）
 sudo apt install -y git curl xz-utils
 
 # 一键安装（跟踪 main，自动装 uv/Python3.11/Node22 等）
