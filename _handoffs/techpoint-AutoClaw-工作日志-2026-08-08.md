@@ -1,0 +1,40 @@
+---
+layout: default
+title: 技术点 · AutoClaw 工作日志 · 2026-08-08
+date: 2026-08-12 23:30:00 +0800
+---
+
+# 技术点 · AutoClaw 工作日志 · 2026-08-08
+
+> 来源：260812_autoclaw-工作日志-2026-08-08_handoff.md（项目 handoff 1:1 companion，由 techpoint_flow 新方法提炼；读取编码：utf-8）
+
+## 一、技术选型
+- 用户要求：给接入的 70+ 模型（实际 84 个）做评分表，参考"上次做评分表的那 5 个网站的分数"，为 Hermes MoA 模式安排主力/助手，输出 md + html
+- **5 大平台来源**（上次评分表，2026-08-02 口径）：
+  - LMArena（ELO）、Artificial Analysis（Intelligence Index）、OpenCompass 司南（综合均分）、SuperCLUE（中文总分）、LiveBench（防污染任务分）
+- **上次数据文件位置**（WorkBuddy 目录，不在本 workspace）：
+  - `D:\AI work\workbuddy\model-speed-radar\模型性能评分汇总.md`（74 模型 5 平台分数+综合指数+置信度）
+  - `D:\AI work\workbuddy\model-speed-radar\模型实测能力排行榜.md`（20 模型 5 题真测）
+  - `D:\AI work\workbuddy\model-speed-radar\模型干活选型排行榜.md`（速度/可靠率综合）
+  - `D:\AI work\workbuddy\tabbit-handoff\inbox\AI模型排行榜汇总报告_2026.md`（5 平台汇总报告）
+- **产出**：`workspace\模型评分表_Hermes-MoA选型.md` + `.html`（84 模型 = 75 文本/推理/多模态 + 9 生成类）
+- **MoA 阵容**：主力 SenseNova GLM-5.2 (91) / 备 DeepSeek-V4-Pro (90) / GLM-5.1 (89)；助手 GLM-5 Turbo (88)、DeepSeek-V4-Flash (89)、Gemini 3.6 Flash (86)、Nemotron-3-Ultra-550B (84)、Kimi-K2 (78)，备选 agnes-2.5-pro / Step-3.7-Flash
+- **注意**：Gemini 系、Kimi-K2、NIM GLM-5.2 近期实测 network 不稳；生成类（语音/图像/视频/GUI）不可进 MoA
+- 生成脚本：`.openclaw-tmp\gen_scores.js`（数据源可改后重跑）
+
+## 二、实施要点与关键技术
+（源 handoff 未单列实施要点）
+
+### 关键技术要点（自动抽取）
+- **来源**：handoff\bak\260812_autoclaw-工作日志-2026-08-08_handoff.md（编码探测：utf-8）
+- 生成脚本：`.openclaw-tmp\gen_scores.js`（数据源可改后重跑）
+- 推荐：主攻 1 A股量化数据服务（资产最全：日线缓存/48只验证/资金流看板，90天方案已有只差执行）；辅攻 2 AI模型选型评测服务（双雷达+84模型评分+MoA，全网独有实测数据）；储备 3 爬虫（合规风险不主攻）
+
+## 三、关键产物与命令
+（见源 handoff 关键产物字段）
+
+## 四、如何复现 / 重打
+（见源 handoff 重打方法字段）
+
+## 五、后续风险
+（见源 handoff 后续风险字段）
