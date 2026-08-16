@@ -1,13 +1,18 @@
 ---
 layout: default
 title: 交接文档 · MemOS 接入 AutoClaw_Hermes 排障：看板空白·网关 slots 重置·智谱 v4 模型接入与摘要_进
-date: 2026-08-10 23:30:00 +0800
+date: 2026-08-16 23:30:00 +0800
 ---
+
+# MemOS 接入 AutoClaw_Hermes 排障：看板空白·网关 slots 重置·智谱 v4 模型接入与摘要_进
+
+- **日期**：2026-08-09
+- **状态**：✅ 已完结（新方法重生成）
+- **来源**：handoff\bak\260809_MemOS 接入 AutoClaw_Hermes 排障：看板空白·网关 slots 重置·智谱 v4 模型接入与摘要_进_handoff.md（编码探测：utf-8）
 
 > 来源：项目文档 `2026-08-09-16-44-16\HANDOFF_MemOS_Hermes_部署排障.md`
 > 由 handoff_flow.py（scan 阶段）自动收集，标题取自文档 H1（即主要干的活），待 publish 阶段分发到 Gridea / 博客 / 语雀 / 论坛。
 
-# MemOS 接入 AutoClaw/Hermes 排障：看板空白·网关 slots 重置·智谱 v4 模型接入与摘要/进化选型
 
 > 交接文档（项目轴）｜会话：2026-08-09-16-44-16｜时间：2026-08-09 晚 ~ 08-10 凌晨
 > 主线：把 MemOS Local Plugin 2.0 装进 AutoClaw/Hermes 做「记忆自进化」，过程中连带着修好了 Hermes Studio 看板空白、Node 升级、网关 slots 被重置、以及 MemOS 模型接入的智谱 v4 协议坑。
@@ -104,4 +109,3 @@ date: 2026-08-10 23:30:00 +0800
 - **P1**：看板空白是「空库」导致，需实际建任务（或导入示例）才能验证看板展示。
 - **P2**：AutoClaw 看门狗不拉起 Hermes 侧进程，机器重启后 18800/13704 需手动救活（或做开机自启，属高危待授权）。
 - **方法学沉淀**：① 国内模型接入先分清 v4/v1 协议，别盲信 base_url 字段；② 改 Gateway 插件配置必须补 `plugins.installs` 注册，否则重启即丢；③ 项目交接文档务必用 `HANDOFF*.md` 命名，否则 scan 不收。
-
