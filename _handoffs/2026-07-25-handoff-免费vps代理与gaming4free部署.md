@@ -1,0 +1,127 @@
+---
+layout: default
+title: 交接文档 · 免费VPS代理与Gaming4Free部署
+date: 2026-08-16 23:30:00 +0800
+---
+
+# 免费 VPS 多协议代理 · Wispbyte/gost + Gaming4Free/sing-box 部署 — 交接文档（人读）
+
+- **日期**：2026-07-25
+- **状态**：✅ 已完结（新方法重生成）
+- **来源**：handoff\bak\260725_免费VPS代理与Gaming4Free部署_handoff.md（编码探测：utf-8）
+
+> 更新于 2026-07-26 00:30。会话根目录：`D:\AI work\workbuddy\2026-07-25-12-10-12\`
+> 给接手的同学看。AI/agent 接手请直接读同目录的 `HANDOFF_AGENT.md`（更详细、含可执行命令）。
+> 本文已同步发布到博客 `daily-note-blog`（Jekyll/GitHub Pages）、Gridea Pro 待发布队列、语雀知识库，见第 9 节。
+
+---
+
+## 0. 一句话成果
+
+- **Wispbyte 免费 VPS**：gost 单二进制 SOCKS5 代理（罗马尼亚，IP `78.154.103.35:13986`）已稳定运行，客户端 FIclash 走该节点加速 GitHub/pypi/raw.github。**YouTube 因免费机房 IP 被流媒体拉黑，无解**（开发加速够用，不追求流媒体）。
+- **Gaming4Free 免费游戏 VPS**：技术上成功用「替换真实二进制 wrapper」注入部署 sing-box 三协议（SS/VLESS/Hysteria2），但账号因运行非游戏进程违反 TOS 被封。**结论：Gaming4Free 只适合真玩游戏，不能跑代理/bot。**
+- 附带产出：免费服务器资源调研报告、Discord 自建 bot 推荐 10 款、Gaming4Free 自动续约脚本与指南。
+
+---
+
+## 1. 背景与目标
+
+目标：找一台免费/低成本的 VPS，部署多协议代理（Shadowsocks/VLESS/Hysteria2 等），客户端（FIclash/Clash/V2rayN）连上后能加速 GitHub、pypi 等开发资源（不追求解锁流媒体）。顺带调研免费服务器资源、Discord bot 自部署、Gaming4Free 自动续约。
+
+---
+
+## 2. 时间线（已完成）
+
+1. **Wispbyte 部署 gost SOCKS5（下午）**：改 Startup 为 `/bin/sh` 拿 shell → 部署 go-gost v3.2.6 单二进制 SOCKS5（带认证）→ FIclash 客户端连上，罗马尼亚 IP，GitHub/pypi 加速成功。
+2. **YouTube 封禁定位**：从 VPS 回环测 YouTube 偶尔 200，但走代理访问被 reset/不可达交替 → 判定为免费机房 IP 被流媒体主动拉黑，非配置问题，免费套餐无解。
+3. **sing-box 多协议尝试（Wispbyte，后放弃）**：单端口 13986 下停 gost 试 sing-box shadowsocks，命令已存档；因网页 Console 多行粘贴被吞、无 Ctrl+C，用户嫌卡放弃，回退 gost SOCKS5。
+4. **免费服务器资源全网搜索（21:53）**：产出 `免费服务器资源汇总_2026-07.md`，分类对比 Wispbyte / FalixNodes / Gaming4Free / Oracle / Serv00 等。
+5. **Gaming4Free 排队开服（22:xx）**：选 Terraria Vanilla + EU Central，排队到 #1 后开服（SFTP `g4f-ger-01.gaming4free.net:2022`）。
+6. **Gaming4Free sing-box 注入部署（23:xx）**：MOTD 变量注入 ❌ / Console 游戏命令 ❌ / `TerrariaServer` wrapper ❌（未被调用）→ 最终**替换真实二进制 `TerrariaServer.bin.x86_64` 为 wrapper 脚本** ✅，sing-box v1.11.0 三协议部署成功（文件全落盘）。
+7. **账号被封（00:13）**：SFTP 突然认证失败，进面板发现 `ACCOUNT BANNED — suspended for violating Terms of Service`。根因：免费游戏 VPS 禁止非游戏进程，sing-box 触发风控。
+
+---
+
+## 3. 关键认知（必读）
+
+- **免费游戏 VPS（Gaming4Free / FalixNodes 类）不适合跑代理/bot**。它们有进程/网络行为监控，非游戏负载一跑就封。要跑代理选 **Wispbyte（已验证可用）/ Serv00（免卡永久 FreeBSD 真 shell）/ Oracle Always Free（4C24G ARM 真 VPS，需信用卡）**。
+- **Gaming4Free 注入技术本身成功**：证明「锁 shell 的翼龙面板，可通过替换真实二进制入口注入自定义进程」。这是可复用技巧（换号/换平台仍可用），但用在此类平台会封号。
+- **Wispbyte 路径不同**：Wispbyte 允许直接改 Startup Command 写 `/bin/sh`，网页 Console 也能用（虽多行粘贴不友好），无需替换二进制。
+
+---
+
+## 4. Wispbyte 代理现状（可用，不受影响）
+
+- 服务器 `w662000`，IP `78.154.103.35`，端口 `13986`
+- 账号 `w662000` / 密码 `vpspwd13543688`（已改掉默认弱密码，因公网扫描器狂暴 auth failure）
+- 协议：gost SOCKS5（带认证），含 Google DNS resolver `8.8.8.8:53`
+- 客户端：FIclash（Clash.Meta 内核），本地 yaml `C:\Users\Administrator\wispbyte-clash.yaml`，节点 `wispbyte-socks5`
+- 验证：`curl -x socks5://w662000:vpspwd13543688@78.154.103.35:13986 https://github.com -o /dev/null -w "%{http_code}"` → 200
+- 限制：YouTube 等流媒体被机房 IP 拉黑；免费套餐 512M 内存
+
+---
+
+## 5. Gaming4Free 部署 + 封号（技术成功，账号作废）
+
+- 服务器地址（已封，仅供参考）：`g4f-ger-01.gaming4free.net:2022`（SFTP），Terraria v1.4.5.6 监听 25727
+- 注入方式：把 `TerrariaServer.bin.x86_64`（6MB 真实二进制）改名 `.real`，新建同名 shell wrapper 先后台注入 `deploy_sing-box.sh` 再 `exec` 真实二进制
+- sing-box 三协议：SS `13986` / VLESS `13987` / Hysteria2 `13988`（端口需在面板 Allocations 申请，账号被封前未确认是否申请成功）
+- 部署脚本/配置/日志均在 `/home/container/` 落盘（`sing-box`、`g4f-ss.json` 等、`inject.log`）
+- **封号根因**：非游戏进程（sing-box）或异常网络行为触发 TOS 风控
+- **教训**：此类平台只玩游戏；代理/bot 换 Serv00 / Oracle / Wispbyte
+
+---
+
+## 6. Discord Bot 自建推荐
+
+完整文档 `Discord_Bot_自建推荐_2026.md`。要点：
+
+- Discord bot 是**纯出站**连接（wss `gateway.discord.gg:443`），**不需要入站端口**，与代理完美共存
+- 推荐 10 个自部署开源 bot（discord.py / discord.js 框架、Red-DiscordBot、Modmail、Ticketsbot、MadGuardian、TomoriBot、Setsuna、JMusicBot 等）
+- 部署流程：开发者后台建 Application 拿 Token → 容器装 python3/node → clone + 填 `.env` → 改 Startup 让 bot 与代理后台共存
+
+---
+
+## 7. Gaming4Free 自动续约方案
+
+完整文档 `Gaming4Free_自动续约指南_2026-07.md` + 脚本 `g4f_renew.py`：
+
+- 续约不是 Pterodactyl 标准 API（只有 start/stop/restart），需**重放 Extend 按钮的 HTTP 请求（Cookie）**
+- 方案 A（自维持）：容器内 `g4f_renew.py` 死循环每 12h 续约，随 Startup 启动
+- 方案 B（外部冗余）：GitHub Actions 跑 `qilan0v0/katabump`
+- ⚠️ 自动续约也可能违反 TOS（封号风险），且 Cookie 会过期需重抓
+
+---
+
+## 8. 关键文件清单（本会话目录）
+
+| 文件 | 说明 |
+|---|---|
+| `wispbyte-clash.yaml` | FIclash 客户端配置（本机 `C:\Users\Administrator\`） |
+| `免费服务器资源汇总_2026-07.md` | 免费服务器调研报告 |
+| `Discord_Bot_自建推荐_2026.md` | Discord 自建 bot 推荐 10 款 |
+| `Gaming4Free_sing-box_部署指南_2026-07.md` | Gaming4Free sing-box 部署教程 |
+| `Gaming4Free_SFTP部署指南_2026-07.md` | SFTP 部署教程 |
+| `Gaming4Free_自动续约指南_2026-07.md` | 自动续约指南 |
+| `g4f_renew.py` | 自动续约脚本（纯标准库 + 系统 curl） |
+| `deploy_sing-box.sh` | sing-box 部署脚本（非交互版） |
+| `TerrariaServer.bin.x86_64` | 注入 wrapper 脚本（已上传服务器，现账号封禁） |
+| `TerrariaServer_modified` | 早期 wrapper 修改版 |
+| `gaming4free_startup.sh` | 启动模板 |
+
+---
+
+## 9. 发布记录
+
+- 博客 `daily-note-blog/_posts/2026-07-25-handoff.md`（Jekyll / GitHub Pages 自动渲染）
+- Gridea Pro 待发布队列（需在 Gridea Pro 手动点「同步」上线）
+- 语雀知识库 `w662000/ylv5l7`，标题 `workbuddy-260725-handoff-free-vps-gaming4free`
+- handoff 归档 `D:\AI work\workbuddy\handoff\250725_免费VPS代理与Gaming4Free部署_handoff.md`
+
+---
+
+## 10. 下一步
+
+- **明天申请 Serv00**（免卡永久 FreeBSD 真 shell）跑免费代理，替代被封的 Gaming4Free
+- Wispbyte gost SOCKS5 继续用，不受影响
+- 可选：把 Wispbyte 的 gost 升级成 sing-box（Wispbyte 允许自定义 Startup，不会被封）
