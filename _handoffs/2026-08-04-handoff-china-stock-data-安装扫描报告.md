@@ -1,13 +1,18 @@
 ---
 layout: default
 title: 交接文档 · china-stock-data 安装扫描报告
-date: 2026-08-10 23:30:00 +0800
+date: 2026-08-16 23:30:00 +0800
 ---
+
+# china-stock-data 安装扫描报告
+
+- **日期**：2026-08-04
+- **状态**：✅ 已完结（新方法重生成）
+- **来源**：handoff\bak\260804_china-stock-data 安装扫描报告_handoff.md（编码探测：utf-8）
 
 > 来源：2026-08-04-20-35-31\china-stock-data-扫描报告.md
 > 由 handoff_flow.py（scan 阶段）自动收集/提炼，标题取自文档 H1 或日志小节标题，待 publish 阶段分发到 Gridea / 博客 / 语雀 / 论坛。
 
-# china-stock-data 安装扫描报告
 
 > 扫描时间：2026-08-04 20:56（GMT+8）
 > 安装位置：`C:\Users\Administrator\.workbuddy\skills\@kekewater\china-stock-data`
