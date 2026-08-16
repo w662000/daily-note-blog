@@ -1,13 +1,18 @@
 ---
 layout: default
 title: 交接文档 · SkillHub 9.8 万技能中「爬虫 _ Playwright 浏览器自动化」技能提炼
-date: 2026-08-04 23:30:00 +0800
+date: 2026-08-16 23:30:00 +0800
 ---
+
+# SkillHub 9.8 万技能中「爬虫 _ Playwright 浏览器自动化」技能提炼
+
+- **日期**：2026-08-03
+- **状态**：✅ 已完结（新方法重生成）
+- **来源**：handoff\bak\260803_SkillHub 9.8 万技能中「爬虫 _ Playwright 浏览器自动化」技能提炼_handoff.md（编码探测：utf-8）
 
 > 来源：项目文档 `2026-08-03-23-24-21\HANDOFF_SkillHub爬虫Playwright技能提炼.md`
 > 由 handoff_flow.py（scan 阶段）自动收集，标题取自文档 H1（即主要干的活），待 publish 阶段分发到 Gridea / 博客 / 语雀 / 论坛。
 
-# SkillHub 9.8 万技能中「爬虫 / Playwright 浏览器自动化」技能提炼
 
 ## 1. 这个项目是什么
 在已抓取的 **skillhub.cn 全量技能库（98,824 个 skill，`skillhub_all.json`）** 里，按「爬虫 / 抓取」与「Playwright / 浏览器自动化」两类关键词筛选出**可直接用于爬虫类项目的 skill**，产出一份可检索的报告 + 全量机器可读数据，作为后续爬虫 / 浏览器自动化选型的数据底座。是 `SkillHub 9.8 万技能市场调研与 Cloudflare 部署上线` 这个父项目的子提炼（聚焦爬虫与 Playwright 两个垂直方向）。
@@ -40,4 +45,3 @@ date: 2026-08-04 23:30:00 +0800
 ## 6. 合规要点（贯穿后续商业项目）
 - skillhub 是**用户创作、免费下载**社区站；仅做「索引 / 评论 / 推荐 + 跳转链接」与「基于技能思路自建自有产品」，**不转售他人 skill 文件**（侵犯创作者权益 + 违反平台 ToS）。
 - 引用官网 `description` 属"介绍/索引"范畴，不搬运/转售原 skill 文件，合规。
-
