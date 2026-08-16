@@ -1,12 +1,15 @@
 ---
 layout: default
 title: 交接文档 · autoclaw-nim-100模型清单
-date: 2026-08-12 23:30:00 +0800
+date: 2026-08-16 23:30:00 +0800
 ---
 
 # nim-100模型清单（AutoClaw 项目表）— 交接文档
 
-# NVIDIA NIM 模型清单（100 个）
+- **日期**：2026-08-12
+- **状态**：✅ 已完结（新方法重生成）
+- **来源**：handoff\bak\260812_autoclaw-nim-100模型清单_handoff.md（编码探测：utf-8）
+
 
 - 来源：`https://integrate.api.nvidia.com/v1/models`（Hermes Studio 动态拉取的全量目录）
 - 状态：✅ 显示 10 个（你保留的）/ 🔒 隐藏 90 个
