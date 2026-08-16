@@ -1,13 +1,18 @@
 ---
 layout: default
 title: 交接文档 · model-speed-radar 看板 A 计划收尾与 handoff 自动发布链路修复
-date: 2026-08-02 23:30:00 +0800
+date: 2026-08-16 23:30:00 +0800
 ---
+
+# model-speed-radar 看板 A 计划收尾与 handoff 自动发布链路修复
+
+- **日期**：2026-08-01
+- **状态**：✅ 已完结（新方法重生成）
+- **来源**：handoff\bak\260801_model-speed-radar 看板 A 计划收尾与 handoff 自动发布链路修复_handoff.md（编码探测：utf-8）
 
 > 来源：项目文档 `2026-08-01-14-48-09\HANDOFF_radar-handoff-fix.md`
 > 由 handoff_flow.py（scan 阶段）自动收集，标题取自文档 H1（即主要干的活），待 publish 阶段分发到 Gridea / 博客 / 语雀 / 论坛。
 
-# model-speed-radar 看板 A 计划收尾与 handoff 自动发布链路修复
 
 > 项目时间：2026-08-01
 > 来源 session：2026-08-01-14-48-09
@@ -46,4 +51,3 @@ date: 2026-08-02 23:30:00 +0800
 ## 五、待办 / 风险
 - 论坛发布（bbs1org/phpBB）在沙箱缺代理时 SSL 握手失败，自动化(venv python)正常；失败不阻断 Gridea/博客/语雀。
 - handoff_flow.py 的 scan 逻辑已进一步改造为"按项目文档收集"（优先 HANDOFF*.md，缺则回退收集 session 根下主题 markdown），详见改造后的脚本。
-
