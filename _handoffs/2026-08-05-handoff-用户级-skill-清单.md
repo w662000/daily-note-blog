@@ -1,13 +1,18 @@
 ---
 layout: default
 title: 交接文档 · 用户级 Skill 清单
-date: 2026-08-10 23:30:00 +0800
+date: 2026-08-16 23:30:00 +0800
 ---
+
+# 用户级 Skill 清单
+
+- **日期**：2026-08-05
+- **状态**：✅ 已完结（新方法重生成）
+- **来源**：handoff\bak\260805_用户级 Skill 清单_handoff.md（编码探测：utf-8）
 
 > 来源：2026-08-05-10-41-07\用户级skill清单.md
 > 由 handoff_flow.py（scan 阶段）自动收集/提炼，标题取自文档 H1 或日志小节标题，待 publish 阶段分发到 Gridea / 博客 / 语雀 / 论坛。
 
-# 用户级 Skill 清单
 
 > 扫描目录：`C:\Users\Administrator\.workbuddy\skills`
 > 共发现 **39** 个 SKILL.md（用户级；含子命名空间与嵌套子技能）
