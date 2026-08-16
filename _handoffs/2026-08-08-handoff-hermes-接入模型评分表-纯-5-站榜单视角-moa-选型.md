@@ -1,13 +1,18 @@
 ---
 layout: default
 title: 交接文档 · Hermes 接入模型评分表（纯 5 站榜单视角 · MoA 选型）
-date: 2026-08-10 23:30:00 +0800
+date: 2026-08-16 23:30:00 +0800
 ---
+
+# Hermes 接入模型评分表（纯 5 站榜单视角 · MoA 选型）
+
+- **日期**：2026-08-08
+- **状态**：✅ 已完结（新方法重生成）
+- **来源**：handoff\bak\260808_Hermes 接入模型评分表（纯 5 站榜单视角 · MoA 选型）_handoff.md（编码探测：utf-8）
 
 > 来源：项目文档 `2026-08-08-10-56-22\HANDOFF_Hermes模型评分表MoA选型.md`
 > 由 handoff_flow.py（scan 阶段）自动收集，标题取自文档 H1（即主要干的活），待 publish 阶段分发到 Gridea / 博客 / 语雀 / 论坛。
 
-# Hermes 接入模型评分表（纯 5 站榜单视角 · MoA 选型）
 
 > 生成日期：2026-08-08 ｜ 接入清单来源：`C:/Users/Administrator/.hermes/provider_models_cache.json`（Hermes 实测缓存，T0 可信）
 > 用途：为 Hermes 开启 MoA（多模型聚合）模式挑主力/助手模型
@@ -49,4 +54,3 @@ date: 2026-08-10 23:30:00 +0800
 - **hy3**：OpenRouter 的 `tencent/hy3` 路由已下架，走 Z.ai/直连或 WorkBuddy 内置入口。
 - **step-3.7-flash**：本机 StepFun，免费/极速/中文强 → 优秀助手层。
 - 沙箱预置的 gpt-5.6 / claude-opus-4.8 / gemini-3.x 等代际高但**5 站均无公开榜单数据（综合 N/A）**，实际可用性需先在 Hermes 试连通性再纳入主力。
-
