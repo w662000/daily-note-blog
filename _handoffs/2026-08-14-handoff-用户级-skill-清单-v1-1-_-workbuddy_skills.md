@@ -1,13 +1,18 @@
 ---
 layout: default
 title: 交接文档 · 用户级 Skill 清单 v1.1（~_.workbuddy_skills）
-date: 2026-08-14 23:30:00 +0800
+date: 2026-08-16 23:30:00 +0800
 ---
+
+# 用户级 Skill 清单 v1.1（~_.workbuddy_skills）
+
+- **日期**：2026-08-14
+- **状态**：✅ 已完结（新方法重生成）
+- **来源**：handoff\bak\260814_用户级 Skill 清单 v1.1（~_.workbuddy_skills）_handoff.md（编码探测：utf-8）
 
 > 来源：2026-08-14-13-34-35\用户级skill清单_20260814_v1.1.md
 > 由 handoff_flow.py（scan 阶段）自动收集/提炼，标题取自文档 H1 或日志小节标题，待 publish 阶段分发到 Gridea / 博客 / 语雀 / 论坛。
 
-# 用户级 Skill 清单 v1.1（~/.workbuddy/skills）
 
 > 扫描时间：2026-08-14 ｜ 共 **51** 个用户级 skill（已剔除 node_modules 依赖）
 > 其中 **★ 我参与制定 18 个** = 自动检测(agent_created=true) **15** 个 + 手动补进(用户确认) **3** 个
