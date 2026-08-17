@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · MemOS 接入 AutoClaw_Hermes 排障：看板空白·网关 slots 重置·智谱 v4 模型接入与摘要_进
-date: 2026-08-16 23:30:00 +0800
+date: 2026-08-17 23:30:00 +0800
 ---
 
 # MemOS 接入 AutoClaw_Hermes 排障：看板空白·网关 slots 重置·智谱 v4 模型接入与摘要_进
