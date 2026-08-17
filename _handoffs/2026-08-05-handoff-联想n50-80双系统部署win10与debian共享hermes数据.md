@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · 联想N50-80双系统部署Win10与Debian共享Hermes数据
-date: 2026-08-16 23:30:00 +0800
+date: 2026-08-17 23:30:00 +0800
 ---
 
 # Handoff 文档 · 联想 N50-80 双系统部署（Win10 + Debian + Hermes 共享）
