@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · autoclaw-模型评分表_Hermes-MoA选型
-date: 2026-08-16 23:30:00 +0800
+date: 2026-08-17 23:30:00 +0800
 ---
 
 # 模型评分表_Hermes-MoA选型（AutoClaw 项目表）— 交接文档
