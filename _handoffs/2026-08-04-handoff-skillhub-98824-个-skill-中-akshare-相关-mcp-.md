@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · skillhub 98824 个 skill 中「akshare 相关 MCP Skill」重筛清单
-date: 2026-08-24 23:30:00 +0800
+date: 2026-08-26 23:30:00 +0800
 ---
 
 > 来源：2026-08-04-19-44-11\akshare相关MCP_Skill筛选清单_20260804.md
