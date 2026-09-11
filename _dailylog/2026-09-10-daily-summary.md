@@ -1,8 +1,7 @@
 ---
-title: "每日工作总结 · 2026-09-10"
-date: 2026-09-10
-category: daily-note
-tags: [workbuddy, daily-log]
+layout: default
+title: 每日工作总结 · 2026-09-10
+date: 2026-09-10 23:30:00 +0800
 ---
 
 # 每日工作总结 · 2026-09-10
@@ -41,3 +40,8 @@ tags: [workbuddy, daily-log]
 - **P2 DeepSeek 官方 flash 与 b.ai 同名**：已用 name 区分解决，但需定期检查其他平台是否有类似撞名。
 - **P2 kimi-k3 未接入五平台**：实测可用（对话 + 推理 + 工具），下次有空时补充配置。
 - **云笔记第 5 端**：不在本任务范围，由 23:07 主链 `upload_youdao.py` 独立处理。
+
+---
+
+*生成时间：2026-09-10 23:00*
+*自动化 ID：automation-1784700756809*
