@@ -1,0 +1,479 @@
+---
+layout: none
+title: WB 国际版工作区 10/12-10/13 成果总结 - ACP 编排链路打通与 agent-teams 移植
+date: 2026-10-13 23:30:00 +0800
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WB 国际版工作区 10/12-10/13 成果总结 - ACP 编排链路打通与 agent-teams 移植</title>
+<style>
+.wbvd, .article-content .wbvd {
+  --bg: #f7f8fa; --card: #ffffff; --ink: #1f2933; --sub: #6b7785;
+  --line: #e3e6ea; --blue: #2563eb; --green: #059669;
+  --orange: #d97706; --red: #dc2626; --soft: #eff4ff;
+  background: #f7f8fa !important; color: #1f2933 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 14px; line-height: 1.7; padding: 24px; border-radius: 12px;
+  box-sizing: border-box;
+}
+.wbvd *, .article-content .wbvd * { box-sizing: border-box; color: #1f2933 !important; }
+
+/* header */
+.wbvd .hd, .article-content .wbvd .hd { margin-bottom: 22px; }
+.wbvd .hd h1, .article-content .wbvd .hd h1 {
+  font-size: 22px; margin: 0 0 8px; line-height: 1.4; font-weight: 700; color: #111827 !important;
+}
+.wbvd .hd p, .article-content .wbvd .hd p { margin: 0; color: #6b7785 !important; font-size: 13px; }
+.wbvd .badges, .article-content .wbvd .badges { margin-top: 10px; }
+.wbvd .bg, .article-content .wbvd .bg {
+  display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 12px;
+  margin-right: 6px; background: #eff4ff !important; color: #2563eb !important;
+  border: 1px solid #c7dbff !important;
+}
+.wbvd .bg.g, .article-content .wbvd .bg.g { background: #ecfdf5 !important; color: #059669 !important; border-color: #a7f3d0 !important; }
+
+/* kpi */
+.wbvd .kpis, .article-content .wbvd .kpis {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 20px;
+}
+.wbvd .kpi, .article-content .wbvd .kpi {
+  background: #ffffff !important; border: 1px solid #e3e6ea !important; border-radius: 10px;
+  padding: 12px 14px; text-align: center;
+}
+.wbvd .kpi b, .article-content .wbvd .kpi b {
+  display: block; font-size: 20px; color: #2563eb !important; line-height: 1.3; font-weight: 700;
+}
+.wbvd .kpi span, .article-content .wbvd .kpi span { font-size: 12px; color: #6b7785 !important; }
+
+/* toolbar */
+.wbvd .bar, .article-content .wbvd .bar {
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 16px;
+}
+.wbvd .bar input, .article-content .wbvd .bar input {
+  flex: 1 1 180px; min-width: 160px; padding: 7px 11px; border: 1px solid #d5d9df !important;
+  border-radius: 8px; background: #ffffff !important; color: #1f2933 !important; font-size: 13px;
+  font-family: inherit;
+}
+.wbvd .tab, .article-content .wbvd .tab {
+  padding: 6px 13px; border: 1px solid #d5d9df !important; border-radius: 8px; cursor: pointer;
+  background: #ffffff !important; color: #4b5563 !important; font-size: 13px; font-family: inherit;
+}
+.wbvd .tab.on, .article-content .wbvd .tab.on {
+  background: #2563eb !important; color: #ffffff !important; border-color: #2563eb !important;
+}
+.wbvd .cnt, .article-content .wbvd .cnt { font-size: 12px; color: #6b7785 !important; }
+
+/* sections */
+.wbvd h2, .article-content .wbvd h2 {
+  font-size: 16px; margin: 26px 0 12px; padding-left: 10px; font-weight: 700; color: #111827 !important;
+  border-left: 4px solid #2563eb !important;
+}
+.wbvd h3, .article-content .wbvd h3 { font-size: 14px; margin: 18px 0 8px; font-weight: 700; color: #111827 !important; }
+.wbvd p, .article-content .wbvd p { margin: 0 0 10px; color: #374151 !important; }
+
+/* event cards */
+.wbvd .ev, .article-content .wbvd .ev {
+  background: #ffffff !important; border: 1px solid #e3e6ea !important; border-left: 3px solid #2563eb !important;
+  border-radius: 8px; padding: 12px 14px; margin-bottom: 10px;
+}
+.wbvd .ev.ok, .article-content .wbvd .ev.ok { border-left-color: #059669 !important; }
+.wbvd .ev.warn, .article-content .wbvd .ev.warn { border-left-color: #d97706 !important; }
+.wbvd .ev.bad, .article-content .wbvd .ev.bad { border-left-color: #dc2626 !important; }
+.wbvd .ev .t, .article-content .wbvd .ev .t { font-weight: 700; font-size: 14px; margin-bottom: 4px; color: #111827 !important; }
+.wbvd .ev .m, .article-content .wbvd .ev .m { font-size: 12px; color: #6b7785 !important; margin-bottom: 6px; }
+.wbvd .ev .d, .article-content .wbvd .ev .d { font-size: 13px; color: #374151 !important; }
+.wbvd .ev code, .article-content .wbvd .ev code {
+  background: #f1f3f5 !important; color: #b91c1c !important; padding: 1px 5px; border-radius: 4px;
+  font-size: 12px; font-family: Consolas, Monaco, monospace;
+}
+
+/* tables */
+.wbvd table, .article-content .wbvd table {
+  width: 100%; border-collapse: collapse; background: #ffffff !important;
+  font-size: 13px; margin-bottom: 12px;
+}
+.wbvd thead th, .article-content .wbvd thead th {
+  background: #eff4ff !important; color: #1e40af !important; text-align: left;
+  padding: 9px 11px; font-weight: 700; border-bottom: 2px solid #c7dbff !important;
+}
+.wbvd tbody td, .article-content .wbvd tbody td {
+  padding: 9px 11px; background: #ffffff !important; color: #374151 !important;
+  border-bottom: 1px solid #edf0f3 !important; vertical-align: top;
+}
+.wbvd tbody tr:nth-child(even) td, .article-content .wbvd tbody tr:nth-child(even) td {
+  background: #fafbfc !important;
+}
+.wbvd td code, .article-content .wbvd td code {
+  background: #f1f3f5 !important; color: #b91c1c !important; padding: 1px 5px; border-radius: 4px;
+  font-size: 12px; font-family: Consolas, Monaco, monospace;
+}
+
+/* tags */
+.wbvd .st, .article-content .wbvd .st {
+  display: inline-block; padding: 1px 8px; border-radius: 5px; font-size: 11px; font-weight: 700;
+}
+.wbvd .st.done, .article-content .wbvd .st.done { background: #ecfdf5 !important; color: #059669 !important; }
+.wbvd .st.doing, .article-content .wbvd .st.doing { background: #fffbeb !important; color: #d97706 !important; }
+.wbvd .st.todo, .article-content .wbvd .st.todo { background: #f1f3f5 !important; color: #6b7785 !important; }
+.wbvd .st.red, .article-content .wbvd .st.red { background: #fef2f2 !important; color: #dc2626 !important; }
+
+/* chain */
+.wbvd .chain, .article-content .wbvd .chain {
+  background: #ffffff !important; border: 1px solid #e3e6ea !important; border-radius: 8px; padding: 14px;
+}
+.wbvd .step, .article-content .wbvd .step {
+  display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px dashed #edf0f3 !important;
+}
+.wbvd .step:last-child, .article-content .wbvd .step:last-child { border-bottom: none !important; }
+.wbvd .step i, .article-content .wbvd .step i {
+  flex: 0 0 22px; height: 22px; border-radius: 50%; background: #2563eb !important; color: #fff !important;
+  font-style: normal; font-size: 12px; display: flex; align-items: center; justify-content: center; font-weight: 700;
+}
+.wbvd .step i.fix, .article-content .wbvd .step i.fix { background: #059669 !important; }
+
+.wbvd .none, .article-content .wbvd .none {
+  padding: 18px; text-align: center; color: #6b7785 !important; background: #fafbfc !important;
+  border: 1px dashed #d5d9df !important; border-radius: 8px;
+}
+.wbvd .ft, .article-content .wbvd .ft {
+  margin-top: 22px; padding-top: 12px; border-top: 1px solid #e3e6ea !important;
+  font-size: 12px; color: #6b7785 !important;
+}
+@media (max-width: 640px) {
+  .wbvd, .article-content .wbvd { padding: 14px; }
+}
+</style>
+</head>
+<body>
+<div class="wbvd" style="background-color:#f7f8fa!important;color:#1f2933!important">
+
+<div class="hd">
+  <h1>WB 国际版工作区 · 10/12–10/13 成果总结</h1>
+  <p>从「CLI 装不上、登录不了」到「多 Agent 编排链路全打通 + agent-teams 移植落地」的两天</p>
+  <div class="badges">
+    <span class="bg">工作流：ACP 原生协议</span>
+    <span class="bg">零积分模型</span>
+    <span class="bg g">145 测试全通过</span>
+  </div>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><b>2</b><span>天跨度</span></div>
+  <div class="kpi"><b>3</b><span>交付工程</span></div>
+  <div class="kpi"><b>145</b><span>测试通过</span></div>
+  <div class="kpi"><b>126</b><span>CLI 模型目录</span></div>
+  <div class="kpi"><b>3</b><span>零积分模型</span></div>
+  <div class="kpi"><b>0</b><span>运行时依赖</span></div>
+</div>
+
+<div class="bar">
+  <input id="wq" type="text" placeholder="搜索关键词：认证 / 端口 / 评审 / 移植 …">
+  <button class="tab on" data-f="all">全部</button>
+  <button class="tab" data-f="10-12">10/12</button>
+  <button class="tab" data-f="10-13">10/13</button>
+  <button class="tab" data-f="break">关键突破</button>
+  <button class="tab" data-f="pit">踩坑</button>
+  <span class="cnt" id="wc"></span>
+</div>
+
+<h2>一、主线时间线</h2>
+<div id="tl">
+
+<div class="ev" data-g="10-12" data-k="安装 cli npmmirror 镜像 内核 2.164.0">
+  <div class="t">10/12 · 装上独立 CodeBuddy CLI 内核</div>
+  <div class="m">打通 A2A 对接的前置条件</div>
+  <div class="d">全局安装 <code>@tencent-ai/codebuddy-code@2.164.0</code>，落在隔离目录
+  <code>~/.workbuddy-ai/binaries/node/versions/22.22.2-6/</code>。
+  直连 npmjs 卡死（元数据 9s、装 16 分钟无进度），换 <code>--registry=https://registry.npmmirror.com</code>
+  后 <b>2 分钟装完（102 包 / 289MB）</b>。→ 结论固化：本机装 npm 包一律走 npmmirror。</div>
+</div>
+
+<div class="ev ok" data-g="10-12" data-k="登录 凭证 google 授权 token 有效期">
+  <div class="t">10/12 17:54 · 登录成功（推翻「微信扫码」的旧判断）</div>
+  <div class="m">此前"微信扫码"是从代码推断的，没实测 → 彻底作废</div>
+  <div class="d">双击 <code>login-codebuddy.cmd</code> 走 TUI <code>/login</code>，弹出的是
+  <b>浏览器 Google 授权</b>，账号 <code>wxatp2022@gmail.com</code>，uid
+  <code>d1bc765b-…</code>，凭证有效期至 <b>2027-10-12</b>。日志铁证：
+  <code>[auth_success: wxatp2022@gmail.com] 认证成功</code> → <code>ttft=1841ms</code>。</div>
+</div>
+
+<div class="ev ok" data-g="10-12" data-k="acp http sse 闸门 头 gateway 密码">
+  <div class="t">10/12 20:44 · ACP over HTTP 全链路验证通过</div>
+  <div class="m">发现两道闸门，缺一不可</div>
+  <div class="d">闸门①：所有 <code>/api/v1/*</code> 必须带 <code>x-codebuddy-request: 1</code>，否则 403；
+  闸门②：<code>requireAuth</code> 校验 gateway 密码，通过后种 <code>gateway_session</code> cookie（sha256）。
+  流程走通 <code>connect → initialize → session/new → session/prompt</code>，
+  模型逐字返回 <b>ACP-OK</b>，带 traceId / finishReason: stop → 真实大模型往返，非本地桩。</div>
+</div>
+
+<div class="ev ok" data-g="10-12" data-k="a2a stdio 进程 api 验证">
+  <div class="t">10/12 · A2A 全链路也跑通（但发现只有 stdio）</div>
+  <div class="m">bundle 里没有任何 A2A HTTP 路由</div>
+  <div class="d">A2A 入站只有 stdio（<code>--a2a</code>），与 <code>--acp</code> 互斥。
+  验证通路：借 <code>--serve</code> 的 E2B 对齐进程 API 拉起 <code>--a2a</code> 子进程，
+  再用 <code>input/send</code> 喂 stdin、<code>process/start</code> 的 SSE 读 stdout。
+  实测 <code>SendMessage → GetTask(TASK_STATE_COMPLETED, Answer="A2A-OK") → ListTasks</code> 全绿。</div>
+</div>
+
+<div class="ev bad" data-g="10-12 break" data-k="server__port 端口污染 子进程 eaddrinuse">
+  <div class="t">10/12 · 最大坑：SERVER__PORT 污染子进程</div>
+  <div class="m">现象极具迷惑性：零 LLM 请求、零响应，但分发循环是活的</div>
+  <div class="d"><code>--a2a</code> 子进程经 <code>process/start</code> 拉起时继承了 serve 父进程的
+  <code>SERVER__PORT=15999</code>，于是自己也要在 15999 起网关 → <code>EADDRINUSE</code> →
+  unhandledRejection → agent 卡死在 getModel 后。
+  <b>修法：显式覆盖 <code>SERVER__PORT</code>（网关 16200 / 子进程 16199 / serve 15999）。</b>
+  单测确认：<code>CODEBUDDY_DAEMON_CONFIGURED_PORT</code>、<code>CODEBUDDY_IDE_PORT</code> 都无效，只有它是关键。</div>
+</div>
+
+<div class="ev" data-g="10-12" data-k="claw 测绘 端口 18901 wb-bridge autoclaw 1.x">
+  <div class="t">10/12 22:55 · 本机 claw 生态测绘（为架构选型）</div>
+  <div class="m">结论：A2A 只能接 AutoClaw 1.X</div>
+  <div class="d">AutoClaw 1.X（OpenClaw 2026.6.8，网关 18889，有 <code>openclaw acp/agent/gateway</code> 可编程入口）
+  vs AutoClaw 2.0（Zhipu zwork v2.1.0，无网关 CLI，3917/11966/11987/18432 全是内部 IPC，所有路径 404）。
+  本机其他：18900 Hermes Web UI、<b>18901 wb-bridge</b>（OpenAI 兼容模型代理）、8642 Hermes gateway、18789 LobsterAI。</div>
+</div>
+
+<div class="ev ok" data-g="10-12 break" data-k="决策 放弃 a2a 统一 acp diff 中转">
+  <div class="t">10/12 深夜 · 关键决策 + wb-orchestrator 立项</div>
+  <div class="m">用户拍板，推翻了前一个方案</div>
+  <div class="d">① <b>放弃 A2A，两个 peer 统一走原生 ACP</b>；② 评审不默认走 AutoClaw，只在需要「外部独立视角」时调；
+  ③ 上下文中转<b>只传 diff 不传全文</b>，但链路必须打通。
+  落地 <code>wb-orchestrator/</code>：peers.json + acp-peer.mjs + diff-relay.mjs + judge.mjs +
+  orchestrator.mjs + mcp-server.mjs + SKILL.md + README.md。<br>
+  <b>不需要「A2A→ACP 转换层」</b>——因为 WorkBuddy→桥接层这一跳本来就是 MCP，只需传输适配 + 工具暴露。</div>
+</div>
+
+<div class="ev ok" data-g="10-13" data-k="复测 闭环 v1 v2 v3 revise pass 账本">
+  <div class="t">10/13 · 审计后修复 + 完整 2 轮闭环复测跑通</div>
+  <div class="m">此前未验证的部分，本日全部补上</div>
+  <div class="d">版本账本 <code>v1 → v2 → v3</code> 每轮 bump；一次真实
+  <b>revise → pass 弧线</b>（round1 revise + 4 条真实 blocker → round2 pass + <code>score=8</code> + 0 must-fix）；
+  <code>finalRelay: mode=full lossless=True</code>（小文档 diff 不划算自动回退全文，正确）；<code>errors=[]</code>，rc=0。</div>
+</div>
+
+<div class="ev bad" data-g="10-13 pit" data-k="评审 解析器 小节标题 must-fix score 缺陷">
+  <div class="t">10/13 · 真实缺陷：评审解析器把小节标题当成 must-fix</div>
+  <div class="m">垃圾标签被原样喂回下一轮产出方，属于会持续污染流水线的 bug</div>
+  <div class="d">现象：<code>mustFix: ["1) VERDICT: pass", "2) BLOCKERS: None (0).", …]</code>，
+  <code>score</code> 抓到 1（来自 "1) VERDICT" 里的 1）。<br>
+  修法：<code>lib/judge.mjs</code> 新增 <code>parseExternalReview()</code>
+  按 5 个分节切片：mustFix = BLOCKERS 区 <code>-</code> 条目 + SUGGESTED PATCH 区 <code>+</code> 行；
+  score 只认显式 <code>5) SCORE: n/10</code>，<b>没有就 null，不伪造</b>。
+  固化回归测试 <code>tests/parse-external-review.test.mjs</code>（19 断言，含真实评审文本 fixture）。</div>
+</div>
+
+<div class="ev warn" data-g="10-13 pit" data-k="hook 拦截 产物 subscription-gate 超时">
+  <div class="t">10/13 · 宿主 hook 注入故障被误当成产物</div>
+  <div class="m">且被真实复现过</div>
+  <div class="d">某一轮 codebuddy 的"产物"其实是
+  <code>UserPromptSubmit operation blocked by hook … subscription-gate/dist/gate.mjs … Hook timed out after 10000ms</code>。<br>
+  修法：<code>isHostHookError()</code> 要求两个短语<b>同时出现</b>才判定（避免误判"介绍 hook 的文档"），
+  命中则换新 session 重试 1 次。CLI 查过没有 <code>--no-hooks</code> 开关，只能重试。</div>
+</div>
+
+<div class="ev" data-g="10-13" data-k="积分 模型 126 x0.00 deepseek step hy3 目录">
+  <div class="t">10/13 · CLI 内置模型的积分真相（用户纠正后核实）</div>
+  <div class="m">权威来源 = CLI 自己通过 ACP 发布的模型目录</div>
+  <div class="d">零成本可读，已固化为 <code>node orchestrator.mjs models</code>。<br>
+  <b>126 个模型里只有 3 个 <code>x0.00</code></b>：<code>deepseek-v4.1-flash</code>、<code>step-5-preview</code>、<code>hy3</code>
+  （名称修正：没有 hy3-preview / step5-preview）。其余内置全收费：fast-model x0.34 / balanced x0.59 /
+  primary x3.31 / gpt-6-astra x6.67 / grok-4.7 x1.90 …；100 个 <code>credits: null</code>（含 default-model
+  与 99 个 custom-local:*）不在计费表内。</div>
+</div>
+
+<div class="ev bad" data-g="10-13 break" data-k="根因 认证 refusal 401 at-rest cbc 竞态 证伪">
+  <div class="t">10/13 · 认证根因：两次误判后才挖到真因</div>
+  <div class="m">从「没模型授权」→「stripProxy」→「at-rest 凭据加密」的三级修正</div>
+  <div class="d">
+  <b>误判①</b>「catalog-listed ≠ entitled，账号没授权」→ 被推翻：我自己就跑在
+  <code>CODEBUDDY_CURRENT_MODEL_ID=deepseek-v4.1-flash</code> 上，授权没问题。<br>
+  <b>误判②</b>「stripProxy 剥掉了承担凭据注入的沙箱代理」→ 被证伪：那个"成功"是
+  hook 拦截造成的假象（见下方教训）。<br>
+  <b>真因</b>：认证文件 <code>workbuddy-desktop-ai.info</code> 是 at-rest 加密（AES-GCM <code>$wbEncrypted</code>），
+  解密密钥只下发给<b>桌面端自己 spawn 的子进程</b>，我们 spawn 的 CLI 角色是 <code>cbc</code>，
+  拿不到 key → <code>hasAccessToken=false</code> → 401 → <code>stopReason=refusal</code> → 产物 0 字节。<br>
+  <b>加剧因素</b>：<code>ClientProductProvider</code>（明文文件）与 <code>EnvProductProvider</code>（加密文件）
+  并行竞态 → 同一命令 3 次跑出 fail / success / fail。</div>
+</div>
+
+<div class="ev ok" data-g="10-13 break" data-k="解法 codebuddy_auth_token 明文 sibling 只读">
+  <div class="t">10/13 13:40 · 解法落地并复验通过</div>
+  <div class="m">用最高优先级 env 认证源绕过文件解析，消灭竞态</div>
+  <div class="d"><code>lib/acp-peer.mjs</code> 新增 <code>resolveAuthToken()</code>（env 优先 → mtime 最新 → 只收明文 → uid 过滤），
+  <code>ensureServer()</code> 里注入 <code>env.CODEBUDDY_AUTH_TOKEN</code>；
+  <code>peers.json</code> 新增 <code>codebuddy.authToken</code> 块（<b>只存路径，不存 token</b>）。<br>
+  复验证据：<code>source=file:Tencent-Cloud.coding-copilot.info</code> →
+  <code>hasAccessToken=true</code>（修复前 false）→ <code>end_turn</code> / <code>elapsedMs 55655</code> / <code>{"ok":true,"n":7}</code> → <b>PASS</b>。<br>
+  <b>安全边界</b>：只读不写（三个 .info 的 mtime 全部早于运行时刻，未回写）；不解密用户加密 token；
+  token 不落盘、日志只打文件名；⛔ 不提取 build secret 解密用户 token。</div>
+</div>
+
+<div class="ev ok" data-g="10-13" data-k="judge 切换 零积分 任务11 计费护栏">
+  <div class="t">10/13 14:05 · 思考/策划环节切到 CLI 内置 0 积分模型</div>
+  <div class="m">先证伪了 wb-bridge 路线（任务 #11 完成）</div>
+  <div class="d">实测 <code>wb-bridge</code> 不能指定为内置模型：<code>/v1/models</code> 只有 101 个自定义 provider id，
+  三个零积分模型都不在，直接调用 → <code>400 unknown model</code>。bridge 是自定义 key 聚合器，无内置模型通道。
+  → 改用 <code>CliJudge</code>：每次评审全新会话 → 读信用表 → <code>pickFreeModel</code> → <code>session/set_model</code> 钉死。
+  新增 <code>lib/model-catalog.mjs</code>（计费护栏 fail-closed）+ 生产者守卫（<code>--allow-billed</code> 才豁免）。
+  三环节全部符合初衷。</div>
+</div>
+
+<div class="ev ok" data-g="10-13" data-k="p0 p1 加固 审计 孤儿进程 autoapprove 配额">
+  <div class="t">10/13 14:30 · 审计报告 P0/P1 加固（8 项全完成 + 实测）</div>
+  <div class="m">重点是「文档与实现脱节」和「运行风险」</div>
+  <div class="d"><b>P0</b>：SKILL.md 评审认知修正（原来写"你自己评审"，实际由后端 CliJudge 执行 → 明确"你不是评审员"）；
+  README judge 描述重写；artifactVersion 失忆约束；新增【鉴权方案说明与风险权衡】。<br>
+  <b>P1</b>：配额告警增强（修掉 <code>throttled</code> 从未累加的隐患）；孤儿进程处理（进程级
+  <code>SPAWNED_SERVERS</code> 注册表 + try/finally + 信号回收）；autoApprove 安全强化；
+  并行模式配额约束。<br>
+  ⚠️ <b>P0 事故与整改</b>：<code>start-review-peer.mjs</code> 用 <code>detached:true</code>
+  <b>即使加了 <code>windowsHide:true</code> 仍弹黑窗</b>，打断用户工作（用户两次发火）→
+  重写为默认只查状态、<code>--start</code> 用 <code>windowsHide:true + detached:false</code>，
+  并新增 <code>tests/no-window.test.mjs</code> 把规则固化为测试。</div>
+</div>
+
+</div>
+
+<h2>二、三大交付工程</h2>
+<table>
+<thead><tr><th>工程</th><th>路径</th><th>核心产出</th><th>状态</th></tr></thead>
+<tbody>
+<tr>
+<td><b>codebuddy-a2a</b></td>
+<td><code>D:\workspace\workbuddyai\codebuddy-a2a\</code></td>
+<td>ACP over HTTP 全链路客户端（已验证）、A2A stdio 验证客户端、守护网关
+<code>a2a-gateway.mjs</code>（23KB，零依赖，子进程保活 + 指数退避自动重启 + 任务排队 + 令牌鉴权）、
+启动器 .cmd / 自启动 .vbs</td>
+<td><span class="st done">已验证</span></td>
+</tr>
+<tr>
+<td><b>wb-orchestrator</b></td>
+<td><code>D:\workspace\workbuddyai\wb-orchestrator\</code></td>
+<td>统一 ACP 驱动（acp-http + acp-stdio 同一接口）、unified diff 中转（往返无损）、
+免费模型评审 CliJudge、串行流水线 CLI（health/prompt/run/diff/models）、
+MCP stdio 服务端（6 工具）、模型信用表与计费护栏</td>
+<td><span class="st done">链路打通</span></td>
+</tr>
+<tr>
+<td><b>agent-teams</b></td>
+<td><code>D:\workspace\workbuddyai\agent-teams\</code></td>
+<td>dsh-agent-teams → WB 国际版移植工程：状态契约（team.json + 3 份 Schema + 零依赖校验器 + 会话锁）、
+任务 DAG + 调度（环检测 / O_EXCL 领取 / attemptId / 冷恢复）、MCP 14 工具 + 成员 spawn + 鉴权、
+Phase 4 质量门禁状态机 + 接入 wb-orchestrator 评审</td>
+<td><span class="st doing">Phase 0–4 完成</span></td>
+</tr>
+</tbody>
+</table>
+
+<h2>三、agent-teams 移植进度</h2>
+<table>
+<thead><tr><th>Phase</th><th>内容</th><th>测试</th><th>状态</th></tr></thead>
+<tbody>
+<tr><td>0</td><td>平台未知项核实（CLI 有 <code>--session-id</code> / <code>-r --resume</code> / <code>--append-system-prompt</code> / <code>--tools</code>）</td><td>—</td><td><span class="st done">完成</span></td></tr>
+<tr><td>1</td><td>状态与契约骨架（team.json / 3 份 Schema / 零依赖校验器 / 会话锁）</td><td>13</td><td><span class="st done">完成</span></td></tr>
+<tr><td>2</td><td>任务 DAG + 调度（环检测、依赖注入上限、O_EXCL 领取、attemptId 语义、冷恢复）</td><td>22</td><td><span class="st done">完成</span></td></tr>
+<tr><td>3</td><td>MCP 工具面（14 工具）+ 成员 spawn + 鉴权</td><td>84 + 真实 CLI 端到端</td><td><span class="st done">完成</span></td></tr>
+<tr><td>4</td><td>质量门禁状态机 + 接入 wb-orchestrator 评审（路线 A+）</td><td>26</td><td><span class="st done">完成</span></td></tr>
+<tr><td>5–6</td><td>审计面板 i18n、加固回归</td><td>—</td><td><span class="st todo">待做</span></td></tr>
+</tbody>
+</table>
+<p><code>node --test tests/*.test.mjs</code> → <b>145 / 145 通过</b>；总代码约 5.9k 行，零运行时依赖。</p>
+
+<h2>四、关键突破：认证链路的因果链</h2>
+<div class="chain">
+  <div class="step"><i>1</i><div><b>现象</b>：<code>stopReason=refusal</code> +
+  <code>Authentication required. Please use /login</code>，产物 0 字节。</div></div>
+  <div class="step"><i>2</i><div><b>排除</b>：模型解析正常（<code>ModelConfig resolved model=deepseek-v4.1-flash</code>）、
+  遥测正常发出 → 请求打到网关被 401。</div></div>
+  <div class="step"><i>3</i><div><b>排除</b>：环境变量传递无效（补 <code>CODEBUDDY_CONFIG_DIR</code> /
+  继承完整宿主 env，三种策略全 refusal）。</div></div>
+  <div class="step"><i>4</i><div><b>真因</b>：token 存于 at-rest 加密文件，解密密钥只给桌面端自己 spawn
+  的子进程；我们 spawn 的 CLI 角色是 <code>cbc</code> → 读不出 token → 401。</div></div>
+  <div class="step"><i>5</i><div><b>加剧</b>：两个 ProductProvider 并行竞态 → 同一命令 3 次跑出 fail/success/fail。</div></div>
+  <div class="step"><i class="fix">6</i><div><b>解法</b>：走最高优先级 env 认证源
+  <code>CODEBUDDY_AUTH_TOKEN</code>，值从<b>明文兄弟文件</b>读取 → 绕过文件解析、消灭竞态。</div></div>
+</div>
+
+<h2>五、踩坑清单（两天累计）</h2>
+<table>
+<thead><tr><th>坑</th><th>现象</th><th>根因</th><th>解法</th></tr></thead>
+<tbody>
+<tr><td>端口 1512 冲突</td><td>CLI 默认绑 1512 起不来</td><td>WorkBuddy 桌面端自身占用</td><td>必须显式 <code>--port</code></td></tr>
+<tr><td>代理变量污染</td><td><code>TypeError: Right-hand side of 'instanceof' is not callable</code></td><td>注入的 <code>http_proxy</code></td><td><code>env -u</code> 清代理</td></tr>
+<tr><td>身份误判</td><td>被认成 WorkBuddy，端点变 workbuddy.ai</td><td><code>CODEBUDDY_HOST=workbuddy-desktop</code> 注入</td><td>清空全部 <code>CODEBUDDY_*</code> + <code>CLIENT_INFO_*</code></td></tr>
+<tr><td>子进程端口继承</td><td><code>EADDRINUSE</code> → 零 LLM 请求</td><td>继承父进程 <code>SERVER__PORT</code></td><td>显式覆盖 <code>SERVER__PORT</code></td></tr>
+<tr><td>陈旧实例冒充</td><td><code>Authentication required</code></td><td>端口上跑着别人的 <code>--serve</code></td><td>kill 后自 spawn + SPAWNED_SERVERS 注册表</td></tr>
+<tr><td>评审解析错乱</td><td>小节标题被当 must-fix，score 抓到 1</td><td>无分节解析</td><td><code>parseExternalReview()</code> 5 段切片</td></tr>
+<tr><td>hook 拦截当产物</td><td>产物是 hook 超时文本</td><td>subscription-gate 10s 超时</td><td><code>isHostHookError()</code> + 重试 + 全局 disable</td></tr>
+<tr><td>长文评审被裁</td><td>PASS 但只看了前半篇</td><td><code>maxArtifactChars</code> 默认 24000</td><td>新增 <code>--max-artifact-chars</code>（长文调大）</td></tr>
+<tr><td>弹窗打扰用户</td><td>黑窗口闪现</td><td><code>detached:true</code> 即使加 windowsHide 也弹</td><td><code>detached:false + windowsHide:true</code>（已固化为测试）</td></tr>
+<tr><td>初始化冲突</td><td><code>Server already initialized</code>（http 400）</td><td><code>session/new</code> 后没把 sessionId 存回 peer</td><td>存回 peer + <code>if(!agentInfo)</code> 守卫</td></tr>
+<tr><td>wb-bridge 配额</td><td><code>429 resets at 00:00 UTC</code></td><td>免费模型 60 次/天账号上限</td><td>优雅降级为 <code>VERDICT: UNREVIEWED</code>，照常交付</td></tr>
+</tbody>
+</table>
+
+<h2>六、方法论沉淀（比代码更值钱的部分）</h2>
+<table>
+<thead><tr><th>教训</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td><b>判据必须钉死</b></td><td><code>stopReason=end_turn</code> <b>不等于</b>模型真被调用了——hook 拦截也会给 end_turn。验证时必须同时确认产物内容。本次因这条误判了两次。</td></tr>
+<tr><td><b>不要为「清环境」strip 代理</b></td><td>沙箱/宿主的网络出口代理很可能同时承担凭据注入。</td></tr>
+<tr><td><b>排查模型调用失败的第一顺位</b></td><td>看 CLI 日志的 <code>stopReason</code> + <code>refusal classified category</code>，一眼区分 <code>auth</code> / <code>empty_model_response</code> / 上游故障，比客户端侧猜快得多。</td></tr>
+<tr><td><b>不要用「改 product id」绕竞态</b></td><td>CLI 有两个 ProductProvider 并行，任何 id 覆盖都不稳。用最高优先级 env 认证源才是确定性的。</td></tr>
+<tr><td><b>长产物评审必须调大 maxArtifactChars</b></td><td>否则 judge 只看到前半篇却照样给出 PASS。</td></tr>
+<tr><td><b>judge PASS ≠ 无缺陷</b></td><td>judge 只按 rubric 打分，rubric 没覆盖的维度（Schema 自洽性、CLI 参数真实性）它不会主动查。编排者通读不可省——本次 6 项实质缺陷全是人读出来的。</td></tr>
+<tr><td><b>修订轮要「逐条 + 修复要求 + 若不同意请说明理由」</b></td><td>比笼统说"再改改"有效得多。</td></tr>
+<tr><td><b>账户 uid 即使在加密认证文件里也是明文</b></td><td>是做账号锚点的好材料。</td></tr>
+<tr><td><code>CODEBUDDY_CREDENTIALS_IN_MEMORY=1</code> 会禁用</td><td>会让 CLI 既读不到也写不了 auth 文件（每次 hasSession=false）。</td></tr>
+</tbody>
+</table>
+
+<h2>七、待办 / 下一步</h2>
+<table>
+<thead><tr><th>项</th><th>状态</th></tr></thead>
+<tbody>
+<tr><td>agent-teams Phase 5–6（审计面板 i18n、加固回归）</td><td><span class="st todo">待做</span></td></tr>
+<tr><td>非沙箱环境双击启动 A2A 网关的验证（此前 WS 建连后 RPC 超时/1006 关闭，疑似沙箱拦截 wmic/schtasks）</td><td><span class="st doing">待验证</span></td></tr>
+<tr><td>artifactVersion 账本目前只在内存、会话重建即丢 → 需持久化方案</td><td><span class="st red">已知风险</span></td></tr>
+<tr><td>并行模式会成倍消耗免费 judge 配额 → 优先用 AutoClaw 评审</td><td><span class="st doing">缓解中</span></td></tr>
+<tr><td>judge 已具备切到 CLI 内置 0 积分模型的条件，需长期稳定性观察</td><td><span class="st doing">观察中</span></td></tr>
+</tbody>
+</table>
+
+<div class="ft">
+来源：D:\workspace\workbuddyai\.workbuddy-ai\memory\2026-10-12.md / 2026-10-13.md ｜ 整理：WorkBuddy ｜ 生成时间：2026-10-13
+</div>
+
+</div>
+<script>
+(function(){
+  var q=document.getElementById('wq'), tl=document.getElementById('tl'),
+      wc=document.getElementById('wc'), tabs=document.querySelectorAll('.wbvd .tab'),
+      cur='all';
+  var items=[].slice.call(tl.querySelectorAll('.ev'));
+  function apply(){
+    var kw=(q.value||'').trim().toLowerCase(), n=0;
+    items.forEach(function(el){
+      var g=el.getAttribute('data-g')||'', k=el.getAttribute('data-k')||'';
+      var okG=(cur==='all')||(g.indexOf(cur)>=0);
+      var okK=!kw||(k.toLowerCase().indexOf(kw)>=0)||(el.textContent.toLowerCase().indexOf(kw)>=0);
+      var show=okG&&okK; el.style.display=show?'':'none'; if(show)n++;
+    });
+    wc.textContent='显示 '+n+' / '+items.length+' 条';
+  }
+  q.addEventListener('input',apply);
+  tabs.forEach(function(b){
+    b.addEventListener('click',function(){
+      tabs.forEach(function(x){x.className='tab';});
+      b.className='tab on'; cur=b.getAttribute('data-f'); apply();
+    });
+  });
+  apply();
+})();
+</script>
+</body>
+</html>
