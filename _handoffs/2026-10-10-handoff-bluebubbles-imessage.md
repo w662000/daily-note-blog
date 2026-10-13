@@ -1,245 +1,153 @@
 ---
 layout: default
-title: 交接文档 · BlueBubbles (iMessage)
+title: 交接文档 · BlueBubbles（iMessage）
 date: 2026-10-13 23:30:00 +0800
 ---
 
-# BlueBubbles (iMessage)
+# BlueBubbles（iMessage）
 
 - **日期**：2026-10-10
 - **状态**：✅ 已完结（scan 自动收集）
-- **来源**：2026-10-10-hermes-upgrade\src-0215\website\docs\user-guide\messaging\bluebubbles.md
+- **来源**：2026-10-10-hermes-upgrade\src-0215\website\i18n\zh-Hans\docusaurus-plugin-content-docs\current\user-guide\messaging\bluebubbles.md
 
-Connect Hermes to Apple iMessage via [BlueBubbles](https://bluebubbles.app/) — a free, open-source macOS server that bridges iMessage to any device.
+通过 [BlueBubbles](https://bluebubbles.app/) 将 Hermes 连接至 Apple iMessage——这是一款免费、开源的 macOS 服务端，可将 iMessage 桥接至任意设备。
 
-## Prerequisites
+## 前提条件
 
-- A **Mac** (always on) running [BlueBubbles Server](https://bluebubbles.app/)
-- Apple ID signed into Messages.app on that Mac
-- BlueBubbles Server v1.0.0+ (webhooks require this version)
-- Network connectivity between Hermes and the BlueBubbles server
+- 一台**始终开机的 Mac**，运行 [BlueBubbles Server](https://bluebubbles.app/)
+- 该 Mac 上的 Messages.app 已登录 Apple ID
+- BlueBubbles Server v1.0.0+（webhook 需要此版本）
+- Hermes 与 BlueBubbles 服务端之间的网络连通性
 
-## Setup
+## 配置步骤
 
-### 1. Install BlueBubbles Server
+### 1. 安装 BlueBubbles Server
 
-Download and install from [bluebubbles.app](https://bluebubbles.app/). Complete the setup wizard — sign in with your Apple ID and configure a connection method (local network, Ngrok, Cloudflare, or Dynamic DNS).
+从 [bluebubbles.app](https://bluebubbles.app/) 下载并安装。完成设置向导——使用 Apple ID 登录，并配置连接方式（本地网络、Ngrok、Cloudflare 或动态 DNS）。
 
-### 2. Get your Server URL and Password
+### 2. 获取服务端 URL 和密码
 
-In BlueBubbles Server → **Settings → API**, note:
-- **Server URL** (e.g., `http://192.168.1.10:1234`)
+在 BlueBubbles Server → **Settings → API** 中，记录：
+- **Server URL**（例如 `http://192.168.1.10:1234`）
 - **Server Password**
 
-### 3. Configure Hermes
+### 3. 配置 Hermes
 
-Run the setup wizard:
+运行设置向导：
 
 ```bash
 hermes gateway setup
 ```
 
-Select **BlueBubbles (iMessage)** and enter your server URL and password.
+选择 **BlueBubbles (iMessage)** 并输入服务端 URL 和密码。
 
-Or set environment variables directly in `~/.hermes/.env`:
+或直接在 `~/.hermes/.env` 中设置环境变量：
 
 ```bash
 BLUEBUBBLES_SERVER_URL=http://192.168.1.10:1234
 BLUEBUBBLES_PASSWORD=your-server-password
 ```
 
-#### Optional: Require mentions in group chats
+### 4. 授权用户
 
-By default, Hermes responds to every authorized BlueBubbles/iMessage DM or group message. To make group chats opt-in, enable mention gating:
+选择以下任一方式：
 
-```yaml
-platforms:
-  bluebubbles:
-    enabled: true
-    extra:
-      require_mention: true
-```
-
-With `require_mention: true`, DMs still work normally, but group-chat messages are ignored unless they match a mention pattern. If you do not configure custom patterns, Hermes uses conservative defaults for `Hermes` and `@Hermes agent` variants.
-
-For a custom agent name, set regex patterns:
-
-```yaml
-platforms:
-  bluebubbles:
-    extra:
-      require_mention: true
-      mention_patterns:
-        - '(?<![\w@])@?amos\b[,:\-]?'
-```
-
-### 4. Authorize Users
-
-Choose one approach:
-
-**DM Pairing (recommended):**
-When someone messages your iMessage, Hermes automatically sends them a pairing code. Approve it with:
+**DM 配对（推荐）：**
+当有人向你的 iMessage 发送消息时，Hermes 会自动向其发送配对码。使用以下命令批准：
 ```bash
 hermes pairing approve bluebubbles <CODE>
 ```
-Use `hermes pairing list` to see pending codes and approved users.
+使用 `hermes pairing list` 查看待处理的配对码和已授权用户。
 
-**Pre-authorize specific users** (in `~/.hermes/.env`):
+**预授权特定用户**（在 `~/.hermes/.env` 中）：
 ```bash
 BLUEBUBBLES_ALLOWED_USERS=user@icloud.com,+15551234567
 ```
 
-**Open access** (in `~/.hermes/.env`):
+**开放访问**（在 `~/.hermes/.env` 中）：
 ```bash
 BLUEBUBBLES_ALLOW_ALL_USERS=true
 ```
 
-### 5. Start the Gateway
+### 5. 启动 Gateway
 
 ```bash
 hermes gateway run
 ```
 
-Hermes will connect to your BlueBubbles server, register a webhook, and start listening for iMessage messages.
+Hermes 将连接至你的 BlueBubbles 服务端，注册 webhook，并开始监听 iMessage 消息。
 
-### 6. Verify the Setup
-
-The setup wizard saves your credentials to `~/.hermes/.env` — it does **not** write `platforms.bluebubbles.enabled` into `~/.hermes/config.yaml`. With no explicit setting, present credentials are enough for the adapter to start; but an explicit `enabled: false` always wins over credentials, so if you previously disabled the adapter (for example, while using another iMessage bridge), the wizard will report success and the adapter will still never start.
-
-Check the stored setting:
-
-```bash
-hermes config get platforms.bluebubbles.enabled
-```
-
-- `true` — explicitly enabled
-- `Config key not set` — no explicit setting; the `.env` credentials drive enablement
-- `false` — explicitly disabled; re-running setup will not flip this — set it to `true` yourself
-
-Then check the gateway log for the two lines that prove the connection and the webhook registration:
-
-```bash
-hermes logs gateway
-```
-
-```text
-[bluebubbles] connected to http://192.168.1.10:1234 (private_api=False, helper=False)
-[bluebubbles] webhook registered with server: http://localhost:8645/bluebubbles-webhook?password=***
-```
-
-Finally, send yourself a test message from another device: a reply (or the pairing code for a new DM) is the end-to-end proof that inbound delivery works.
-
-## How It Works
+## 工作原理
 
 ```
 iMessage → Messages.app → BlueBubbles Server → Webhook → Hermes
 Hermes → BlueBubbles REST API → Messages.app → iMessage
 ```
 
-- **Inbound:** BlueBubbles sends webhook events to a local listener when new messages arrive. No polling — instant delivery.
-- **Outbound:** Hermes sends messages via the BlueBubbles REST API.
-- **Media:** Images, voice messages, videos, and documents are supported in both directions. Inbound attachments are downloaded and cached locally for the agent to process.
+- **入站：** 新消息到达时，BlueBubbles 向本地监听器发送 webhook 事件。无需轮询——即时送达。
+- **出站：** Hermes 通过 BlueBubbles REST API 发送消息。
+- **媒体：** 双向支持图片、语音消息、视频和文档。入站附件会被下载并在本地缓存，供 Agent 处理。
 
-### Two URLs, opposite directions
+## 环境变量
 
-The setup uses two URLs that point in opposite directions — don't confuse them:
-
-- `BLUEBUBBLES_SERVER_URL` (e.g. `http://192.168.1.10:1234`) — Hermes **calls** your BlueBubbles server's API. This is the Server URL shown in BlueBubbles Server → Settings → API.
-- The webhook (default `http://localhost:8645/bluebubbles-webhook`) — BlueBubbles **POSTs** new-message events to Hermes. Its host/port/path come from `BLUEBUBBLES_WEBHOOK_HOST` / `BLUEBUBBLES_WEBHOOK_PORT` / `BLUEBUBBLES_WEBHOOK_PATH`.
-
-### How the webhook is registered
-
-You do **not** need to create a webhook in the BlueBubbles UI. When the gateway connects, Hermes registers the webhook itself via the BlueBubbles REST API (`/api/v1/webhook`) for the `new-message` and `updated-message` events, and removes the registration again on clean shutdown.
-
-Two details worth knowing:
-
-- The registered URL carries the server password as a query parameter (`?password=…`) because the BlueBubbles webhook API does not support custom headers — this is how inbound events are authenticated.
-- The webhook listener binds to `127.0.0.1` by default. That is fine when Hermes and BlueBubbles run on the same machine; if they are on different machines, set `BLUEBUBBLES_WEBHOOK_HOST` to an address the Mac running BlueBubbles can reach.
-
-## Environment Variables
-
-| Variable | Required | Default | Description |
+| 变量 | 必填 | 默认值 | 说明 |
 |----------|----------|---------|-------------|
-| `BLUEBUBBLES_SERVER_URL` | Yes | — | BlueBubbles server URL |
-| `BLUEBUBBLES_PASSWORD` | Yes | — | Server password |
-| `BLUEBUBBLES_WEBHOOK_HOST` | No | `127.0.0.1` | Webhook listener bind address |
-| `BLUEBUBBLES_WEBHOOK_PORT` | No | `8645` | Webhook listener port |
-| `BLUEBUBBLES_WEBHOOK_PATH` | No | `/bluebubbles-webhook` | Webhook URL path |
-| `BLUEBUBBLES_HOME_CHANNEL` | No | — | Phone/email for cron delivery |
-| `BLUEBUBBLES_ALLOWED_USERS` | No | — | Comma-separated authorized users |
-| `BLUEBUBBLES_ALLOW_ALL_USERS` | No | `false` | Allow all users |
-| `BLUEBUBBLES_REQUIRE_MENTION` | No | `false` | Require a mention pattern before responding in group chats |
-| `BLUEBUBBLES_MENTION_PATTERNS` | No | Hermes wake words | JSON array, newline-separated, or comma-separated regex patterns for group mention matching |
+| `BLUEBUBBLES_SERVER_URL` | 是 | — | BlueBubbles 服务端 URL |
+| `BLUEBUBBLES_PASSWORD` | 是 | — | 服务端密码 |
+| `BLUEBUBBLES_WEBHOOK_HOST` | 否 | `127.0.0.1` | Webhook 监听器绑定地址 |
+| `BLUEBUBBLES_WEBHOOK_PORT` | 否 | `8645` | Webhook 监听器端口 |
+| `BLUEBUBBLES_WEBHOOK_PATH` | 否 | `/bluebubbles-webhook` | Webhook URL 路径 |
+| `BLUEBUBBLES_HOME_CHANNEL` | 否 | — | cron 投递使用的手机号/邮箱 |
+| `BLUEBUBBLES_ALLOWED_USERS` | 否 | — | 逗号分隔的授权用户列表 |
+| `BLUEBUBBLES_ALLOW_ALL_USERS` | 否 | `false` | 允许所有用户 |
 
-Auto-marking messages as read is controlled by the `send_read_receipts` key under `platforms.bluebubbles.extra` in `~/.hermes/config.yaml` (default: `true`). There is no corresponding environment variable.
+自动将消息标记为已读由 `~/.hermes/config.yaml` 中 `platforms.bluebubbles.extra` 下的 `send_read_receipts` 键控制（默认值：`true`）。该选项没有对应的环境变量。
 
-## Features
+## 功能特性
 
-### Text Messaging
-Send and receive iMessages. Markdown is automatically stripped for clean plain-text delivery.
+### 文字消息
+发送和接收 iMessage。Markdown 会自动去除，以确保纯文本的整洁呈现。
 
-### Rich Media
-- **Images:** Photos appear natively in the iMessage conversation
-- **Voice messages:** Audio files sent as iMessage voice messages
-- **Videos:** Video attachments
-- **Documents:** Files sent as iMessage attachments
+### 富媒体
+- **图片：** 照片在 iMessage 对话中原生显示
+- **语音消息：** 音频文件以 iMessage 语音消息形式发送
+- **视频：** 视频附件
+- **文档：** 文件以 iMessage 附件形式发送
 
-### Tapback Reactions
-Love, like, dislike, laugh, emphasize, and question reactions. Requires the BlueBubbles [Private API helper](https://docs.bluebubbles.app/helper-bundle/installation).
+### Tapback 反应
+支持喜爱、点赞、踩、大笑、强调和疑问等反应。需要 BlueBubbles [Private API helper](https://docs.bluebubbles.app/helper-bundle/installation)。
 
-### Typing Indicators
-Shows "typing..." in the iMessage conversation while the agent is processing. Requires Private API.
+### 正在输入指示器
+Agent 处理消息期间，iMessage 对话中会显示"正在输入……"。需要 Private API。
 
-### Read Receipts
-Automatically marks messages as read after processing. Requires Private API.
+### 已读回执
+处理消息后自动标记为已读。需要 Private API。
 
-### Chat Addressing
-You can address chats by email or phone number — Hermes resolves them to BlueBubbles chat GUIDs automatically. No need to use raw GUID format.
+### 聊天寻址
+你可以通过邮箱或手机号寻址聊天——Hermes 会自动将其解析为 BlueBubbles 聊天 GUID，无需使用原始 GUID 格式。
 
 ## Private API
 
-Some features require the BlueBubbles [Private API helper](https://docs.bluebubbles.app/helper-bundle/installation):
-- Tapback reactions
-- Typing indicators
-- Read receipts
-- Creating new chats by address
+部分功能需要 BlueBubbles [Private API helper](https://docs.bluebubbles.app/helper-bundle/installation)：
+- Tapback 反应
+- 正在输入指示器
+- 已读回执
+- 通过地址创建新聊天
 
-Without the Private API, basic text messaging and media still work.
+不使用 Private API 时，基本文字消息和媒体功能仍可正常使用。
 
-One caveat: "basic messaging works without Private API" assumes BlueBubbles can drive Messages.app in the foreground of a logged-in macOS user. If the Mac running BlueBubbles stays at the login screen or the server user is switched away from (Fast User Switching), AppleScript-based sending fails — see [BlueBubbles: multiple users on the same Mac](https://docs.bluebubbles.app/server/basic-guides/multiple-users-on-the-same-mac). In that setup the Private API is required for reliable sending, not just for the extras above.
-
-## Troubleshooting
+## 故障排查
 
 ### "Cannot reach server"
-- Verify the server URL is correct and the Mac is on
-- Check that BlueBubbles Server is running
-- Ensure network connectivity (firewall, port forwarding)
+- 确认服务端 URL 正确且 Mac 已开机
+- 检查 BlueBubbles Server 是否正在运行
+- 确保网络连通（防火墙、端口转发）
 
-### Messages not arriving
-- Check `hermes logs gateway` for webhook errors (or `hermes logs -f` to follow in real-time)
-- Hermes registers the webhook itself on connect — only inspect BlueBubbles Server → Settings → API → Webhooks if the log shows a registration failure
-- A webhook row in the BlueBubbles UI is not proof of delivery; the end-to-end proof is Hermes logging the message and replying
-- If Hermes and BlueBubbles run on different machines, the default webhook bind address `127.0.0.1` is unreachable from the Mac — set `BLUEBUBBLES_WEBHOOK_HOST` to a reachable address and restart the gateway
-
-### Setup succeeded, but the adapter never starts
-- `hermes gateway setup` saves credentials to `~/.hermes/.env`; it does not set `platforms.bluebubbles.enabled: true`
-- An explicit `enabled: false` in `~/.hermes/config.yaml` wins over credentials being present — check with `hermes config get platforms.bluebubbles.enabled`
-- This commonly bites after switching iMessage bridges: if you used another iMessage bridge and disabled BlueBubbles at the time, re-running setup will not re-enable it. Set `enabled: true` (and disable the bridge you no longer use — two iMessage bridges will double-handle messages)
-
-### Two BlueBubbles servers on one Mac (wrong Apple ID)
-- Hermes uses `BLUEBUBBLES_SERVER_URL` from `~/.hermes/.env`, not the Server URL shown in the BlueBubbles UI (which can be stale after a DHCP change)
-- Two macOS users on one Mac each run their own BlueBubbles server with its own API port and Apple ID — verify which one Hermes reaches: `curl "http://<server-url>/api/v1/server/info?password=<password>"` and compare the `computer_id`
-- For the multi-user setup itself, follow [BlueBubbles: multiple users on the same Mac](https://docs.bluebubbles.app/server/basic-guides/multiple-users-on-the-same-mac) — one port per user, and don't log out the user running the server
-
-### Duplicate replies
-- Known issue: session handling can split one correspondent into two sessions (raw-GUID form vs. phone/email form) — tracked in [#30708](https://github.com/NousResearch/hermes-agent/issues/30708) and [#34372](https://github.com/NousResearch/hermes-agent/issues/34372)
-- Not a documentation or configuration problem — follow those issues for fixes
-
-### "♻️ Recovered reply" repeats, or sends hang for minutes
-- If a `BLUEBUBBLES_HOME_CHANNEL` (or `platforms.bluebubbles.home_channel`) is configured, gateway restarts and platform reconnects notify the home channel and may re-deliver pending replies as "♻️ Recovered reply"
-- If sends on the BlueBubbles side silently fail — typically AppleScript errors like `Not authorized to send Apple events to Messages. (-1743)` with long timeouts on a background macOS user — the retries pile up and can crowd out webhook delivery
-- Leave the home channel empty until sending is proven reliable, and enable the Private API helper for background-user setups (see [Private API](#private-api))
+### 消息未送达
+- 检查 webhook 是否已在 BlueBubbles Server → Settings → API → Webhooks 中注册
+- 确认 webhook URL 可从 Mac 访问
+- 查看 `hermes logs gateway` 中的 webhook 错误（或使用 `hermes logs -f` 实时跟踪）
 
 ### "Private API helper not connected"
-- Install the Private API helper: [docs.bluebubbles.app](https://docs.bluebubbles.app/helper-bundle/installation)
-- Basic messaging works without it — only reactions, typing, and read receipts require it
+- 安装 Private API helper：[docs.bluebubbles.app](https://docs.bluebubbles.app/helper-bundle/installation)
+- 不安装也可使用基本消息功能——仅反应、正在输入和已读回执需要它
