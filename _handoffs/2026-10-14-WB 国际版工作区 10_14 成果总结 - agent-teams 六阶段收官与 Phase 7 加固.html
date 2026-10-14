@@ -1,0 +1,403 @@
+---
+layout: none
+title: WB 国际版工作区 10/14 成果总结 - agent-teams 六阶段收官与 Phase 7 加固
+date: 2026-10-14 23:30:00 +0800
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WB 国际版工作区 10/14 成果总结 - agent-teams 六阶段收官与 Phase 7 加固</title>
+<style>
+.wbvd, .article-content .wbvd {
+  --bg: #f7f8fa; --card: #ffffff; --ink: #1f2933; --sub: #6b7785;
+  --line: #e3e6ea; --blue: #2563eb; --green: #059669;
+  --orange: #d97706; --red: #dc2626; --soft: #eff4ff;
+  background: #f7f8fa !important; color: #1f2933 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 14px; line-height: 1.7; padding: 24px; border-radius: 12px;
+  box-sizing: border-box;
+}
+.wbvd *, .article-content .wbvd * { box-sizing: border-box; color: #1f2933 !important; }
+
+/* header */
+.wbvd .hd, .article-content .wbvd .hd { margin-bottom: 22px; }
+.wbvd .hd h1, .article-content .wbvd .hd h1 {
+  font-size: 22px; margin: 0 0 8px; line-height: 1.4; font-weight: 700; color: #111827 !important;
+}
+.wbvd .hd p, .article-content .wbvd .hd p { margin: 0; color: #6b7785 !important; font-size: 13px; }
+.wbvd .badges, .article-content .wbvd .badges { margin-top: 10px; }
+.wbvd .bg, .article-content .wbvd .bg {
+  display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 12px;
+  margin-right: 6px; background: #eff4ff !important; color: #2563eb !important;
+  border: 1px solid #c7dbff !important;
+}
+.wbvd .bg.g, .article-content .wbvd .bg.g { background: #ecfdf5 !important; color: #059669 !important; border-color: #a7f3d0 !important; }
+
+/* kpi */
+.wbvd .kpis, .article-content .wbvd .kpis {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 20px;
+}
+.wbvd .kpi, .article-content .wbvd .kpi {
+  background: #ffffff !important; border: 1px solid #e3e6ea !important; border-radius: 10px;
+  padding: 12px 14px; text-align: center;
+}
+.wbvd .kpi b, .article-content .wbvd .kpi b {
+  display: block; font-size: 20px; color: #2563eb !important; line-height: 1.3; font-weight: 700;
+}
+.wbvd .kpi span, .article-content .wbvd .kpi span { font-size: 12px; color: #6b7785 !important; }
+
+/* toolbar */
+.wbvd .bar, .article-content .wbvd .bar {
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 16px;
+}
+.wbvd .bar input, .article-content .wbvd .bar input {
+  flex: 1 1 180px; min-width: 160px; padding: 7px 11px; border: 1px solid #d5d9df !important;
+  border-radius: 8px; background: #ffffff !important; color: #1f2933 !important; font-size: 13px;
+  font-family: inherit;
+}
+.wbvd .tab, .article-content .wbvd .tab {
+  padding: 6px 13px; border: 1px solid #d5d9df !important; border-radius: 8px; cursor: pointer;
+  background: #ffffff !important; color: #4b5563 !important; font-size: 13px; font-family: inherit;
+}
+.wbvd .tab.on, .article-content .wbvd .tab.on {
+  background: #2563eb !important; color: #ffffff !important; border-color: #2563eb !important;
+}
+.wbvd .cnt, .article-content .wbvd .cnt { font-size: 12px; color: #6b7785 !important; }
+
+/* sections */
+.wbvd h2, .article-content .wbvd h2 {
+  font-size: 16px; margin: 26px 0 12px; padding-left: 10px; font-weight: 700; color: #111827 !important;
+  border-left: 4px solid #2563eb !important;
+}
+.wbvd h3, .article-content .wbvd h3 { font-size: 14px; margin: 18px 0 8px; font-weight: 700; color: #111827 !important; }
+.wbvd p, .article-content .wbvd p { margin: 0 0 10px; color: #374151 !important; }
+
+/* event cards */
+.wbvd .ev, .article-content .wbvd .ev {
+  background: #ffffff !important; border: 1px solid #e3e6ea !important; border-left: 3px solid #2563eb !important;
+  border-radius: 8px; padding: 12px 14px; margin-bottom: 10px;
+}
+.wbvd .ev.ok, .article-content .wbvd .ev.ok { border-left-color: #059669 !important; }
+.wbvd .ev.warn, .article-content .wbvd .ev.warn { border-left-color: #d97706 !important; }
+.wbvd .ev.bad, .article-content .wbvd .ev.bad { border-left-color: #dc2626 !important; }
+.wbvd .ev .t, .article-content .wbvd .ev .t { font-weight: 700; font-size: 14px; margin-bottom: 4px; color: #111827 !important; }
+.wbvd .ev .m, .article-content .wbvd .ev .m { font-size: 12px; color: #6b7785 !important; margin-bottom: 6px; }
+.wbvd .ev .d, .article-content .wbvd .ev .d { font-size: 13px; color: #374151 !important; }
+.wbvd .ev code, .article-content .wbvd .ev code {
+  background: #f1f3f5 !important; color: #b91c1c !important; padding: 1px 5px; border-radius: 4px;
+  font-size: 12px; font-family: Consolas, Monaco, monospace;
+}
+
+/* tables */
+.wbvd table, .article-content .wbvd table {
+  width: 100%; border-collapse: collapse; background: #ffffff !important;
+  font-size: 13px; margin-bottom: 12px;
+}
+.wbvd thead th, .article-content .wbvd thead th {
+  background: #eff4ff !important; color: #1e40af !important; text-align: left;
+  padding: 9px 11px; font-weight: 700; border-bottom: 2px solid #c7dbff !important;
+}
+.wbvd tbody td, .article-content .wbvd tbody td {
+  padding: 9px 11px; background: #ffffff !important; color: #374151 !important;
+  border-bottom: 1px solid #edf0f3 !important; vertical-align: top;
+}
+.wbvd tbody tr:nth-child(even) td, .article-content .wbvd tbody tr:nth-child(even) td {
+  background: #fafbfc !important;
+}
+.wbvd td code, .article-content .wbvd td code {
+  background: #f1f3f5 !important; color: #b91c1c !important; padding: 1px 5px; border-radius: 4px;
+  font-size: 12px; font-family: Consolas, Monaco, monospace;
+}
+
+/* tags */
+.wbvd .st, .article-content .wbvd .st {
+  display: inline-block; padding: 1px 8px; border-radius: 5px; font-size: 11px; font-weight: 700;
+}
+.wbvd .st.done, .article-content .wbvd .st.done { background: #ecfdf5 !important; color: #059669 !important; }
+.wbvd .st.doing, .article-content .wbvd .st.doing { background: #fffbeb !important; color: #d97706 !important; }
+.wbvd .st.todo, .article-content .wbvd .st.todo { background: #f1f3f5 !important; color: #6b7785 !important; }
+.wbvd .st.red, .article-content .wbvd .st.red { background: #fef2f2 !important; color: #dc2626 !important; }
+
+/* chain */
+.wbvd .chain, .article-content .wbvd .chain {
+  background: #ffffff !important; border: 1px solid #e3e6ea !important; border-radius: 8px; padding: 14px;
+}
+.wbvd .step, .article-content .wbvd .step {
+  display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px dashed #edf0f3 !important;
+}
+.wbvd .step:last-child, .article-content .wbvd .step:last-child { border-bottom: none !important; }
+.wbvd .step i, .article-content .wbvd .step i {
+  flex: 0 0 22px; height: 22px; border-radius: 50%; background: #2563eb !important; color: #fff !important;
+  font-style: normal; font-size: 12px; display: flex; align-items: center; justify-content: center; font-weight: 700;
+}
+.wbvd .step i.fix, .article-content .wbvd .step i.fix { background: #059669 !important; }
+.wbvd .step div, .article-content .wbvd .step div { flex: 1; font-size: 13px; color: #374151 !important; }
+
+.wbvd .none, .article-content .wbvd .none {
+  padding: 18px; text-align: center; color: #6b7785 !important; background: #fafbfc !important;
+  border: 1px dashed #d5d9df !important; border-radius: 8px;
+}
+.wbvd .ft, .article-content .wbvd .ft {
+  margin-top: 22px; padding-top: 12px; border-top: 1px solid #e3e6ea !important;
+  font-size: 12px; color: #6b7785 !important;
+}
+@media (max-width: 640px) {
+  .wbvd, .article-content .wbvd { padding: 14px; }
+}
+</style>
+</head>
+<body>
+<div class="wbvd" style="background-color:#f7f8fa!important;color:#1f2933!important">
+
+<div class="hd">
+  <h1>WB 国际版工作区 · 10/14 成果总结</h1>
+  <p>agent-teams 六阶段移植收官 → Phase 7 加固 → 两轮外部审计逐条取证，全量测试 159 → 228</p>
+  <div class="badges">
+    <span class="bg g">Phase 0–6 全部完成</span>
+    <span class="bg">Phase 7 加固</span>
+    <span class="bg">228/228 测试通过</span>
+    <span class="bg">15 个 captain 工具</span>
+  </div>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><b>228</b><span>测试通过</span></div>
+  <div class="kpi"><b>+69</b><span>今日新增测试</span></div>
+  <div class="kpi"><b>7</b><span>完成阶段(0-6)</span></div>
+  <div class="kpi"><b>15</b><span>captain 工具</span></div>
+  <div class="kpi"><b>119</b><span>CLI 模型目录</span></div>
+  <div class="kpi"><b>2</b><span>轮外部审计</span></div>
+  <div class="kpi"><b>~20s</b><span>全量回归耗时</span></div>
+  <div class="kpi"><b>5</b><span>抓出真 bug</span></div>
+</div>
+
+<div class="bar">
+  <input id="wq" type="text" placeholder="搜索关键词：审计 / peer / 面板 / taskkill / 模型 …">
+  <button class="tab on" data-f="all">全部</button>
+  <button class="tab" data-f="phase">阶段交付</button>
+  <button class="tab" data-f="audit">审计取证</button>
+  <button class="tab" data-f="bug">真 bug</button>
+  <button class="tab" data-f="pit">踩坑</button>
+  <span class="cnt" id="wc"></span>
+</div>
+
+<h2>一、今日主线</h2>
+<p>昨天（10/13）结束时 agent-teams 停在 <b>Phase 4（145/145）</b>。今天一口气推进到 <b>Phase 6 收官</b>，又在两轮外部审计的刺激下做了 <b>Phase 7 加固</b>，测试数从 159 涨到 <b>228</b>。</p>
+<p>今天的真正主线不是"写了多少功能"，而是<b>方法论</b>：两份外部审计报告共 18 条指控，逐条实测取证后，<b>第一轮 8 条里 4 条不成立或表述错误，第二轮 10 条里 2 条不改</b>。直接照做会白改，甚至会删掉正常功能。</p>
+
+<div class="chain">
+  <div class="step"><i>1</i><div><b>MCP 注册 + skill 固化</b> —— Phase 4 成果双通道保住：MCP（运行时）+ skill（触发与知识层）</div></div>
+  <div class="step"><i>2</i><div><b>Phase 5</b> —— 交付审计 / 活动面板 / i18n，159/159</div></div>
+  <div class="step"><i>3</i><div><b>per-member 模型 upsert</b> —— 随时人工改成员模型，163/163</div></div>
+  <div class="step"><i>4</i><div><b>Phase 6</b> —— 孤儿回收验收 / PreToolUse 兜底 / 定时 tick，168/168，六阶段收官</div></div>
+  <div class="step"><i>5</i><div><b>peer 惰性自动拉起</b> —— ensurePeer + 预热 + 门禁接线，172/172</div></div>
+  <div class="step"><i>6</i><div><b>面板模型下拉三连修</b> —— datalist 陷阱 → 自绘下拉 → 接 CLI 全量 119 目录，176/176</div></div>
+  <div class="step"><i>7</i><div><b>工作区动态解析</b> —— 不再把 state dir 钉死在环境变量上，182/182</div></div>
+  <div class="step"><i>8</i><div><b>第一轮审计 + Phase 7 加固</b> —— env 校验 / peer 来源识别 / 计费护栏，205/205</div></div>
+  <div class="step"><i class="fix">9</i><div><b>烟测 19 项 + 护栏专项</b> —— 抓出信用表第三段泄漏，216/216</div></div>
+  <div class="step"><i class="fix">10</i><div><b>第二轮审计逐条取证</b> —— 只做真需要的 6 项，228/228</div></div>
+</div>
+
+<h2>二、今日时间线（可筛选）</h2>
+<div id="tl">
+
+<div class="ev" data-g="phase infra" data-k="MCP 注册 skill 固化 14工具">
+  <div class="t">00:10 · MCP 注册 + Skill 固化 —— Phase 4 成果双通道保住</div>
+  <div class="m">用户指令：「该注册就注册，该做成 skill 就做」</div>
+  <div class="d">MCP：<code>~/.workbuddy-ai/mcp.json</code> 新增 <code>agent-teams</code> 条目（node 22.22.2-6 → <code>agent-teams/mcp-server.mjs</code>）。stdio 握手 <code>initialize → tools/list</code> 返回 <b>14 个 captain 工具</b>。Skill：<code>~/.workbuddy-ai/skills/agent-teams/SKILL.md</code>（用户级，quick_validate 通过）。<span class="st doing">注意</span> 新 server 不会自动生效，需在连接器管理页点「信任/启用」。</div>
+</div>
+
+<div class="ev ok" data-g="phase" data-k="Phase5 交付审计 活动面板 i18n 159">
+  <div class="t">00:15–00:45 · Phase 5 全部完成（159/159）</div>
+  <div class="m">三项交付：5.1 交付审计 · 5.2 活动面板 · 5.3 i18n</div>
+  <div class="d"><b>5.1 交付审计</b>：<code>quality.mjs</code> 新增 <code>gitStatus</code>（异步 <code>git status --porcelain=v1</code>，非仓库优雅降级）、<code>auditFromStatusText</code>、<code>runDeliveryAudit</code>（每轮落 <code>review/&lt;task&gt;/r&lt;n&gt;/audit.json</code>）。judge 与 pipeline 两条评审路都<b>先审计后评审</b>。<br><b>5.2 活动面板</b>：<code>activity.mjs</code> —— 静态单文件 HTML、服务端渲染、HTML 转义、prefers-color-scheme。队长每次 <code>agent_teams_status</code> 重新生成 <code>activity.html</code> 并回 <code>activityPath</code>；<b>成员调用不写盘</b>。<br><b>5.3 i18n</b>：zh-CN / en-US 双 locale，<code>AGENT_TEAMS_LOCALE</code> 切换；服务端协议字符串/事件名/状态名<b>保持英文键</b>（面向程序，不翻译）。<br>回归 159/159（148 原有 + 6 审计 + 5 面板/i18n）。</div>
+</div>
+
+<div class="ev ok" data-g="phase" data-k="per-member 模型 upsert 163 deepseek hy3">
+  <div class="t">01:00–01:10 · per-member 模型 + 随时人工改（163/163）</div>
+  <div class="m">用户需求：成员能各自指定模型，且随时可改</div>
+  <div class="d"><code>agent_teams_add_member</code> 升级为 <b>upsert</b>：对已有成员传 model/provider 即重排路由（优先级 request &gt; team config &gt; captain），下次 spawn 生效；只传 persona 不动模型；provider 无 model 拒绝且保留旧路由。免费三模型：<code>deepseek-v4.1-flash</code>（默认/队长）/ <code>step-5-preview</code> / <code>hy3</code>。<span class="st todo">坑</span> <code>st.members</code> 里队长本身占一行 <code>role='captain'</code>，计数要过滤。</div>
+</div>
+
+<div class="ev ok" data-g="phase" data-k="Phase6 孤儿回收 PreToolUse tick 168 收官">
+  <div class="t">01:07–01:15 · Phase 6 全部完成（168/168）—— 六阶段移植收官</div>
+  <div class="m">6.1 孤儿回收验收 · 6.2 PreToolUse 兜底 · 6.3 定时 tick · 6.4 全量回归</div>
+  <div class="d"><b>6.1</b>：机制 Phase 3 已有，本阶段补齐验收测试 <code>recovery.test.mjs</code> 2/2 —— 强杀队长（claim marker 换死 pid）→ 重入冷恢复 → 旧 attempt 报 done 被 <code>E_STALE_ATTEMPT</code> 拒绝 → 新 claim 拿新 attempt。<br><b>6.2</b>：<code>hooks/pre-tool-use.mjs</code> 拦截成员对 captain-only <code>agent_teams_*</code> 的调用（exit 2 + stderr + 追加 <code>hook-blocks.log</code>）；成员 4 工具与非 agent-teams 工具放行；<b>stdin 不可解析 fail-open（绝不卡死会话）</b>。<br><b>6.3</b>：<code>automations/agent-teams-tick.json</code>，环境注册表已创建同名自动化（每小时，ACTIVE）。用途：队长空闲时兜底 tick（依赖晋升、孤儿回收、面板刷新），<b>绝不创建/改动团队状态</b>。<br>移植状态：Phase 0–6 ✅；judge 模式真实验证 LIVE；pipeline 模式遗留（produce &gt; 600s，另案）。</div>
+</div>
+
+<div class="ev warn" data-g="phase pit" data-k="ensurePeer 惰性拉起 peer 并发竞态 172 卡死">
+  <div class="t">10:00–10:30 · 评审 peer 惰性自动拉起 ensurePeer（172/172）</div>
+  <div class="m">用户拍板选 A：skill/MCP 触发时自动拉起 judge peer，不进自启动菜单</div>
+  <div class="d"><code>peer.mjs</code> 的 <code>ensurePeer()</code> 复用已验证引导路径（peers.json 驱动：clearEnvPrefixes + setEnv + 网关密码 + 账号 token）。单例 inflight <b>同步赋值</b>（修复并发窗口双 spawn 竞态，测试抓到）；windowsHide + detached:false。门禁接线：<code>checkReviewBackend</code> 发现 peer 挂 → ensurePeer 一次 → 重检，仍挂才 fail-closed；<code>AGENT_TEAMS_PEER_AUTOSTART=0</code> 可关。预热：建队/建任务时 fire-and-forget <code>prewarmPeer()</code>。实机验证：桌面宿主 peer 在跑 → <b>66ms 采纳 <code>started:false</code></b>。<br><span class="st red">事故</span> 首轮全量回归<b>卡死 14 分钟</b> —— <code>tools.test.mjs</code> 的 <code>loadConfig</code> 解析出<b>真实</b> orchestratorPath → prewarmPeer 在单测里拉起了真 CLI（每次建队重试 240s）。双重保险修复：① 7 个测试文件 tmpCfg 一律 <code>peerAutoStart:false</code>；② <code>prewarmPeer</code> 加 <code>fs.existsSync(cfg.peersFile)</code> 守卫。修后 22/22 仅 6s，全量 172/172 / 16 秒。</div>
+</div>
+
+<div class="ev" data-g="infra" data-k="README 文档 peer 生命周期">
+  <div class="t">10:30 · 文档落地：新建 agent-teams/README.md</div>
+  <div class="d">六阶段状态表、目录结构、评审后端（judge/pipeline、退出码契约）、<b>评审 peer 生命周期（惰性自动拉起 5 条机制）</b>、审计/面板、per-member 模型 upsert、注册激活、测试守卫（no-window + peerAutoStart 密封）。SKILL.md 补 <code>AGENT_TEAMS_PEER_AUTOSTART</code> / <code>AGENT_TEAMS_PEER_READY_TIMEOUT_MS</code>。</div>
+</div>
+
+<div class="ev" data-g="feat" data-k="成员上限 8 custom-local 面板下拉 模型">
+  <div class="t">11:00–11:25 · 成员扩容 / 自定义模型 + 面板模型下拉</div>
+  <div class="m">用户两问：① 成员上限多少、能用自定义模型吗 ② 面板能直接选模型吗</div>
+  <div class="d"><b>Q1 实测结论</b>（跑 CLI <code>--help</code>）：成员上限<b>默认 8</b>（<code>AGENT_TEAMS_MAX_MEMBERS</code> / create 传 maxMembers），无「默认 3 人」限制。CLI <code>--model</code> 除内置 0 积分三模型外，还内置 <b>~100 个 <code>custom-local:*</code></b>（wb-model-bridge 聚合）与账号计费模型（gpt-6 / glm-5.3 / kimi-k3…）—— <code>add_member({model:'custom-local:xxx'})</code> 零配置即用；<b>0 积分保证仅内置三模型</b>。<br><b>Q2 实现</b>：面板成员表模型格升级为 input+datalist，选中即时生成可复制的 <code>agent_teams_add_member</code> 命令。目录来源零子进程：缓存后端预检 0 积分表 + env + 内置三模型。</div>
+</div>
+
+<div class="ev bad" data-g="bug" data-k="datalist 前缀过滤 自绘下拉 173">
+  <div class="t">12:15 · 真 bug：面板下拉「只有一个模型」—— datalist 过滤陷阱</div>
+  <div class="m">用户报告：下拉框出现但里面只有原来的一个模型</div>
+  <div class="d"><b>根因</b>：原生 <code>&lt;input list&gt;</code> 的浏览器行为 —— 输入框<b>预填了当前模型值</b>时，选项列表按输入文本<b>前缀过滤</b>，目录里其余条目全被隐藏。<br><b>修复</b>：弃用 datalist，改自绘下拉（<code>.mwrap/.mbtn/.mlist</code>）—— 点击展开<b>全量</b>目录（当前项打 ✓）；顶部「输入自定义模型 ID…」自由输入行，输入即过滤高亮、Enter 提交、Esc 关闭；点击面板其他处收起；点击命令框全选+写剪贴板；暗色适配；无目录时无样式无 JS。测试 6/6，全量 <b>173/173</b>。<br><span class="st doing">提醒</span> 真实 <code>activity.html</code> 由<b>运行中的</b> MCP server 进程生成 —— 旧进程跑的是旧代码，需重启连接器/新会话后才出下拉。</div>
+</div>
+
+<div class="ev ok" data-g="feat" data-k="模型目录 119 member-models 缓存 176">
+  <div class="t">12:50 · 接 CLI 全量模型目录（119 个）—— 解决「下拉只有几个模型」</div>
+  <div class="m">根因：目录来源只有内置三模型 + 后端预检缓存（当时 peer 认证挂掉返回空）+ env</div>
+  <div class="d"><code>member-models.mjs</code> 从 <code>codebuddy --help</code> 的「--model … Currently supported: (…)」解析 CLI 真实接受的全部 ID（实测 <b>119</b>：内置/账号模型 + 99 个 <code>custom-local:*</code>），写 <code>&lt;stateDir&gt;/model-catalog.json</code> 磁盘缓存（TTL 7 天）。合并优先级：内置免费 &lt; CLI 缓存 &lt; 后端 0 积分表 &lt; env。server 启动时 fire-and-forget 预热（冷探 10–20s，之后 status 0 开销）。<span class="st todo">坑</span> probe 用 <code>spawn(node,[cliPath,'--help'])</code> —— <code>bin/codebuddy</code> 是 shebang 无扩展名脚本，Windows 直 exec ENOENT；空输出偶发时一次 retry 兜底。测试 3/3，全量 <b>176/176</b>。</div>
+</div>
+
+<div class="ev ok" data-g="feat" data-k="工作区动态解析 resolveWorkspace cwd 182">
+  <div class="t">13:58 · 工作区动态解析 —— 不再把 state dir 钉死在环境变量上</div>
+  <div class="m">问题：mcp.json 用 env 把 AGENT_TEAMS_WORKSPACE 全局钉死 → 任何会话都操作同一个 state dir</div>
+  <div class="d"><code>resolveWorkspace()</code> 解析链：<code>--workspace</code> 参数 &gt; <code>AGENT_TEAMS_WORKSPACE</code> &gt; <b>安全的 cwd</b> &gt; 安装目录。原理：host 每会话起独立 server 进程，各带自己的 cwd → 不钉环境变量即动态。<b>安全过滤</b>：cwd 命中系统/应用目录（Program Files、AppData、System32、node_modules、.codebuddy、.hermes、.workbuddy…）时回落，绝不把团队状态写进系统目录。<code>mcp.json</code> 的 agent-teams 条目<b>删除 env 块</b>。测试 6/6，全量 <b>182/182</b>。</div>
+</div>
+
+<div class="ev warn" data-g="audit" data-k="第一轮审计 Phase7 env校验 peer来源 计费护栏 205">
+  <div class="t">17:30 · 第一轮外部审计核实 + Phase 7 加固（205/205）</div>
+  <div class="m">用户贴来审计报告（4 项 P0 + 若干 P1/P2），要求「分析下，确有必要就改进」</div>
+  <div class="d"><b>逐条实测核实后只做真问题</b>，并在报告里指出不成立的几条。<br><b>P0.1 部分成立</b>：<code>POST /api/v1/acp/connect</code> 在不带 token / 带错 token 时都返回 200（只校验 <code>x-codebuddy-request:1</code>）→ <code>isPeerReady()</code> 只能证明「端口活着」，不能证明「这个 peer 能用」。准确表述是「探针不具备区分能力」，不是「未校验密码」。<br><b>P0.2 部分成立</b>：信用表守卫已有，缺的是「评审实际用的模型是不是免费」。<br><b>P0.3 成立且严重</b>：<code>Number(env.X ?? def)</code> 对 <code>'abc'</code> 得 NaN → <code>deadline=NaN</code> → <code>Date.now()&gt;NaN</code> <b>恒 false</b> → 就绪循环永不退出（挂死）。<br><b>P0.4 不成立</b>：pipeline 已实现且有独立超时 → 改启动 WARN + 文档说明，而非删功能。<b>P1.3 / P1.7 不成立</b>。<br><b>意外发现的真 bug（审计没提，最值钱）</b>：<code>writeActivityReport()</code> 的解构漏了 <code>availableModels</code> → <code>hasCatalog=false</code> → <b>队长看到的真实面板根本没有模型下拉</b>，而手工 demo 却有。这正是「面板看起来是坏的、demo 却是好的」的根因。另外 <code>tests/audit.test.mjs:189</code> 本身是坏的（读从未设置的 env → <code>readFileSync(undefined)</code>），基线 181/182 就是它。<br>Phase 7 落地 9 项改动，全量 <b>205/205</b>（约 20s）。</div>
+</div>
+
+<div class="ev bad" data-g="bug audit" data-k="信用表 第三段 billed 123 custom-local fixture 216">
+  <div class="t">烟测阶段 · 第二个真 bug：信用表有「第三段」—— 真实 fixture 当场暴露</div>
+  <div class="m">把真实 <code>orchestrator models</code> 输出落盘成 fixture 后立刻发现：真实表是三段，不是两段</div>
+  <div class="d">真实结构：<code>--- credits = x0.00 ---</code>（free，3 个）/ <code>--- billed models (x&gt;0) ---</code>（20 个）/ <code>--- unlabeled credits=null (100, bridge custom providers) ---</code>（<b>第三段，100 个</b>）。<code>parseCreditTable</code> 只认前两个 banner → 第三段开始时 <code>section</code> 仍是 <code>'billed'</code> → 100 个 <code>custom-local:*</code> <b>全部漏进 billedModels</b>：计数 20 → <b>123</b>（面板虚高），且<b>计费护栏会误拒</b>钉在「积分未知」自定义模型上的 judge peer（fail-closed 打错方向）。<br><b>修法</b>：任何未被识别的 <code>--- … ---</code> banner 关闭当前区块（未来 CLI 加段也不会泄漏）。回归断言：<code>custom-local:*</code> 不得出现在 billed、billed &lt; 60。烟测 20/20，全量 <b>216/216</b>。<br><span class="st red">教训</span> <b>解析外部 CLI 输出，必须用真实抓取做 fixture，不能只靠自造的假样本。</b></div>
+</div>
+
+<div class="ev bad" data-g="bug pit" data-k="taskkill execFileSync 阻塞 事件循环 216">
+  <div class="t">第三个真 bug：偶发用例真根因 = taskkill 同步且慢</div>
+  <div class="m">偶发 <code>not ok 167</code> 等待 26.8s，断言 &lt; 25s 失败</div>
+  <div class="d"><b>根因不是测试写错，是产品代码</b>：<code>killTree()</code> 用 <code>execFileSync('taskkill',['/PID',pid,'/T','/F'])</code>，而 <code>execFileSync</code> <b>阻塞事件循环</b>。实测本机：空闲 <b>3251 ms</b>，全量并行负载 <b>~25 s</b> → 生产后果：成员超时 / reapAll 时 <b>MCP server 事件循环被卡住</b>（HTTP、scheduler tick 全停）。<br><b>修法</b>：<code>execFileSync</code> 加 <code>timeout:8000</code> 硬上限（超时回退 <code>process.kill(SIGKILL)</code>）。测试判据改为「子进程睡 60s、上界 30s」。单跑该用例 6.8s（1.2s 定时器 + 3.2s taskkill）。</div>
+</div>
+
+<div class="ev ok" data-g="audit" data-k="第二轮审计 killHint 降级可见 228">
+  <div class="t">21:15 · 第二轮审计（README+代码整体复盘）逐条取证 → 只做真需要的（228/228）</div>
+  <div class="m">第二份审计 P1×6 / P2×4 / 文档 3 处，指令「看下这次审计是否有改进必要」</div>
+  <div class="d"><b>结论：1 条前提不成立、1 条已实现、4 条确有必要（+ 文档 3 处）。</b><br><b>不改</b>：P1.2「坏 config 会让 MCP server 崩溃」<b>前提不成立</b>（实测全链路无一处 THREW，server 正常启动并干净关闭）；P1.4「git stderr 被丢弃」<b>已实现</b>（已写进 <code>reason</code> 并落 audit.json）；P1.2 的「拒绝启动」部分<b>主动不做</b> —— 评审是 best-effort，为评审侧配置错误把整个连接器弄挂是更糟的失败模式。<br><b>已落地 6 项</b>：① <code>tail()</code> 只取 stderr 最后 4 行 → 有用信息被 ESM 堆栈顶掉，改为优先保留首部非堆栈行；② 探针重试日志（原来静默重试，「抖动后恢复」与「一次成功」结果一样，现在每次失败记 <code>[peer-probe] WARN</code>）；③ <code>validateOrchestratorConfig()</code> 启动校验三种坏法 → <code>[config] ERROR &lt;完整路径&gt;</code>，<b>不拒绝启动</b>；④ foreign 拒绝给可复制命令 <code>killHint(pid)</code>；⑤ 模型目录降级可见（区分「没有缓存」与「缓存过期」，过期缓存不再当当前列表用）；⑥ 文档 3 处修正。<br><b>P2 全部延后</b>（配额监控 / 面板导出归档 / 状态持久化 / 一键 kill）。<br>测试 <b>228/228</b>（+12）。</div>
+</div>
+
+</div>
+
+<h2>三、今日时间线全表</h2>
+<table>
+<thead><tr><th>时间</th><th>事项</th><th>测试数</th><th>关键要点</th></tr></thead>
+<tbody>
+<tr><td>00:10</td><td>MCP 注册 + Skill 固化</td><td>—</td><td>14 个 captain 工具；skill quick_validate 通过</td></tr>
+<tr><td>00:15–00:45</td><td>Phase 5：交付审计 / 活动面板 / i18n</td><td>159</td><td>先审计后评审；面板服务端渲染；协议字符串不翻译</td></tr>
+<tr><td>01:00–01:10</td><td>per-member 模型 upsert</td><td>163</td><td>add_member 升级 upsert；免费三模型</td></tr>
+<tr><td>01:07–01:15</td><td>Phase 6：孤儿回收 / PreToolUse / tick</td><td>168</td><td><span class="st done">六阶段收官</span>；hook fail-open 不卡死</td></tr>
+<tr><td>10:00–10:30</td><td>ensurePeer 惰性自动拉起</td><td>172</td><td>修并发双 spawn 竞态；修测试卡死 14 分钟</td></tr>
+<tr><td>10:30</td><td>README.md 落地</td><td>—</td><td>peer 生命周期 5 条机制；测试守卫说明</td></tr>
+<tr><td>11:00–11:25</td><td>成员上限 8 + custom-local + 面板下拉</td><td>—</td><td>无「默认 3 人」限制；0 积分保证仅内置三模型</td></tr>
+<tr><td>12:15</td><td>修 datalist 前缀过滤陷阱 → 自绘下拉</td><td>173</td><td>全量目录 + 自定义输入行 + 剪贴板</td></tr>
+<tr><td>12:50</td><td>接 CLI 全量模型目录（119）</td><td>176</td><td>TTL 7 天磁盘缓存；四级合并优先级</td></tr>
+<tr><td>13:58</td><td>工作区动态解析</td><td>182</td><td>删 mcp.json env 块；系统目录回落保护</td></tr>
+<tr><td>17:30</td><td>第一轮审计核实 + Phase 7 加固</td><td>205</td><td>env 校验 / peer 来源 / 计费护栏 / 15 工具</td></tr>
+<tr><td>18:xx</td><td>烟测 19 项 + 护栏专项 + 回归</td><td>216</td><td>抓出信用表第三段泄漏、taskkill 阻塞</td></tr>
+<tr><td>21:15</td><td>第二轮审计逐条取证</td><td>228</td><td>只做 6 项真需要；P2 全延后</td></tr>
+</tbody>
+</table>
+
+<h2>四、两轮审计取证对照（今天最有价值的方法论）</h2>
+<table>
+<thead><tr><th>轮次</th><th>条目</th><th>审计指控</th><th>实测取证结论</th><th>处置</th></tr></thead>
+<tbody>
+<tr><td rowspan="4">第一轮</td><td>P0.1</td><td>acp/connect 未校验密码</td><td>探针不具备区分能力（不带 token 也 200），非「未校验密码」</td><td><span class="st doing">部分成立</span> 表述修正</td></tr>
+<tr><td>P0.2</td><td>缺免费模型守卫</td><td>信用表守卫已有，缺「评审实际用的模型是否免费」</td><td><span class="st doing">部分成立</span> 加计费护栏</td></tr>
+<tr><td>P0.3</td><td>env 未校验</td><td><code>Number('abc')=NaN</code> → deadline 恒 false 挂死</td><td><span class="st red">成立</span> 加 envNumber/envBool/envChoice</td></tr>
+<tr><td>P0.4</td><td>pipeline 会卡死</td><td>已实现且 runAsync 有独立超时</td><td><span class="st done">不成立</span> 改 WARN</td></tr>
+<tr><td rowspan="3">第二轮</td><td>P1.2</td><td>坏 config 让 server 崩溃</td><td>实测全链路无 THREW，正常启动并干净关闭</td><td><span class="st done">前提不成立</span> 不改</td></tr>
+<tr><td>P1.4</td><td>git stderr 被丢弃</td><td>已写进 <code>reason</code> 并落 audit.json</td><td><span class="st done">已实现</span> 不改</td></tr>
+<tr><td>P1.1/1.3/1.5/1.6</td><td>日志静默 / 路径校验 / kill 提示 / 降级不可见</td><td>逐条确认确有缺陷</td><td><span class="st red">已落地</span> 6 项修复</td></tr>
+</tbody>
+</table>
+<p style="font-size:13px;color:#6b7785!important">核心教训：<b>审计报告要逐条取证</b> —— 第一轮 8 条里 4 条不成立或表述错误，第二轮 10 条里 2 条不改。直接照做会白改，甚至删掉正常功能（如 pipeline 模式）。</p>
+
+<h2>五、今日抓出的 5 个真 bug</h2>
+<table>
+<thead><tr><th>#</th><th>bug</th><th>症状</th><th>根因</th><th>修法</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>面板没有模型下拉</td><td>真实面板坏、手工 demo 却好</td><td><code>writeActivityReport()</code> 解构漏了 <code>availableModels</code> → <code>hasCatalog=false</code></td><td>修函数签名</td></tr>
+<tr><td>2</td><td>计费护栏误拒</td><td>billed 计数 20 → 123</td><td>信用表有<b>第三段</b>，<code>parseCreditTable</code> 只认两个 banner</td><td>未知 banner 一律关闭当前区块</td></tr>
+<tr><td>3</td><td>MCP server 事件循环卡住</td><td>偶发超时，负载下 ~25s</td><td><code>execFileSync('taskkill')</code> 阻塞事件循环</td><td>加 <code>timeout:8000</code> + SIGKILL 回退</td></tr>
+<tr><td>4</td><td>就绪循环永不退出</td><td>非法 env 值直接挂死</td><td><code>Number('abc')=NaN</code> → <code>Date.now()&gt;NaN</code> 恒 false</td><td>envNumber 校验 + Number.isFinite 兜底</td></tr>
+<tr><td>5</td><td>端口被占还重复 spawn</td><td>hosted 槽位被覆盖</td><td>就绪探针<b>瞬时抖动</b>（24s 内 6 次探针失败 1 次）</td><td>探针重试 3 次；spawn 前用 <code>listenerPid</code> 问 OS</td></tr>
+</tbody>
+</table>
+
+<h2>六、踩坑记录（可复用）</h2>
+<table>
+<thead><tr><th>坑</th><th>表现</th><th>正确做法</th></tr></thead>
+<tbody>
+<tr><td>不要把 <code>process.pid</code> 塞进 <code>spawner.live</code></td><td>Windows 上对本进程 <code>taskkill /T /F</code> → 测试文件静默退出 1、无任何输出、没有子测试</td><td>写测试时用真实子进程</td></tr>
+<tr><td>沙箱 <code>execFileSync</code> EBUSY</td><td><code>netstat</code>/<code>lsof</code> 探测失败</td><td>必须用异步 <code>execFile</code></td></tr>
+<tr><td><code>node -e "脚本" arg1 arg2</code></td><td><b>argv 整体左移一位</b>：<code>argv[1]</code> 是第一个额外参数，<code>slice(2)</code> 丢一个</td><td>stub 一律落盘成文件再 <code>node stub.mjs port</code></td></tr>
+<tr><td>外部 CLI 输出解析</td><td>自造假样本漏掉真实第三段</td><td><b>必须用真实抓取做 fixture</b></td></tr>
+<tr><td>15999 端口上的 peer</td><td>以为是孤儿进程想杀掉</td><td>是 codebuddy-a2a 开机自启服务，<b>杀了无效且有害</b>（登录后自动回来，不继承网关密码）</td></tr>
+<tr><td>单测里拉起真 CLI</td><td>全量回归卡死 14 分钟</td><td>测试 cfg 一律 <code>peerAutoStart:false</code> + <code>existsSync(peersFile)</code> 守卫</td></tr>
+<tr><td>测「ECONNREFUSED 不重试」</td><td>撞上同文件其它 fixture 的 403 stub</td><td>用先 bind 再 close 拿到的<b>空闲端口</b></td></tr>
+<tr><td>no-window tripwire 误报</td><td>文档注释里写了 <code>spawn()</code> 被当真实调用</td><td>断言前先剥离纯注释行</td></tr>
+</tbody>
+</table>
+
+<h2>七、当前真实状态（给用户交代）</h2>
+<table>
+<thead><tr><th>项</th><th>状态</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td>Phase 0–6</td><td><span class="st done">全部完成</span></td><td>六阶段移植收官</td></tr>
+<tr><td>judge 模式</td><td><span class="st done">LIVE 真实验证</span></td><td>已用真实 peer 跑通</td></tr>
+<tr><td>pipeline 模式</td><td><span class="st doing">遗留</span></td><td>produce &gt; 600s，另案</td></tr>
+<tr><td>orchestrator health</td><td><span class="st done">全 ok:true</span></td><td>但探针只看端口活着</td></tr>
+<tr><td>orchestrator models</td><td><span class="st red">失败</span></td><td>15999 是外部实例，<code>session/new</code> 报 Authentication required</td></tr>
+<tr><td>judge.ok</td><td><span class="st red">false</span></td><td><b>「health 全绿」≠「peer 能用」</b></td></tr>
+<tr><td>MCP 工具数</td><td>15</td><td>新增 <code>agent_teams_reclaim_orphans</code></td></tr>
+<tr><td>已知现象</td><td><span class="st doing">预期行为</span></td><td>MCP 重启后自己拉起的 peer 会变成 foreign（<code>SPAWNED</code> 是进程内存）</td></tr>
+</tbody>
+</table>
+
+<div class="ft">
+数据源：<code>D:\workspace\workbuddyai\.workbuddy-ai\memory\2026-10-14.md</code>（30414 B）｜测试命令：<code>node --test --test-timeout=180000 "tests/*.test.mjs"</code><br>
+生成时间：2026-10-14 ｜ 全量 228/228 通过，约 20 秒
+</div>
+
+</div>
+
+<script>
+(function(){
+  var q=document.getElementById('wq'), tl=document.getElementById('tl'),
+      wc=document.getElementById('wc'), tabs=document.querySelectorAll('.wbvd .tab'),
+      cur='all';
+  var items=[].slice.call(tl.querySelectorAll('.ev'));
+  function apply(){
+    var kw=(q.value||'').trim().toLowerCase(), n=0;
+    items.forEach(function(el){
+      var g=el.getAttribute('data-g')||'', k=el.getAttribute('data-k')||'';
+      var okG=(cur==='all')||(g.indexOf(cur)>=0);
+      var okK=!kw||(k.toLowerCase().indexOf(kw)>=0)||(el.textContent.toLowerCase().indexOf(kw)>=0);
+      var show=okG&&okK; el.style.display=show?'':'none'; if(show)n++;
+    });
+    wc.textContent='显示 '+n+' / '+items.length+' 条';
+  }
+  q.addEventListener('input',apply);
+  tabs.forEach(function(b){
+    b.addEventListener('click',function(){
+      tabs.forEach(function(x){x.className='tab';});
+      b.className='tab on'; cur=b.getAttribute('data-f'); apply();
+    });
+  });
+  apply();
+})();
+</script>
+</body>
+</html>
