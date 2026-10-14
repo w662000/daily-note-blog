@@ -1,10 +1,9 @@
 ---
-layout: post
-title: "每日工作总结 · 2026-10-13"
-date: 2026-10-13 22:55:00 +0800
-categories: [daily-log, workbuddy]
-tags: [workbuddy, daily-summary]
+layout: default
+title: 每日工作总结 · 2026-10-13
+date: 2026-10-13 23:30:00 +0800
 ---
+
 # 每日工作总结 · 2026-10-13
 
 ## 一、今日完成事项
