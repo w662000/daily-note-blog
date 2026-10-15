@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · Humanizer_ Remove AI Writing Patterns
-date: 2026-10-13 23:30:00 +0800
+date: 2026-10-15 23:30:00 +0800
 ---
 
 # Humanizer: Remove AI Writing Patterns
