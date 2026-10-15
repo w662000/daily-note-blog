@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · Simple English_ Write Like an Aerospace Manual
-date: 2026-10-13 23:30:00 +0800
+date: 2026-10-15 23:30:00 +0800
 ---
 
 # Simple English: Write Like an Aerospace Manual
