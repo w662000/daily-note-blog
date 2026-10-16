@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · Design System_ Linear
-date: 2026-10-15 23:30:00 +0800
+date: 2026-10-16 23:30:00 +0800
 ---
 
 # Design System: Linear
