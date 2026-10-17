@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · Connecting Desktop to Many Hermes Instances
-date: 2026-10-16 23:30:00 +0800
+date: 2026-10-17 23:30:00 +0800
 ---
 
 # Connecting Desktop to Many Hermes Instances
