@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · hermes_cli_ + cli.py — CLI, slash commands, config, skins, u
-date: 2026-10-15 23:30:00 +0800
+date: 2026-10-19 23:30:00 +0800
 ---
 
 # hermes_cli/ + cli.py — CLI, slash commands, config, skins, updater, profiles
