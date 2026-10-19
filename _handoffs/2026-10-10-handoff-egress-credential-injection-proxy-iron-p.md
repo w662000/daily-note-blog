@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · Egress credential-injection proxy (iron-proxy)
-date: 2026-10-16 23:30:00 +0800
+date: 2026-10-19 23:30:00 +0800
 ---
 
 # Egress credential-injection proxy (iron-proxy)
