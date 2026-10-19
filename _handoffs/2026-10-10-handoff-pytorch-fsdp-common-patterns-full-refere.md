@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · PyTorch FSDP — Common Patterns (full reference)
-date: 2026-10-15 23:30:00 +0800
+date: 2026-10-19 23:30:00 +0800
 ---
 
 # PyTorch FSDP — Common Patterns (full reference)
