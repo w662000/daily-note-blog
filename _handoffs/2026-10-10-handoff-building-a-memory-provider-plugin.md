@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · Building a Memory Provider Plugin
-date: 2026-10-18 23:30:00 +0800
+date: 2026-10-19 23:30:00 +0800
 ---
 
 # Building a Memory Provider Plugin
