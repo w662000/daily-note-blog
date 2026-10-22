@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · Compaction v2 — 4-transcript scorecard (2026-08-15, anchor-i
-date: 2026-10-21 23:30:00 +0800
+date: 2026-10-22 23:30:00 +0800
 ---
 
 # Compaction v2 — 4-transcript scorecard (2026-08-15, anchor-index build)
