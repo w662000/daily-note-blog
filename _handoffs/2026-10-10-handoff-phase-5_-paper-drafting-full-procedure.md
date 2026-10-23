@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · Phase 5_ Paper Drafting (full procedure)
-date: 2026-10-19 23:30:00 +0800
+date: 2026-10-23 23:30:00 +0800
 ---
 
 # Phase 5: Paper Drafting (full procedure)
