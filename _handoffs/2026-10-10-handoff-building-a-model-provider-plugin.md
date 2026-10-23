@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · Building a Model Provider Plugin
-date: 2026-10-22 23:30:00 +0800
+date: 2026-10-23 23:30:00 +0800
 ---
 
 # Building a Model Provider Plugin
