@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · Slack Setup
-date: 2026-10-19 23:30:00 +0800
+date: 2026-10-23 23:30:00 +0800
 ---
 
 # Slack Setup
