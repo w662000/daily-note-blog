@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · Kanban tutorial
-date: 2026-10-22 23:30:00 +0800
+date: 2026-10-23 23:30:00 +0800
 ---
 
 # Kanban tutorial
