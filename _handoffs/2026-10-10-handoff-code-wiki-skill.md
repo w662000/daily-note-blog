@@ -4,6 +4,7 @@ title: 交接文档 · Code Wiki Skill
 date: 2026-10-13 23:30:00 +0800
 ---
 
+{% raw %}
 # Code Wiki Skill
 
 - **日期**：2026-10-10
@@ -455,3 +456,4 @@ After writing, verify:
    ```
 3. **Module count matches what you intended** — `ls "$OUTPUT_DIR/modules" | wc -l` should equal the number of modules you committed to in Step 3.
 4. **No fabricated paths** — sanity-check 2–3 source links resolve to real files.
+{% endraw %}

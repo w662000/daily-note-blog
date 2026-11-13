@@ -4,6 +4,7 @@ title: 交接文档 · Nous Tool Gateway
 date: 2026-10-13 23:30:00 +0800
 ---
 
+{% raw %}
 # Nous Tool Gateway
 
 - **日期**：2026-10-10
@@ -235,3 +236,4 @@ Modal is available as an **optional add-on** through the Nous subscription, not 
 ### Do I need to delete my existing API keys when I enable the gateway?
 
 No — keep them in `.env`. While a tool's selection is **Nous Subscription**, direct keys for that tool are simply ignored. Pick the direct provider again in `hermes tools` and your keys become the source again. The gateway isn't a lock-in.
+{% endraw %}

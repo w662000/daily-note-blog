@@ -4,6 +4,7 @@ title: 交接文档 · Hermes Agent Quickstart
 date: 2026-10-25 23:30:00 +0800
 ---
 
+{% raw %}
 # Hermes Agent Quickstart
 
 - **日期**：2026-10-10
@@ -409,3 +410,4 @@ That sequence gets you from "broken vibes" back to a known state fast.
 - **[Skills System](../user-guide/features/skills.md)** — Reusable workflows and knowledge
 - **[Tips & Best Practices](../guides/tips.md)** — Power user tips
 - **[Moving to another machine](../reference/faq.md#exporting-hermes-to-another-machine)** — `hermes backup` migrates your whole setup (or [a single profile](../reference/faq.md#moving-a-single-profile-to-another-machine)); no need to rebuild from scratch
+{% endraw %}

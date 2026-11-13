@@ -4,6 +4,7 @@ title: 交接文档 · Architecture
 date: 2026-10-13 23:30:00 +0800
 ---
 
+{% raw %}
 # Architecture
 
 - **日期**：2026-10-10
@@ -38,3 +39,4 @@ flowchart TD
 - {{DECISION_1}}
 - {{DECISION_2}}
 - {{DECISION_3}}
+{% endraw %}

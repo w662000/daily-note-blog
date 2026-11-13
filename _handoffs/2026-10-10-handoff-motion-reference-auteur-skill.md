@@ -4,6 +4,7 @@ title: 交接文档 · Motion Reference — auteur skill
 date: 2026-10-13 23:30:00 +0800
 ---
 
+{% raw %}
 # Motion Reference — auteur skill
 
 - **日期**：2026-10-10
@@ -363,3 +364,4 @@ function playConfirm() {
 | `linearRampToValueAtTime(0, t)` for decay | Sounds mechanical |
 | Sound on hover / scroll / keyboard nav | Unbearable at speed |
 | Default volume 1.0 | Jarring |
+{% endraw %}

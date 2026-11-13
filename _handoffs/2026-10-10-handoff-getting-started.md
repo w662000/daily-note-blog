@@ -4,6 +4,7 @@ title: 交接文档 · Getting Started
 date: 2026-10-13 23:30:00 +0800
 ---
 
+{% raw %}
 # Getting Started
 
 - **日期**：2026-10-10
@@ -55,3 +56,4 @@ Key config files and settings:
 - Architecture overview: [architecture.md](architecture.md)
 - Module reference: [README.md#module-map](README.md#module-map)
 - Diagrams: [diagrams/](diagrams/)
+{% endraw %}

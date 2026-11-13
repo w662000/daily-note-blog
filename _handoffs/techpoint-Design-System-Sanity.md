@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 技术点 · Design System: Sanity
+title: "技术点 · Design System: Sanity"
 date: 2026-10-10 23:30:00 +0800
 ---
 

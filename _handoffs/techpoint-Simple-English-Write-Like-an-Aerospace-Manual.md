@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 技术点 · Simple English: Write Like an Aerospace Manual
+title: "技术点 · Simple English: Write Like an Aerospace Manual"
 date: 2026-10-10 23:30:00 +0800
 ---
 

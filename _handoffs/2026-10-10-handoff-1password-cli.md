@@ -4,6 +4,7 @@ title: 交接文档 · 1Password CLI
 date: 2026-10-13 23:30:00 +0800
 ---
 
+{% raw %}
 # 1Password CLI
 
 - **日期**：2026-10-10
@@ -173,3 +174,4 @@ Service accounts require CLI v2.18.0+.
 - `references/cli-examples.md`
 - https://developer.1password.com/docs/cli/
 - https://developer.1password.com/docs/service-accounts/
+{% endraw %}

@@ -4,6 +4,7 @@ title: 交接文档 · Citation Management & Hallucination Prevention
 date: 2026-10-13 23:30:00 +0800
 ---
 
+{% raw %}
 # Citation Management & Hallucination Prevention
 
 - **日期**：2026-10-10
@@ -572,3 +573,4 @@ Before adding a citation:
 **Verification Tools:**
 - Citely: https://citely.ai/citation-checker
 - ReciteWorks: https://reciteworks.com/
+{% endraw %}

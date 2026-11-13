@@ -4,6 +4,7 @@ title: 交接文档 · TUI
 date: 2026-10-25 23:30:00 +0800
 ---
 
+{% raw %}
 # TUI
 
 - **日期**：2026-10-10
@@ -326,3 +327,4 @@ If the TUI fails to launch (no Node, missing bundle, TTY issue), Hermes prints a
 - [Skins & Themes](features/skins.md) — theme the banner, status bar, and overlays
 - [Voice Mode](features/voice-mode.md) — works in both interfaces
 - [Configuration](configuration.md) — all config keys
+{% endraw %}

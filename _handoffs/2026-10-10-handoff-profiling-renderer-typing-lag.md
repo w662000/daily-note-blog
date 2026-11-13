@@ -4,6 +4,7 @@ title: 交接文档 · Profiling renderer typing lag
 date: 2026-10-13 23:30:00 +0800
 ---
 
+{% raw %}
 # Profiling renderer typing lag
 
 - **日期**：2026-10-10
@@ -396,3 +397,4 @@ Root cause likely sits in `vite.config.ts` aliasing + dedupe + Vite 8's
 new `optimizeDeps` defaults. Worth a separate fix pass — when it's
 resolved, the `<PerfProbe>` blocks in `perf-probe.tsx` become useful
 (per-id commit timings) instead of inert.
+{% endraw %}

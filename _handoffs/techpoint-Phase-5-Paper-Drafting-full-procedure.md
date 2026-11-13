@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 技术点 · Phase 5: Paper Drafting (full procedure)
+title: "技术点 · Phase 5: Paper Drafting (full procedure)"
 date: 2026-10-10 23:30:00 +0800
 ---
 

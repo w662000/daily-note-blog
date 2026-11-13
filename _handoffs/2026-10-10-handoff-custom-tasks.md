@@ -4,6 +4,7 @@ title: 交接文档 · Custom Tasks
 date: 2026-10-13 23:30:00 +0800
 ---
 
+{% raw %}
 # Custom Tasks
 
 - **日期**：2026-10-10
@@ -610,3 +611,4 @@ metric_list:
 - Task system: EleutherAI/lm-evaluation-harness docs
 - Example tasks: `lm_eval/tasks/` directory
 - TaskConfig: `lm_eval/api/task.py`
+{% endraw %}

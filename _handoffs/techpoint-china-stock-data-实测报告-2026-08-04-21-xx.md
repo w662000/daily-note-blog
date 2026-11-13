@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 技术点 · china-stock-data 实测报告（2026-08-04 21:xx）
+title: "技术点 · china-stock-data 实测报告（2026-08-04 21:xx）"
 date: 2026-08-04 23:30:00 +0800
 ---
 

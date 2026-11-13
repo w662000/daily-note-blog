@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 技术点 · Profile Distributions: Share a Whole Agent
+title: "技术点 · Profile Distributions: Share a Whole Agent"
 date: 2026-10-10 23:30:00 +0800
 ---
 

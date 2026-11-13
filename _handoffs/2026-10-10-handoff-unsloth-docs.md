@@ -4,6 +4,7 @@ title: 交接文档 · Unsloth Docs
 date: 2026-10-25 23:30:00 +0800
 ---
 
+{% raw %}
 # Unsloth Docs
 
 - **日期**：2026-10-10
@@ -16805,3 +16806,4 @@ We tested Llama 3.3 (70B) Instruct on a 80GB A100 and did 4bit QLoRA on all line
 | -------- | ------------------------ | ------------------ |
 | 48 GB    | 12,106                   | OOM                |
 | 80 GB    | 89,389                   | 6,916              |
+{% endraw %}

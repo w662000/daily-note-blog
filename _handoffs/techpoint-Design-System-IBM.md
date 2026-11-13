@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 技术点 · Design System: IBM
+title: "技术点 · Design System: IBM"
 date: 2026-10-10 23:30:00 +0800
 ---
 

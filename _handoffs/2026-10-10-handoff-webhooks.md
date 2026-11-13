@@ -4,6 +4,7 @@ title: 交接文档 · Webhooks
 date: 2026-10-25 23:30:00 +0800
 ---
 
+{% raw %}
 # Webhooks
 
 - **日期**：2026-10-10
@@ -713,3 +714,4 @@ This is the same trust model that applies to everything the agent reads: web pag
 | `WEBHOOK_ENABLED` | Enable the webhook platform adapter | `false` |
 | `WEBHOOK_PORT` | HTTP server port for receiving webhooks | `8644` |
 | `WEBHOOK_SECRET` | Global HMAC secret (used as fallback when routes don't specify their own) | _(none)_ |
+{% endraw %}

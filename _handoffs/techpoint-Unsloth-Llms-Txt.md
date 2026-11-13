@@ -4,6 +4,7 @@ title: 技术点 · Unsloth - Llms-Txt
 date: 2026-10-10 23:30:00 +0800
 ---
 
+{% raw %}
 # 技术点 · Unsloth - Llms-Txt
 
 > 来源：261010_Unsloth - Llms-Txt_handoff.md（项目 handoff 1:1 companion，由 techpoint_flow 新方法提炼；读取编码：utf-8）
@@ -208,3 +209,4 @@ Example 4 (unknown):
 
 ## 五、后续风险
 （见源 handoff 后续风险字段）
+{% endraw %}

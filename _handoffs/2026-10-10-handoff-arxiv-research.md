@@ -4,6 +4,7 @@ title: 交接文档 · arXiv Research
 date: 2026-10-13 23:30:00 +0800
 ---
 
+{% raw %}
 # arXiv Research
 
 - **日期**：2026-10-10
@@ -292,3 +293,4 @@ Papers can be withdrawn after submission. When this happens:
 - The `<summary>` field contains a withdrawal notice (look for "withdrawn" or "retracted")
 - Metadata fields may be incomplete
 - Always check the summary before treating a result as a valid paper
+{% endraw %}

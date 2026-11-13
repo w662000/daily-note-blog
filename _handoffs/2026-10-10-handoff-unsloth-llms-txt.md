@@ -4,6 +4,7 @@ title: 交接文档 · Unsloth - Llms-Txt
 date: 2026-10-25 23:30:00 +0800
 ---
 
+{% raw %}
 # Unsloth - Llms-Txt
 
 - **日期**：2026-10-10
@@ -12052,3 +12053,4 @@ pip install "unsloth[cu121-torch240] @ git+https://github.com/unslothai/unsloth.
 ```
 
 ---
+{% endraw %}

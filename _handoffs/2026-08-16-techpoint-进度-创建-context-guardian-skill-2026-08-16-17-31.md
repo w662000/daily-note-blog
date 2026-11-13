@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 技术点 · 进度：创建 context-guardian skill（2026-08-16 17:31）
+title: "技术点 · 进度：创建 context-guardian skill（2026-08-16 17:31）"
 date: 2026-08-16 23:30:00 +0800
 ---
 

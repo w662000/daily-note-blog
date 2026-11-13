@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 技术点 · 进度 — b.ai 接入 DSH + Hermes（2026-08-18 13:05）
+title: "技术点 · 进度 — b.ai 接入 DSH + Hermes（2026-08-18 13:05）"
 date: 2026-08-18 23:30:00 +0800
 ---
 

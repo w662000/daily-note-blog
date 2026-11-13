@@ -4,6 +4,7 @@ title: 交接文档 · Module_ `{{MODULE_NAME}}`
 date: 2026-10-13 23:30:00 +0800
 ---
 
+{% raw %}
 # Module: `{{MODULE_NAME}}`
 
 - **日期**：2026-10-10
@@ -46,3 +47,4 @@ date: 2026-10-13 23:30:00 +0800
 ## Notable Patterns / Gotchas
 
 - {{ANYTHING_NON_OBVIOUS}}
+{% endraw %}

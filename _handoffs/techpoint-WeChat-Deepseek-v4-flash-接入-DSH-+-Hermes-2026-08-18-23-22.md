@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 技术点 · [WeChat] Deepseek-v4-flash 接入 DSH + Hermes（2026-08-18 23:22）
+title: "技术点 · [WeChat] Deepseek-v4-flash 接入 DSH + Hermes（2026-08-18 23:22）"
 date: 2026-08-18 23:30:00 +0800
 ---
 

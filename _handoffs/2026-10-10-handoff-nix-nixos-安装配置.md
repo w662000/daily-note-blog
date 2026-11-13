@@ -4,6 +4,7 @@ title: 交接文档 · Nix & NixOS 安装配置
 date: 2026-10-25 23:30:00 +0800
 ---
 
+{% raw %}
 # Nix & NixOS 安装配置
 
 - **日期**：2026-10-10
@@ -985,3 +986,4 @@ nix-store --query --roots $(docker exec hermes-agent readlink /data/current-pack
 | `no container with name or ID "hermes-agent"`（Podman） | Podman rootful 容器对普通用户不可见 | 为 podman 添加免密 sudo（参见[容器模式](#container-mode)章节） |
 | `unable to find user hermes` | 容器仍在启动中（入口点尚未创建用户） | 等待几秒后重试——CLI 会自动重试 |
 | 通过 `extraPackages` 添加的工具在终端中找不到 | 需要 `nixos-rebuild switch` 更新每用户 profile | 重建并重启：`nixos-rebuild switch && systemctl restart hermes-agent` |
+{% endraw %}

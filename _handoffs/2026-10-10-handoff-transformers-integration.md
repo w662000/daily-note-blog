@@ -4,6 +4,7 @@ title: 交接文档 · Transformers Integration
 date: 2026-10-13 23:30:00 +0800
 ---
 
+{% raw %}
 # Transformers Integration
 
 - **日期**：2026-10-10
@@ -645,3 +646,4 @@ tokenizer(
    - Save `tokenizer_config.json`
    - Document custom templates
    - Track vocabulary changes
+{% endraw %}
