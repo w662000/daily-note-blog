@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · Axolotl - Other
-date: 2026-10-25 23:30:00 +0800
+date: 2026-11-14 23:30:00 +0800
 ---
 
 # Axolotl - Other
@@ -3108,7 +3108,7 @@ Example 4 (unknown):
 ```unknown
 @software{axolotl,
   title = {Axolotl: Open Source LLM Post-Training},
-  author = &#123;&#123;Axolotl maintainers and contributors}},
+  author = {{Axolotl maintainers and contributors}},
   url = {https://github.com/axolotl-ai-cloud/axolotl},
   license = {Apache-2.0},
   year = {2023}
