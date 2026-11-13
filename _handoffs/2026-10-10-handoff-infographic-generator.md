@@ -213,7 +213,7 @@ Combine:
 4. Structured content from Step 2
 5. All text in confirmed language
 
-**Aspect ratio resolution** for `{% raw %}{{{% endraw %}ASPECT_RATIO}}`:
+**Aspect ratio resolution** for `&#123;&#123;ASPECT_RATIO}}`:
 - Named presets → ratio string: landscape→`16:9`, portrait→`9:16`, square→`1:1`
 - Custom W:H ratios → use as-is (e.g., `3:4`, `4:3`, `2.35:1`)
 

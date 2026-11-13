@@ -225,7 +225,7 @@ def generate_citation_key(bibtex: str) -> str:
 
 ### Complete Citation Manager Class
 
-{% raw %}{%{% endraw %} raw %}
+&#123;&#37; raw %}
 ```python
 """
 Citation Manager - Verified citation workflow for ML papers.
@@ -344,10 +344,10 @@ class CitationManager:
         # Format authors
         authors = " and ".join(paper.authors) if paper.authors else "Unknown"
 
-        bibtex = f"""@article{% raw %}{{{% endraw %}{key},
-  title = {% raw %}{{{% endraw %}{paper.title}}},
-  author = {% raw %}{{{% endraw %}{authors}}},
-  year = {% raw %}{{{% endraw %}{paper.year}}},
+        bibtex = f"""@article&#123;&#123;{key},
+  title = &#123;&#123;{paper.title}}},
+  author = &#123;&#123;{authors}}},
+  year = &#123;&#123;{paper.year}}},
   {'doi = {' + paper.doi + '},' if paper.doi else ''}
   {'eprint = {' + paper.arxiv_id + '},' if paper.arxiv_id else ''}
   {'journal = {' + paper.venue + '},' if paper.venue else ''}
@@ -388,7 +388,7 @@ if __name__ == "__main__":
     if bibtex:
         print(bibtex)
 ```
-{% raw %}{%{% endraw %} endraw %}
+&#123;&#37; endraw %}
 
 ### Quick Functions
 

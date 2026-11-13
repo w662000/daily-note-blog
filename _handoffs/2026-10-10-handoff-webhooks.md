@@ -24,11 +24,11 @@ The agent processes the event and can respond by posting comments on PRs, sendin
 
 ## Video Tutorial
 
-<div style={% raw %}{{{% endraw %}position: 'relative', width: '100%', aspectRatio: '16 / 9', marginBottom: '1.5rem'}}>
+<div style=&#123;&#123;position: 'relative', width: '100%', aspectRatio: '16 / 9', marginBottom: '1.5rem'}}>
   <iframe
     src="https://www.youtube.com/embed/WNYe5mD4fY8"
     title="Hermes Agent — Webhooks Tutorial"
-    style={% raw %}{{{% endraw %}position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0}}
+    style=&#123;&#123;position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0}}
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowFullScreen
   />

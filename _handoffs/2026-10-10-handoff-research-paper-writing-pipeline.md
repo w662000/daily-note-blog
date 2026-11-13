@@ -1773,7 +1773,7 @@ for cite_group in cites:
     for cite in cite_group.split(','):
         cite = cite.strip()
         if cite and cite not in bib:
-            print(f'WARNING: \\\\cite{% raw %}{{{% endraw %}{cite}}} not found in references.bib')
+            print(f'WARNING: \\\\cite&#123;&#123;{cite}}} not found in references.bib')
 "
 
 # 3. Verify all referenced figures exist on disk

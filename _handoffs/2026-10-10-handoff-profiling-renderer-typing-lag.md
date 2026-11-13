@@ -268,7 +268,7 @@ layouts and removes a steady CPU floor.
 Two smaller follow-ups in the same investigation:
 
 1. **`MarkdownText` `plugins` object useMemo'd.** The inline
-   `plugins={% raw %}{{{% endraw %} math: mathPlugin, ...(isStreaming ? {} : { code }) }}`
+   `plugins=&#123;&#123; math: mathPlugin, ...(isStreaming ? {} : { code }) }}`
    was constructing a new object on every render, which churns
    `<Streamdown>`'s outer memo and forces its internal `rehypePlugins` /
    `remarkPlugins` arrays to rebuild. CPU profile after the change shows

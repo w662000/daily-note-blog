@@ -24,9 +24,9 @@ This guide gets you from zero to a working Hermes setup that survives real use. 
 
 **Onchain AI Garage** put together a Masterclass walkthrough of installation, setup, and basic commands — a good companion to this page if you'd rather follow along on video. For more, see the full [Hermes Agent Tutorials & Use Cases](https://www.youtube.com/playlist?list=PLmpUb_PWAkDxewld5ZYyKifuHxgIbiq2d) playlist.
 
-<div style={% raw %}{{{% endraw %}position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', marginBottom: '1.5rem'}}>
+<div style=&#123;&#123;position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', marginBottom: '1.5rem'}}>
   <iframe
-    style={% raw %}{{{% endraw %}position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}
+    style=&#123;&#123;position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}
     src="https://www.youtube-nocookie.com/embed/R3YOGfTBcQg"
     title="Hermes Agent Masterclass: Installation, Setup, Basic Commands"
     frameBorder="0"

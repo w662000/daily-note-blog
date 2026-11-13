@@ -124,7 +124,7 @@ uv run --with openai python "$SKILL_DIR/scripts/show_snapshot.py" \
 ```
 
 Expected output: 7 evolved prompt templates ranked by score, with the best
-landing around 0.6–0.8 (the seed `Say {% raw %}{{{% endraw %} phrase }}` scored 0.000).
+landing around 0.6–0.8 (the seed `Say &#123;&#123; phrase }}` scored 0.000).
 
 ## Defining a Custom Problem
 

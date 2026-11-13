@@ -23,8 +23,8 @@ sidebar_position: 2
 
 The Tool Gateway is included with every paid [Nous Portal](https://portal.nousresearch.com) subscription. It routes Hermes' tool calls — web search, image generation, text-to-speech, and cloud browser automation — through infrastructure Nous already runs, so you don't have to sign up with Firecrawl, FAL, OpenAI, Browser Use, or anyone else just to make your agent useful.
 
-<div style={% raw %}{{{% endraw %}display: 'flex', gap: '1rem', flexWrap: 'wrap', margin: '1.5rem 0'}}>
-  <a href="https://portal.nousresearch.com/manage-subscription" style={% raw %}{{{% endraw %}background: 'var(--ifm-color-primary)', color: 'white', padding: '0.75rem 1.5rem', borderRadius: '6px', textDecoration: 'none', fontWeight: 'bold'}}>Start or manage subscription →</a>
+<div style=&#123;&#123;display: 'flex', gap: '1rem', flexWrap: 'wrap', margin: '1.5rem 0'}}>
+  <a href="https://portal.nousresearch.com/manage-subscription" style=&#123;&#123;background: 'var(--ifm-color-primary)', color: 'white', padding: '0.75rem 1.5rem', borderRadius: '6px', textDecoration: 'none', fontWeight: 'bold'}}>Start or manage subscription →</a>
 </div>
 
 ## What's included

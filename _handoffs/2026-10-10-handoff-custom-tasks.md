@@ -32,8 +32,8 @@ Create `my_tasks/simple_qa.yaml`:
 task: simple_qa
 dataset_path: data/simple_qa.jsonl
 output_type: generate_until
-doc_to_text: "Question: {% raw %}{{{% endraw %}question}}\nAnswer:"
-doc_to_target: "{% raw %}{{{% endraw %}answer}}"
+doc_to_text: "Question: &#123;&#123;question}}\nAnswer:"
+doc_to_target: "&#123;&#123;answer}}"
 metric_list:
   - metric: exact_match
     aggregation: mean
@@ -73,8 +73,8 @@ num_fewshot: 5                 # Number of few-shot examples
 batch_size: auto               # Batch size
 
 # Prompt templates (Jinja2)
-doc_to_text: "Question: {% raw %}{{{% endraw %}question}}"
-doc_to_target: "{% raw %}{{{% endraw %}answer}}"
+doc_to_text: "Question: &#123;&#123;question}}"
+doc_to_target: "&#123;&#123;answer}}"
 
 # Metrics
 metric_list:
@@ -109,7 +109,7 @@ output_type: loglikelihood
 **`multiple_choice`**: Choose from options
 ```yaml
 output_type: multiple_choice
-doc_to_choice: "{% raw %}{{{% endraw %}choices}}"  # List of choices
+doc_to_choice: "&#123;&#123;choices}}"  # List of choices
 ```
 
 ## Data Formats
@@ -160,18 +160,18 @@ dataset_kwargs:
 ### Simple Template
 
 ```yaml
-doc_to_text: "Question: {% raw %}{{{% endraw %}question}}\nAnswer:"
-doc_to_target: "{% raw %}{{{% endraw %}answer}}"
+doc_to_text: "Question: &#123;&#123;question}}\nAnswer:"
+doc_to_target: "&#123;&#123;answer}}"
 ```
 
 ### Conditional Logic
 
 ```yaml
 doc_to_text: |
-  {% raw %}{%{% endraw %} if context %}
-  Context: {% raw %}{{{% endraw %}context}}
-  {% raw %}{%{% endraw %} endif %}
-  Question: {% raw %}{{{% endraw %}question}}
+  &#123;&#37; if context %}
+  Context: &#123;&#123;context}}
+  &#123;&#37; endif %}
+  Question: &#123;&#123;question}}
   Answer:
 ```
 
@@ -179,14 +179,14 @@ doc_to_text: |
 
 ```yaml
 doc_to_text: |
-  Question: {% raw %}{{{% endraw %}question}}
-  A. {% raw %}{{{% endraw %}choices[0]}}
-  B. {% raw %}{{{% endraw %}choices[1]}}
-  C. {% raw %}{{{% endraw %}choices[2]}}
-  D. {% raw %}{{{% endraw %}choices[3]}}
+  Question: &#123;&#123;question}}
+  A. &#123;&#123;choices[0]}}
+  B. &#123;&#123;choices[1]}}
+  C. &#123;&#123;choices[2]}}
+  D. &#123;&#123;choices[3]}}
   Answer:
 
-doc_to_target: "{% raw %}{{{% endraw %} 'ABCD'[answer_idx] }}"
+doc_to_target: "&#123;&#123; 'ABCD'[answer_idx] }}"
 doc_to_choice: ["A", "B", "C", "D"]
 ```
 
@@ -195,8 +195,8 @@ doc_to_choice: ["A", "B", "C", "D"]
 ```yaml
 fewshot_delimiter: "\n\n"        # Between examples
 target_delimiter: " "            # Between question and answer
-doc_to_text: "Q: {% raw %}{{{% endraw %}question}}"
-doc_to_target: "A: {% raw %}{{{% endraw %}answer}}"
+doc_to_text: "Q: &#123;&#123;question}}"
+doc_to_target: "A: &#123;&#123;answer}}"
 ```
 
 ## Custom Python Functions
@@ -266,11 +266,11 @@ output_type: generate_until
 num_fewshot: 3
 
 doc_to_text: |
-  Medical Question: {% raw %}{{{% endraw %}question}}
-  Context: {% raw %}{{{% endraw %}context}}
+  Medical Question: &#123;&#123;question}}
+  Context: &#123;&#123;context}}
   Answer (be concise):
 
-doc_to_target: "{% raw %}{{{% endraw %}answer}}"
+doc_to_target: "&#123;&#123;answer}}"
 
 generation_kwargs:
   max_gen_toks: 100
@@ -338,12 +338,12 @@ num_fewshot: 0
 
 doc_to_text: |
   Write a Python function to solve:
-  {% raw %}{{{% endraw %}problem_statement}}
+  &#123;&#123;problem_statement}}
 
   Function signature:
-  {% raw %}{{{% endraw %}function_signature}}
+  &#123;&#123;function_signature}}
 
-doc_to_target: "{% raw %}{{{% endraw %}canonical_solution}}"
+doc_to_target: "&#123;&#123;canonical_solution}}"
 
 generation_kwargs:
   max_gen_toks: 512
@@ -406,13 +406,13 @@ output_type: generate_until
 num_fewshot: 0
 
 doc_to_text: |
-  Instruction: {% raw %}{{{% endraw %}instruction}}
-  {% raw %}{%{% endraw %} if constraints %}
-  Constraints: {% raw %}{{{% endraw %}constraints}}
-  {% raw %}{%{% endraw %} endif %}
+  Instruction: &#123;&#123;instruction}}
+  &#123;&#37; if constraints %}
+  Constraints: &#123;&#123;constraints}}
+  &#123;&#37; endif %}
   Response:
 
-doc_to_target: "{% raw %}{{{% endraw %}expected_response}}"
+doc_to_target: "&#123;&#123;expected_response}}"
 
 generation_kwargs:
   max_gen_toks: 256
@@ -565,8 +565,8 @@ lm_eval --model hf \
 
 ```yaml
 output_type: loglikelihood
-doc_to_text: "Text: {% raw %}{{{% endraw %}text}}\nLabel:"
-doc_to_target: " {% raw %}{{{% endraw %}label}}"  # Space prefix important!
+doc_to_text: "Text: &#123;&#123;text}}\nLabel:"
+doc_to_target: " &#123;&#123;label}}"  # Space prefix important!
 metric_list:
   - metric: acc
     aggregation: mean
@@ -576,7 +576,7 @@ metric_list:
 
 ```yaml
 output_type: loglikelihood_rolling
-doc_to_text: "{% raw %}{{{% endraw %}text}}"
+doc_to_text: "&#123;&#123;text}}"
 metric_list:
   - metric: perplexity
     aggregation: perplexity
@@ -586,7 +586,7 @@ metric_list:
 
 ```yaml
 output_type: loglikelihood
-doc_to_text: "Query: {% raw %}{{{% endraw %}query}}\nPassage: {% raw %}{{{% endraw %}passage}}\nRelevant:"
+doc_to_text: "Query: &#123;&#123;query}}\nPassage: &#123;&#123;passage}}\nRelevant:"
 doc_to_target: [" Yes", " No"]
 metric_list:
   - metric: acc

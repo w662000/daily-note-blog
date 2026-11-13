@@ -472,15 +472,15 @@ tokenizer = PreTrainedTokenizerFast(tokenizer_file="tokenizer.json")
 
 # Define chat template
 tokenizer.chat_template = """
-{% raw %}{%{% endraw %}- for message in messages %}
-    {% raw %}{%{% endraw %}- if message['role'] == 'system' %}
-        System: {% raw %}{{{% endraw %} message['content'] }}\\n
-    {% raw %}{%{% endraw %}- elif message['role'] == 'user' %}
-        User: {% raw %}{{{% endraw %} message['content'] }}\\n
-    {% raw %}{%{% endraw %}- elif message['role'] == 'assistant' %}
-        Assistant: {% raw %}{{{% endraw %} message['content'] }}\\n
-    {% raw %}{%{% endraw %}- endif %}
-{% raw %}{%{% endraw %}- endfor %}
+&#123;&#37;- for message in messages %}
+    &#123;&#37;- if message['role'] == 'system' %}
+        System: &#123;&#123; message['content'] }}\\n
+    &#123;&#37;- elif message['role'] == 'user' %}
+        User: &#123;&#123; message['content'] }}\\n
+    &#123;&#37;- elif message['role'] == 'assistant' %}
+        Assistant: &#123;&#123; message['content'] }}\\n
+    &#123;&#37;- endif %}
+&#123;&#37;- endfor %}
 Assistant:
 """
 

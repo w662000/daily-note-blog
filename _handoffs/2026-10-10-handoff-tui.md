@@ -157,7 +157,7 @@ Open it with any of these:
 
 <img alt="Hermes TUI Session Orchestrator with one live session and a +new row" src="/docs/img/docs/tui-session-orchestrator/session-orchestrator.png" />
 
-<video controls muted loop playsInline src="/docs/img/docs/tui-session-orchestrator/session-orchestrator-demo.mp4" title="Hermes TUI Session Orchestrator demo" style={% raw %}{{{% endraw %}maxWidth: '100%'}}></video>
+<video controls muted loop playsInline src="/docs/img/docs/tui-session-orchestrator/session-orchestrator-demo.mp4" title="Hermes TUI Session Orchestrator demo" style=&#123;&#123;maxWidth: '100%'}}></video>
 
 Inside the switcher:
 

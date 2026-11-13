@@ -200,7 +200,7 @@ flowchart TD
     User([User]) --> Entry[Entry Point]
     Entry --> Core[Core Engine]
     Core --> StorageA[(Database)]
-    Core --> ExternalAPI{% raw %}{{{% endraw %}External API}}
+    Core --> ExternalAPI&#123;&#123;External API}}
 ```
 
 ## Data Flow
@@ -216,7 +216,7 @@ flowchart TD
 **Mermaid shape semantics:**
 - `[]` = component
 - `[()]` = database / storage
-- `{% raw %}{{{% endraw %}}}` = external service
+- `&#123;&#123;}}` = external service
 - `(())` = entry point or terminal
 - `-->` = sync call, `-.->` = async/event
 

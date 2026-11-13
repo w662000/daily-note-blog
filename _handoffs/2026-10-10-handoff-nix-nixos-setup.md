@@ -1197,7 +1197,7 @@ docker logs -f hermes-agent
 ```bash
 systemctl status hermes-agent
 docker ps -a --filter name=hermes-agent
-docker inspect hermes-agent --format='{% raw %}{{{% endraw %}.State.Status}}'
+docker inspect hermes-agent --format='&#123;&#123;.State.Status}}'
 docker exec -it hermes-agent bash
 docker exec hermes-agent readlink /data/current-package
 docker exec hermes-agent cat /data/.container-identity

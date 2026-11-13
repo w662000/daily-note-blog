@@ -17,9 +17,9 @@ date: 2026-10-10 23:30:00 +0800
 ### 关键技术要点（自动抽取）
 - ```
 
-{% raw %}{%{% endraw %} hint style="success" %}
+&#123;&#37; hint style="success" %}
 Read more on running Llama 4 here: <https://docs.unsloth.ai/basics/tutorial-how-to-run-and-fine-tune-llama-4>
-{% raw %}{%{% endraw %} endhint %}
+&#123;&#37; endhint %}
 
 **Examples:**
 
@@ -58,15 +58,15 @@ Qwen3-Coder is Qwen’s new series of coding agent models, available in 30B (**Q
 
 We also uploaded Qwen3-Coder with native <mark style="background-color:purple;">**1M context length**</mark> extended by YaRN and full-precision 8bit and 16bit versions. [Unsloth](https://github.com/unslothai/unsloth) also now supports fine-tuning and [RL](https://docs.unsloth.ai/get-started/reinforcement-learning-rl-guide) of Qwen3-Coder.
 
-{% raw %}{%{% endraw %} hint style="success" %}
+&#123;&#37; hint style="success" %}
 [**UPDATE:** We fixed tool-calling for Qwen3-Coder! ](#tool-calling-fixes)You can now use tool-calling seamlessly in llama.cpp, Ollama, LMStudio, Open WebUI, Jan etc. This issue was universal and affected all uploads (not just Unsloth), and we've communicated with the Qwen team about our fixes! [Read more](#tool-calling-fixes)
-{% raw %}{%{% endraw %} endhint %}
+&#123;&#37; endhint %}
 
 <a href="#run-qwen3-coder-30b-a3b-instruct" class="button secondary">Run 30B-A3B</a><a href="#run-qwen3-coder-480b-a35b-instruct" class="button secondary">Run 480B-A35B</a>
 
-{% raw %}{%{% endraw %} hint style="success" %}
+&#123;&#37; hint style="success" %}
 **Does** [**Unsloth Dynamic Quants**](https://docs.unsloth.ai/basics/unsloth-dynamic-2.0-ggufs) **work?** Yes, and very well. In third-party testing on the Aider Polyglot benchmark, the **UD-Q4\_K\_XL (276GB)** dynamic quant nearly matched the **full bf16 (960GB)** Qwen3-coder model, scoring 60.9% vs 61.8%. [More details here.](https://huggingface.co/unsloth/Qwen3-Coder-480B-A35B-Instruct-GGUF/discussions/8)
-{% raw %}{%{% endraw %} endhint %}
+&#123;&#37; endhint %}
 
 #### **Qwen3 Coder - Unsloth Dynamic 2.0 GGUFs**:
 
@@ -91,20 +91,20 @@ Qwen recommends these inference settings for both models:
 * <mark style="background-color:green;">**Repetition Penalty of 1.05**</mark>
 * Chat template:&#x20;
 
-{% raw %}{%{% endraw %} code overflow="wrap" %}
+&#123;&#37; code overflow="wrap" %}
 
-{% raw %}{%{% endraw %} endcode %}
+&#123;&#37; endcode %}
 * Recommended context output: 65,536 tokens (can be increased). Details here.
 
 **Chat template/prompt format with newlines un-rendered**
 
-{% raw %}{%{% endraw %} code overflow="wrap" %}
+&#123;&#37; code overflow="wrap" %}
 
 <mark style="background-color:yellow;">**Chat template for tool calling**</mark> (Getting the current temperature for San Francisco). More details here for how to format tool calls.
 
-{% raw %}{%{% endraw %} hint style="info" %}
+&#123;&#37; hint style="info" %}
 Reminder that this model supports only non-thinking mode and does not generate `<think></think>` blocks in its output. Meanwhile, specifying `enable_thinking=False` is no longer required.
-{% raw %}{%{% endraw %} endhint %}
+&#123;&#37; endhint %}
 
 ### Run Qwen3-Coder-30B-A3B-Instruct:
 
@@ -114,9 +114,9 @@ To achieve inference speeds of 6+ tokens per second for our Dynamic 4-bit quant,
 
 Given that this is a non thinking model, there is no need to set `thinking=False` and the model does not generate `<think> </think>` blocks.
 
-{% raw %}{%{% endraw %} hint style="info" %}
+&#123;&#37; hint style="info" %}
 Follow the [**best practices above**](#recommended-settings). They're the same as the 480B model.
-{% raw %}{%{% endraw %} endhint %}
+&#123;&#37; endhint %}
 
 #### 🦙 Ollama: Run Qwen3-Coder-30B-A3B-Instruct Tutorial
 

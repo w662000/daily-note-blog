@@ -145,7 +145,7 @@ op read "op://app-prod/npm/one-time password?attribute=otp"
 ### Inject into template
 
 ```bash
-echo "db_password: {% raw %}{{{% endraw %} op://app-prod/db/password }}" | op inject
+echo "db_password: &#123;&#123; op://app-prod/db/password }}" | op inject
 ```
 
 ### Run a command with secret env var

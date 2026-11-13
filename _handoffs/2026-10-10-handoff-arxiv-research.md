@@ -127,7 +127,7 @@ curl -s "https://export.arxiv.org/api/query?id_list=2402.03300,2401.12345,2403.0
 
 After fetching metadata for a paper, generate a BibTeX entry:
 
-{% raw %}{%{% endraw %} raw %}
+&#123;&#37; raw %}
 ```bash
 curl -s "https://export.arxiv.org/api/query?id_list=1706.03762" | python3 -c "
 import sys, xml.etree.ElementTree as ET
@@ -142,18 +142,18 @@ raw_id = entry.find('a:id', ns).text.strip().split('/abs/')[-1]
 cat = entry.find('arxiv:primary_category', ns)
 primary = cat.get('term') if cat is not None else 'cs.LG'
 last_name = entry.find('a:author', ns).find('a:name', ns).text.split()[-1]
-print(f'@article{% raw %}{{{% endraw %}{last_name}{year}_{raw_id.replace(\".\", \"\")},')
-print(f'  title     = {% raw %}{{{% endraw %}{title}}},')
-print(f'  author    = {% raw %}{{{% endraw %}{authors}}},')
-print(f'  year      = {% raw %}{{{% endraw %}{year}}},')
-print(f'  eprint    = {% raw %}{{{% endraw %}{raw_id}}},')
-print(f'  archivePrefix = {% raw %}{{{% endraw %}arXiv}},')
-print(f'  primaryClass  = {% raw %}{{{% endraw %}{primary}}},')
-print(f'  url       = {% raw %}{{{% endraw %}https://arxiv.org/abs/{raw_id}}}')
+print(f'@article&#123;&#123;{last_name}{year}_{raw_id.replace(\".\", \"\")},')
+print(f'  title     = &#123;&#123;{title}}},')
+print(f'  author    = &#123;&#123;{authors}}},')
+print(f'  year      = &#123;&#123;{year}}},')
+print(f'  eprint    = &#123;&#123;{raw_id}}},')
+print(f'  archivePrefix = &#123;&#123;arXiv}},')
+print(f'  primaryClass  = &#123;&#123;{primary}}},')
+print(f'  url       = &#123;&#123;https://arxiv.org/abs/{raw_id}}}')
 print('}')
 "
 ```
-{% raw %}{%{% endraw %} endraw %}
+&#123;&#37; endraw %}
 
 ## Reading Paper Content
 

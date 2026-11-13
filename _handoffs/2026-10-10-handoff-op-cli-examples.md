@@ -29,7 +29,7 @@ op read "op://app-prod/npm/one-time password?attribute=otp"
 ## Inject secrets
 
 ```bash
-echo "api_key: {% raw %}{{{% endraw %} op://app-prod/openai/api key }}" | op inject
+echo "api_key: &#123;&#123; op://app-prod/openai/api key }}" | op inject
 op inject -i config.tpl.yml -o config.yml
 ```
 

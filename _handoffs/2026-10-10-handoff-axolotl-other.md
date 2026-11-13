@@ -3108,7 +3108,7 @@ Example 4 (unknown):
 ```unknown
 @software{axolotl,
   title = {Axolotl: Open Source LLM Post-Training},
-  author = {% raw %}{{{% endraw %}Axolotl maintainers and contributors}},
+  author = &#123;&#123;Axolotl maintainers and contributors}},
   url = {https://github.com/axolotl-ai-cloud/axolotl},
   license = {Apache-2.0},
   year = {2023}

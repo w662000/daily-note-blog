@@ -12,43 +12,43 @@ date: 2026-10-13 23:30:00 +0800
 
 ## Prerequisites
 
-- {% raw %}{{{% endraw %}LANGUAGE_RUNTIME_VERSION}}
-- {% raw %}{{{% endraw %}DEPENDENCY}}
+- &#123;&#123;LANGUAGE_RUNTIME_VERSION}}
+- &#123;&#123;DEPENDENCY}}
 
 ## Installation
 
 ```bash
-{% raw %}{{{% endraw %}INSTALL_COMMANDS}}
+&#123;&#123;INSTALL_COMMANDS}}
 ```
 
 ## First Run
 
 ```bash
-{% raw %}{{{% endraw %}FIRST_RUN_COMMAND}}
+&#123;&#123;FIRST_RUN_COMMAND}}
 ```
 
-You should see {% raw %}{{{% endraw %}EXPECTED_OUTPUT}}.
+You should see &#123;&#123;EXPECTED_OUTPUT}}.
 
 ## Common Workflows
 
-### {% raw %}{{{% endraw %}WORKFLOW_1}}
+### &#123;&#123;WORKFLOW_1}}
 
 ```bash
-{% raw %}{{{% endraw %}COMMANDS}}
+&#123;&#123;COMMANDS}}
 ```
 
-### {% raw %}{{{% endraw %}WORKFLOW_2}}
+### &#123;&#123;WORKFLOW_2}}
 
 ```bash
-{% raw %}{{{% endraw %}COMMANDS}}
+&#123;&#123;COMMANDS}}
 ```
 
 ## Configuration
 
 Key config files and settings:
 
-- `{% raw %}{{{% endraw %}CONFIG_FILE}}` — {% raw %}{{{% endraw %}WHAT_IT_CONTROLS}}
-- Env var `{% raw %}{{{% endraw %}VAR}}` — {% raw %}{{{% endraw %}WHAT_IT_CONTROLS}}
+- `&#123;&#123;CONFIG_FILE}}` — &#123;&#123;WHAT_IT_CONTROLS}}
+- Env var `&#123;&#123;VAR}}` — &#123;&#123;WHAT_IT_CONTROLS}}
 
 ## Where to Go Next
 
