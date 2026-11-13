@@ -4,7 +4,6 @@ title: 交接文档 · Motion Reference — auteur skill
 date: 2026-10-13 23:30:00 +0800
 ---
 
-{% raw %}
 # Motion Reference — auteur skill
 
 - **日期**：2026-10-10
@@ -122,7 +121,7 @@ button:active {
 }
 ```
 
-`whileTap={{ scale: 0.8 }}` is a P1 fail — too exaggerated.
+`whileTap={% raw %}{{{% endraw %} scale: 0.8 }}` is a P1 fail — too exaggerated.
 
 **Origin-aware popovers and dropdowns** — the element must scale from its trigger, not from its own center:
 
@@ -159,10 +158,10 @@ Never set `transform-origin: center` on trigger-anchored popovers, tooltips, or 
 
 ```tsx
 // Weak under scroll load:
-<motion.div animate={{ x: 100, scale: 1.2 }} />
+<motion.div animate={% raw %}{{{% endraw %} x: 100, scale: 1.2 }} />
 
 // Correct for pinned / scroll-driven:
-<motion.div animate={{ transform: "translateX(100px) scale(1.2)" }} />
+<motion.div animate={% raw %}{{{% endraw %} transform: "translateX(100px) scale(1.2)" }} />
 // or migrate to GSAP for the section
 ```
 
@@ -213,10 +212,10 @@ Read the **order**, not the absolutes — your GPU differs, and summing these is
 
 ```tsx
 // Motion RevealStagger skeleton (feature lists, testimonials, logo walls):
-initial={{ opacity: 0, y: 24 }}
-whileInView={{ opacity: 1, y: 0 }}
-viewport={{ once: true, amount: 0.3 }}
-transition={{ duration: 0.6, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+initial={% raw %}{{{% endraw %} opacity: 0, y: 24 }}
+whileInView={% raw %}{{{% endraw %} opacity: 1, y: 0 }}
+viewport={% raw %}{{{% endraw %} once: true, amount: 0.3 }}
+transition={% raw %}{{{% endraw %} duration: 0.6, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
 ```
 
 `staggerChildren` in Framer Motion requires parent and child to be in the same Client Component tree. Async data → pass through props into a centralized parent Motion wrapper.
@@ -364,4 +363,3 @@ function playConfirm() {
 | `linearRampToValueAtTime(0, t)` for decay | Sounds mechanical |
 | Sound on hover / scroll / keyboard nav | Unbearable at speed |
 | Default volume 1.0 | Jarring |
-{% endraw %}

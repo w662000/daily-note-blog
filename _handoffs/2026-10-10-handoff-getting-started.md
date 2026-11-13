@@ -4,7 +4,6 @@ title: 交接文档 · Getting Started
 date: 2026-10-13 23:30:00 +0800
 ---
 
-{% raw %}
 # Getting Started
 
 - **日期**：2026-10-10
@@ -13,47 +12,46 @@ date: 2026-10-13 23:30:00 +0800
 
 ## Prerequisites
 
-- {{LANGUAGE_RUNTIME_VERSION}}
-- {{DEPENDENCY}}
+- {% raw %}{{{% endraw %}LANGUAGE_RUNTIME_VERSION}}
+- {% raw %}{{{% endraw %}DEPENDENCY}}
 
 ## Installation
 
 ```bash
-{{INSTALL_COMMANDS}}
+{% raw %}{{{% endraw %}INSTALL_COMMANDS}}
 ```
 
 ## First Run
 
 ```bash
-{{FIRST_RUN_COMMAND}}
+{% raw %}{{{% endraw %}FIRST_RUN_COMMAND}}
 ```
 
-You should see {{EXPECTED_OUTPUT}}.
+You should see {% raw %}{{{% endraw %}EXPECTED_OUTPUT}}.
 
 ## Common Workflows
 
-### {{WORKFLOW_1}}
+### {% raw %}{{{% endraw %}WORKFLOW_1}}
 
 ```bash
-{{COMMANDS}}
+{% raw %}{{{% endraw %}COMMANDS}}
 ```
 
-### {{WORKFLOW_2}}
+### {% raw %}{{{% endraw %}WORKFLOW_2}}
 
 ```bash
-{{COMMANDS}}
+{% raw %}{{{% endraw %}COMMANDS}}
 ```
 
 ## Configuration
 
 Key config files and settings:
 
-- `{{CONFIG_FILE}}` — {{WHAT_IT_CONTROLS}}
-- Env var `{{VAR}}` — {{WHAT_IT_CONTROLS}}
+- `{% raw %}{{{% endraw %}CONFIG_FILE}}` — {% raw %}{{{% endraw %}WHAT_IT_CONTROLS}}
+- Env var `{% raw %}{{{% endraw %}VAR}}` — {% raw %}{{{% endraw %}WHAT_IT_CONTROLS}}
 
 ## Where to Go Next
 
 - Architecture overview: [architecture.md](architecture.md)
 - Module reference: [README.md#module-map](README.md#module-map)
 - Diagrams: [diagrams/](diagrams/)
-{% endraw %}

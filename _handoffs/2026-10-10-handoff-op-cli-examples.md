@@ -4,7 +4,6 @@ title: 交接文档 · op CLI examples
 date: 2026-10-13 23:30:00 +0800
 ---
 
-{% raw %}
 # op CLI examples
 
 - **日期**：2026-10-10
@@ -30,7 +29,7 @@ op read "op://app-prod/npm/one-time password?attribute=otp"
 ## Inject secrets
 
 ```bash
-echo "api_key: {{ op://app-prod/openai/api key }}" | op inject
+echo "api_key: {% raw %}{{{% endraw %} op://app-prod/openai/api key }}" | op inject
 op inject -i config.tpl.yml -o config.yml
 ```
 
@@ -40,4 +39,3 @@ op inject -i config.tpl.yml -o config.yml
 export DB_PASSWORD="op://app-prod/db/password"  # example op:// reference, resolved by `op run`
 op run -- sh -c '[ -n "$DB_PASSWORD" ] && echo "DB_PASSWORD is set"'
 ```
-{% endraw %}

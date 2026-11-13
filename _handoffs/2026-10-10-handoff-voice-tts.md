@@ -4,7 +4,6 @@ title: 交接文档 · Voice & TTS
 date: 2026-10-25 23:30:00 +0800
 ---
 
-{% raw %}
 # Voice & TTS
 
 - **日期**：2026-10-10
@@ -135,7 +134,7 @@ MiniMax TTS selects its region, endpoint, and credential together:
 
 Gemini TTS can follow natural-language performance direction. Set `tts.gemini.persona_prompt_file` to a local Markdown or text file that describes the voice persona. The file can include Gemini-style sections such as `AUDIO PROFILE`, `SCENE`, `DIRECTOR'S NOTES`, `SAMPLE CONTEXT`, and `TRANSCRIPT`.
 
-If the file contains `{transcript}` or `{{ transcript }}`, Hermes replaces that placeholder with the live TTS text. Otherwise, Hermes appends a labeled `TRANSCRIPT` section automatically. The persona prompt stays local and is not shown in the chat reply.
+If the file contains `{transcript}` or `{% raw %}{{{% endraw %} transcript }}`, Hermes replaces that placeholder with the live TTS text. Otherwise, Hermes appends a labeled `TRANSCRIPT` section automatically. The persona prompt stays local and is not shown in the chat reply.
 
 ```yaml
 tts:
@@ -371,7 +370,7 @@ Your command template can reference these placeholders. Hermes substitutes them 
 | `{model}`        | `tts.providers.<name>.model`                         |
 | `{speed}`        | Resolved speed multiplier (provider or global)       |
 
-Use `{{` and `}}` for literal braces.
+Use `{% raw %}{{{% endraw %}` and `}}` for literal braces.
 
 #### Optional keys
 
@@ -622,7 +621,7 @@ Your command template can reference these placeholders. Hermes substitutes them 
 | `{language}`      | Configured language code (defaults to `en`)                          |
 | `{model}`         | `stt.providers.<name>.model`, empty when unset                       |
 
-Use `{{` and `}}` for literal braces (handy when embedding JSON snippets in the command).
+Use `{% raw %}{{{% endraw %}` and `}}` for literal braces (handy when embedding JSON snippets in the command).
 
 #### How the transcript is read back
 
@@ -763,4 +762,3 @@ Override these on your provider class for richer integration:
 - `get_setup_schema()` → return `{name, badge, tag, env_vars: [{key, prompt, url}]}` to power picker rows in `hermes tools` / `hermes setup` (the picker category for STT is not yet shipped — this metadata is available to plugins for forward compatibility).
 
 See `agent/transcription_provider.py` for the full ABC including docstrings.
-{% endraw %}

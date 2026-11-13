@@ -4,7 +4,6 @@ title: 交接文档 · Citation Management & Hallucination Prevention
 date: 2026-10-13 23:30:00 +0800
 ---
 
-{% raw %}
 # Citation Management & Hallucination Prevention
 
 - **日期**：2026-10-10
@@ -226,7 +225,7 @@ def generate_citation_key(bibtex: str) -> str:
 
 ### Complete Citation Manager Class
 
-{% raw %}
+{% raw %}{%{% endraw %} raw %}
 ```python
 """
 Citation Manager - Verified citation workflow for ML papers.
@@ -345,10 +344,10 @@ class CitationManager:
         # Format authors
         authors = " and ".join(paper.authors) if paper.authors else "Unknown"
 
-        bibtex = f"""@article{{{key},
-  title = {{{paper.title}}},
-  author = {{{authors}}},
-  year = {{{paper.year}}},
+        bibtex = f"""@article{% raw %}{{{% endraw %}{key},
+  title = {% raw %}{{{% endraw %}{paper.title}}},
+  author = {% raw %}{{{% endraw %}{authors}}},
+  year = {% raw %}{{{% endraw %}{paper.year}}},
   {'doi = {' + paper.doi + '},' if paper.doi else ''}
   {'eprint = {' + paper.arxiv_id + '},' if paper.arxiv_id else ''}
   {'journal = {' + paper.venue + '},' if paper.venue else ''}
@@ -389,7 +388,7 @@ if __name__ == "__main__":
     if bibtex:
         print(bibtex)
 ```
-{% endraw %}
+{% raw %}{%{% endraw %} endraw %}
 
 ### Quick Functions
 
@@ -573,4 +572,3 @@ Before adding a citation:
 **Verification Tools:**
 - Citely: https://citely.ai/citation-checker
 - ReciteWorks: https://reciteworks.com/
-{% endraw %}

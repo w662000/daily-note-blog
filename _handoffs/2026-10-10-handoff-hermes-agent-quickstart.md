@@ -4,7 +4,6 @@ title: 交接文档 · Hermes Agent Quickstart
 date: 2026-10-25 23:30:00 +0800
 ---
 
-{% raw %}
 # Hermes Agent Quickstart
 
 - **日期**：2026-10-10
@@ -25,9 +24,9 @@ This guide gets you from zero to a working Hermes setup that survives real use. 
 
 **Onchain AI Garage** put together a Masterclass walkthrough of installation, setup, and basic commands — a good companion to this page if you'd rather follow along on video. For more, see the full [Hermes Agent Tutorials & Use Cases](https://www.youtube.com/playlist?list=PLmpUb_PWAkDxewld5ZYyKifuHxgIbiq2d) playlist.
 
-<div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', marginBottom: '1.5rem'}}>
+<div style={% raw %}{{{% endraw %}position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', maxWidth: '100%', marginBottom: '1.5rem'}}>
   <iframe
-    style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}
+    style={% raw %}{{{% endraw %}position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}}
     src="https://www.youtube-nocookie.com/embed/R3YOGfTBcQg"
     title="Hermes Agent Masterclass: Installation, Setup, Basic Commands"
     frameBorder="0"
@@ -410,4 +409,3 @@ That sequence gets you from "broken vibes" back to a known state fast.
 - **[Skills System](../user-guide/features/skills.md)** — Reusable workflows and knowledge
 - **[Tips & Best Practices](../guides/tips.md)** — Power user tips
 - **[Moving to another machine](../reference/faq.md#exporting-hermes-to-another-machine)** — `hermes backup` migrates your whole setup (or [a single profile](../reference/faq.md#moving-a-single-profile-to-another-machine)); no need to rebuild from scratch
-{% endraw %}

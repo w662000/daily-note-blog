@@ -4,7 +4,6 @@ title: 交接文档 · Transformers Integration
 date: 2026-10-13 23:30:00 +0800
 ---
 
-{% raw %}
 # Transformers Integration
 
 - **日期**：2026-10-10
@@ -473,15 +472,15 @@ tokenizer = PreTrainedTokenizerFast(tokenizer_file="tokenizer.json")
 
 # Define chat template
 tokenizer.chat_template = """
-{%- for message in messages %}
-    {%- if message['role'] == 'system' %}
-        System: {{ message['content'] }}\\n
-    {%- elif message['role'] == 'user' %}
-        User: {{ message['content'] }}\\n
-    {%- elif message['role'] == 'assistant' %}
-        Assistant: {{ message['content'] }}\\n
-    {%- endif %}
-{%- endfor %}
+{% raw %}{%{% endraw %}- for message in messages %}
+    {% raw %}{%{% endraw %}- if message['role'] == 'system' %}
+        System: {% raw %}{{{% endraw %} message['content'] }}\\n
+    {% raw %}{%{% endraw %}- elif message['role'] == 'user' %}
+        User: {% raw %}{{{% endraw %} message['content'] }}\\n
+    {% raw %}{%{% endraw %}- elif message['role'] == 'assistant' %}
+        Assistant: {% raw %}{{{% endraw %} message['content'] }}\\n
+    {% raw %}{%{% endraw %}- endif %}
+{% raw %}{%{% endraw %}- endfor %}
 Assistant:
 """
 
@@ -646,4 +645,3 @@ tokenizer(
    - Save `tokenizer_config.json`
    - Document custom templates
    - Track vocabulary changes
-{% endraw %}

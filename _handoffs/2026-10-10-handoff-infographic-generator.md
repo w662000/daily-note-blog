@@ -4,7 +4,6 @@ title: 交接文档 · Infographic Generator
 date: 2026-10-13 23:30:00 +0800
 ---
 
-{% raw %}
 # Infographic Generator
 
 - **日期**：2026-10-10
@@ -214,7 +213,7 @@ Combine:
 4. Structured content from Step 2
 5. All text in confirmed language
 
-**Aspect ratio resolution** for `{{ASPECT_RATIO}}`:
+**Aspect ratio resolution** for `{% raw %}{{{% endraw %}ASPECT_RATIO}}`:
 - Named presets → ratio string: landscape→`16:9`, portrait→`9:16`, square→`1:1`
 - Custom W:H ratios → use as-is (e.g., `3:4`, `4:3`, `2.35:1`)
 
@@ -248,4 +247,3 @@ Report: topic, layout, style, aspect, language, output path, files created.
 3. **One message per section** — each infographic section should convey one clear concept. Overloading sections reduces readability.
 4. **Style consistency** — the style definition from the references file must be applied consistently across the entire infographic. Don't mix styles.
 5. **image_generate aspect ratios** — the tool only supports `landscape`, `portrait`, and `square`. Custom ratios like `3:4` should map to the nearest option (portrait in that case).
-{% endraw %}

@@ -4,7 +4,6 @@ title: 交接文档 · Webhooks
 date: 2026-10-25 23:30:00 +0800
 ---
 
-{% raw %}
 # Webhooks
 
 - **日期**：2026-10-10
@@ -25,11 +24,11 @@ The agent processes the event and can respond by posting comments on PRs, sendin
 
 ## Video Tutorial
 
-<div style={{position: 'relative', width: '100%', aspectRatio: '16 / 9', marginBottom: '1.5rem'}}>
+<div style={% raw %}{{{% endraw %}position: 'relative', width: '100%', aspectRatio: '16 / 9', marginBottom: '1.5rem'}}>
   <iframe
     src="https://www.youtube.com/embed/WNYe5mD4fY8"
     title="Hermes Agent — Webhooks Tutorial"
-    style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0}}
+    style={% raw %}{{{% endraw %}position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0}}
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowFullScreen
   />
@@ -714,4 +713,3 @@ This is the same trust model that applies to everything the agent reads: web pag
 | `WEBHOOK_ENABLED` | Enable the webhook platform adapter | `false` |
 | `WEBHOOK_PORT` | HTTP server port for receiving webhooks | `8644` |
 | `WEBHOOK_SECRET` | Global HMAC secret (used as fallback when routes don't specify their own) | _(none)_ |
-{% endraw %}

@@ -4,7 +4,6 @@ title: 交接文档 · TUI
 date: 2026-10-25 23:30:00 +0800
 ---
 
-{% raw %}
 # TUI
 
 - **日期**：2026-10-10
@@ -158,7 +157,7 @@ Open it with any of these:
 
 <img alt="Hermes TUI Session Orchestrator with one live session and a +new row" src="/docs/img/docs/tui-session-orchestrator/session-orchestrator.png" />
 
-<video controls muted loop playsInline src="/docs/img/docs/tui-session-orchestrator/session-orchestrator-demo.mp4" title="Hermes TUI Session Orchestrator demo" style={{maxWidth: '100%'}}></video>
+<video controls muted loop playsInline src="/docs/img/docs/tui-session-orchestrator/session-orchestrator-demo.mp4" title="Hermes TUI Session Orchestrator demo" style={% raw %}{{{% endraw %}maxWidth: '100%'}}></video>
 
 Inside the switcher:
 
@@ -327,4 +326,3 @@ If the TUI fails to launch (no Node, missing bundle, TTY issue), Hermes prints a
 - [Skins & Themes](features/skins.md) — theme the banner, status bar, and overlays
 - [Voice Mode](features/voice-mode.md) — works in both interfaces
 - [Configuration](configuration.md) — all config keys
-{% endraw %}

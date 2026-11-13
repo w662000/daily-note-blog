@@ -4,7 +4,6 @@ title: 交接文档 · Profiling renderer typing lag
 date: 2026-10-13 23:30:00 +0800
 ---
 
-{% raw %}
 # Profiling renderer typing lag
 
 - **日期**：2026-10-10
@@ -269,7 +268,7 @@ layouts and removes a steady CPU floor.
 Two smaller follow-ups in the same investigation:
 
 1. **`MarkdownText` `plugins` object useMemo'd.** The inline
-   `plugins={{ math: mathPlugin, ...(isStreaming ? {} : { code }) }}`
+   `plugins={% raw %}{{{% endraw %} math: mathPlugin, ...(isStreaming ? {} : { code }) }}`
    was constructing a new object on every render, which churns
    `<Streamdown>`'s outer memo and forces its internal `rehypePlugins` /
    `remarkPlugins` arrays to rebuild. CPU profile after the change shows
@@ -397,4 +396,3 @@ Root cause likely sits in `vite.config.ts` aliasing + dedupe + Vite 8's
 new `optimizeDeps` defaults. Worth a separate fix pass — when it's
 resolved, the `<PerfProbe>` blocks in `perf-probe.tsx` become useful
 (per-id commit timings) instead of inert.
-{% endraw %}

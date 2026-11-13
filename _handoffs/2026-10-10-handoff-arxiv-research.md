@@ -4,7 +4,6 @@ title: 交接文档 · arXiv Research
 date: 2026-10-13 23:30:00 +0800
 ---
 
-{% raw %}
 # arXiv Research
 
 - **日期**：2026-10-10
@@ -128,7 +127,7 @@ curl -s "https://export.arxiv.org/api/query?id_list=2402.03300,2401.12345,2403.0
 
 After fetching metadata for a paper, generate a BibTeX entry:
 
-{% raw %}
+{% raw %}{%{% endraw %} raw %}
 ```bash
 curl -s "https://export.arxiv.org/api/query?id_list=1706.03762" | python3 -c "
 import sys, xml.etree.ElementTree as ET
@@ -143,18 +142,18 @@ raw_id = entry.find('a:id', ns).text.strip().split('/abs/')[-1]
 cat = entry.find('arxiv:primary_category', ns)
 primary = cat.get('term') if cat is not None else 'cs.LG'
 last_name = entry.find('a:author', ns).find('a:name', ns).text.split()[-1]
-print(f'@article{{{last_name}{year}_{raw_id.replace(\".\", \"\")},')
-print(f'  title     = {{{title}}},')
-print(f'  author    = {{{authors}}},')
-print(f'  year      = {{{year}}},')
-print(f'  eprint    = {{{raw_id}}},')
-print(f'  archivePrefix = {{arXiv}},')
-print(f'  primaryClass  = {{{primary}}},')
-print(f'  url       = {{https://arxiv.org/abs/{raw_id}}}')
+print(f'@article{% raw %}{{{% endraw %}{last_name}{year}_{raw_id.replace(\".\", \"\")},')
+print(f'  title     = {% raw %}{{{% endraw %}{title}}},')
+print(f'  author    = {% raw %}{{{% endraw %}{authors}}},')
+print(f'  year      = {% raw %}{{{% endraw %}{year}}},')
+print(f'  eprint    = {% raw %}{{{% endraw %}{raw_id}}},')
+print(f'  archivePrefix = {% raw %}{{{% endraw %}arXiv}},')
+print(f'  primaryClass  = {% raw %}{{{% endraw %}{primary}}},')
+print(f'  url       = {% raw %}{{{% endraw %}https://arxiv.org/abs/{raw_id}}}')
 print('}')
 "
 ```
-{% endraw %}
+{% raw %}{%{% endraw %} endraw %}
 
 ## Reading Paper Content
 
@@ -293,4 +292,3 @@ Papers can be withdrawn after submission. When this happens:
 - The `<summary>` field contains a withdrawal notice (look for "withdrawn" or "retracted")
 - Metadata fields may be incomplete
 - Always check the summary before treating a result as a valid paper
-{% endraw %}

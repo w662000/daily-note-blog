@@ -4,7 +4,6 @@ title: 交接文档 · Axolotl - Other
 date: 2026-10-25 23:30:00 +0800
 ---
 
-{% raw %}
 # Axolotl - Other
 
 - **日期**：2026-10-10
@@ -3109,7 +3108,7 @@ Example 4 (unknown):
 ```unknown
 @software{axolotl,
   title = {Axolotl: Open Source LLM Post-Training},
-  author = {{Axolotl maintainers and contributors}},
+  author = {% raw %}{{{% endraw %}Axolotl maintainers and contributors}},
   url = {https://github.com/axolotl-ai-cloud/axolotl},
   license = {Apache-2.0},
   year = {2023}
@@ -3572,4 +3571,3 @@ main-latest
 ```
 
 ---
-{% endraw %}

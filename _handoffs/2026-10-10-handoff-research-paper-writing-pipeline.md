@@ -4,7 +4,6 @@ title: 交接文档 · Research Paper Writing Pipeline
 date: 2026-10-25 23:30:00 +0800
 ---
 
-{% raw %}
 # Research Paper Writing Pipeline
 
 - **日期**：2026-10-10
@@ -1774,7 +1773,7 @@ for cite_group in cites:
     for cite in cite_group.split(','):
         cite = cite.strip()
         if cite and cite not in bib:
-            print(f'WARNING: \\\\cite{{{cite}}} not found in references.bib')
+            print(f'WARNING: \\\\cite{% raw %}{{{% endraw %}{cite}}} not found in references.bib')
 "
 
 # 3. Verify all referenced figures exist on disk
@@ -2388,4 +2387,3 @@ See [templates/README.md](templates/README.md) for compilation instructions.
 **APIs:** [Semantic Scholar](https://api.semanticscholar.org/api-docs/) | [CrossRef](https://www.crossref.org/documentation/retrieve-metadata/rest-api/) | [arXiv](https://info.arxiv.org/help/api/basics.html)
 
 **Venues:** [NeurIPS](https://neurips.cc/Conferences/2025/PaperInformation/StyleFiles) | [ICML](https://icml.cc/Conferences/2025/AuthorInstructions) | [ICLR](https://iclr.cc/Conferences/2026/AuthorGuide) | [ACL](https://github.com/acl-org/acl-style-files)
-{% endraw %}

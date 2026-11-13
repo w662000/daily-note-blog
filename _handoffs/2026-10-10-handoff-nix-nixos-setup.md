@@ -4,7 +4,6 @@ title: 交接文档 · Nix & NixOS Setup
 date: 2026-10-25 23:30:00 +0800
 ---
 
-{% raw %}
 # Nix & NixOS Setup
 
 - **日期**：2026-10-10
@@ -1198,7 +1197,7 @@ docker logs -f hermes-agent
 ```bash
 systemctl status hermes-agent
 docker ps -a --filter name=hermes-agent
-docker inspect hermes-agent --format='{{.State.Status}}'
+docker inspect hermes-agent --format='{% raw %}{{{% endraw %}.State.Status}}'
 docker exec -it hermes-agent bash
 docker exec hermes-agent readlink /data/current-package
 docker exec hermes-agent cat /data/.container-identity
@@ -1246,4 +1245,3 @@ nix-store --query --roots $(docker exec hermes-agent readlink /data/current-pack
 | `no container with name or ID "hermes-agent"` (Podman) | Podman rootful container not visible to regular user | Add passwordless sudo for podman (see [Container Mode](#container-mode) section) |
 | `unable to find user hermes` | Container still starting (entrypoint hasn't created user yet) | Wait a few seconds and retry — the CLI retries automatically |
 | Tool added via `extraPackages` not found in terminal | Requires `nixos-rebuild switch` to update the per-user profile | Rebuild and restart: `nixos-rebuild switch && systemctl restart hermes-agent` |
-{% endraw %}

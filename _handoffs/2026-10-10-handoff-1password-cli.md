@@ -4,7 +4,6 @@ title: 交接文档 · 1Password CLI
 date: 2026-10-13 23:30:00 +0800
 ---
 
-{% raw %}
 # 1Password CLI
 
 - **日期**：2026-10-10
@@ -146,7 +145,7 @@ op read "op://app-prod/npm/one-time password?attribute=otp"
 ### Inject into template
 
 ```bash
-echo "db_password: {{ op://app-prod/db/password }}" | op inject
+echo "db_password: {% raw %}{{{% endraw %} op://app-prod/db/password }}" | op inject
 ```
 
 ### Run a command with secret env var
@@ -174,4 +173,3 @@ Service accounts require CLI v2.18.0+.
 - `references/cli-examples.md`
 - https://developer.1password.com/docs/cli/
 - https://developer.1password.com/docs/service-accounts/
-{% endraw %}
