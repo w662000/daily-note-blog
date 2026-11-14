@@ -50,17 +50,75 @@ date: 2026-11-14 23:30:00 +0800
 - 有道云删除：16:36 中断在 75/739，17:12 重启（Zl52PP），瓶颈是每次重启都要游标分页全量盘点 3750+ 条云端笔记；已给 youdao_fake_cleanup.py 加断点续删（成功 ID 落盘 logs/youdao_deleted_ids.txt，重启跳过已删），当前进程用旧代码，下次中断即生效。
 - 交付：会话目录「后台任务进度对账_20261114.md」。
 
-## 4端发布升级·多agent 探查结论（17:30）
-- 4 个 agent 日志源：wb-cn=D:/AI work\workbuddy\**\.workbuddy\memory\；wb-intl=D:/workspace/workbuddyai/**/.workbuddy-ai/memory/（10-14 归纳文件写明）；autoclaw-115=C:/Users/Administrator/.openclaw-autoclaw/workspace/memory/；zcode 无日志文件，只有 ~/.zcode/cli/db/db.sqlite（session 26 / message 1955），需按日聚合。
-- 三轴既有实现：handoff/upload_youdao.py 的 collect_workbuddy_entries + collect_autoclaw_entries（工作日志/项目表/技术点），仅发有道云第5端。10-14 有三份 daily-summary-{wb-cn,wb-intl,autoclaw-115}.md 历史模板。
-- 现有链：generate_daily_summary.py(单篇) → sync_logs_to_github.py(单文件→博客+语雀源) → publish_worklog_to_forums.py(单文件→#2/#10) → Gridea 浓缩稿；handoff_flow/techpoint_flow 只认 WB 国内版收件箱。
-- 用户要求升级为「统计 4 agent 当天日志后再发布 工作日志/项目流/技术点 三轴到 4 端」，因涉及文章形态（产品可见），已用 AskUserQuestion 确认口径，待确认后实现。
+## 追加（21:12–21:20）· 按能力分重排主力模型 + 场景推荐
+
+用户新名单：CF 5 个 + NIM 4 个作免费主力、`spark-x2.6` 主力、`deepseek` 收费 flash 作备用兜底；要求**按能力分排行**并做场景推荐。
+
+### 核实结果（不瞎编）
+- 活清单 `models.json`（94 条）里**没有 `deepseek-4.1-flash`**；DeepSeek 官方仅 `deepseek-v4-pro` 与 `deepseek-flash`（= [DeepSeek] DeepSeek-V4-Flash），url 均为 `api.deepseek.com`。10-13 综合分排行第 19 行出现过别名 `DeepSeek-V4.1-Flash[Loomy]`，但当前已不在活清单 → 本次按 `deepseek-flash` 处理并在报告里明写推断依据、请用户确认。
+- `spark-x2.6` = `[xf] spark-x2.6`（vendor Xunfei），10-13 报告把 `spark-x` 列入「未取到公开分(主流类)」，08-02 干活榜无此模型 → **无任何能力分**，按 T0 可靠性（98.33% 成功、零 429）入选，能力分填 `—`。
+
+### 能力分口径（重要，已补进 skill）
+- 08-02 干活榜有两列：「**得分**」= 纯能力分不含速度（字面意义的"能力分"）；「**综合**」(榜A) = `0.7×速度分 + 0.3×得分`，含 70% 速度。用户说按能力分，用纯「得分」列做主排序；综合 A 与上一份"靠谱分"高度重叠，换维度没意义，只作对照列。
+- T1 公开基准分（10-13 报告，OpenCompass/Vellum 均值）与 T2 量纲不同，单列展示、不混排。
+- **同模型双分数冲突**：`nemotron-3-ultra-550b` 在 08-02 榜有 NIM 直连行「得分 84 / 综合 25.2」（当时 0% 可靠率 network 失败）与 OR 免费行「得分 78 / 综合 48.7」，必须并列标注，不能偷偷取一个。
+- **跨通道引用**：`poolside/laguna-xs-2.1`、`nvidia/nemotron-3-nano-omni-30b-a3b-reasoning` 榜里只有 OpenRouter 免费版行，能力分标 `*`。
+- **无分模型**：`nemotron-3.5-lightning-30b-a3b`、`spark-x2.6`、`deepseek-flash`（后者有 T1 62.7）一律填 `—` 排表尾，不编数字。
+
+### 结论
+- 能力分第 1 `nvidia/nemotron-3-ultra-550b-a55b` 84（OR 版 78）；CF 第 1 `@cf/google/gemma-4-26b-a4b-it` 80。
+- 能力分 vs 综合A 排序差异大：`@cf/nvidia/nemotron-3-120b-a12b` 能力 73 第 4 → 综合A 43.9 第 8；`@cf/qwen/qwen3-30b-a3b-fp8` 能力 63 第 5 → 综合A 62.4 第 2。
+- 11 个入选 = 9 免费主力（CF5+NIM4）+ 1 指定主力 spark + 1 收费兜底 deepseek-flash；4 个平台。
+- 部署三件事：① CF 5 个仍在 `config.json` `skip_models`（额度让给发布链），要当主力须删 5 行 + 重启 8848/8849 daemon，且会与发布链抢免费额度；② CF 窗口小（11-13 日志 T1：qwen3-30b 32768 / qwq-32b 24000 vs WB agent 会话约 53974 token），只适合短请求，不能塞进 WB agent 会话；③ NIM 预览模型 180 个 untestable 轮次 / 219 次 model_gone，易下架。
+- 场景推荐 8 个场景 + 免费优先组合链路（CF/NIM 免费主力 → spark 高可靠批处理 → deepseek-flash 收费兜底）。
+
+### 产物
+`主力模型能力分排行_2026-11-14.md`、`.csv`、`主力模型能力分看板_2026-11-14.html`、`能力分看板预览_2026-11-14.png`、`分析脚本/render_capability.py`、`进度/进度_20261114_2117_主力选型能力分.md`。
+
+### 验证 / 踩坑
+静态校验：11 行、9 免费主力、3 无分、能力分降序成立、T0 数值与上一轮聚合 JSON 完全一致、HTML 零外部依赖。浏览器实测：**8899 端口有上一轮残留的两个 LISTENING 进程导致 `ERR_EMPTY_RESPONSE`**，换 8901 后成功（11 行主表 + 8 场景卡片 + 筛选器全渲染），console 仅 favicon 404。以后临时服务用完要确认进程真的退出，别复用同一端口。
+
+## 追加（21:32–21:45）· 本次结果以「项目流」发布到 4 端
+
+用户指令「这次结果以项目流发布到4端」。查清「项目流」= 11-14 18:05 落地的多 Agent 三轴发布体系里的一轴（工作日志 / 项目流 / 技术点），文档 `2026-11-13-20-41-08/4端发布升级_多Agent三轴_20261114.md`，发布器 `publish_3axis_extra.py`。
+
+### 用户确认口径（AskUserQuestion）
+- 新增带后缀的一篇《项目流 · 2026-11-14 · 主力模型能力分选型》，**不覆盖** 18:05 已发的《项目流 · 2026-11-14》
+- **只 4 端**（博客 / Gridea / bbs1org#3 / phpBB#11），不发第 5 端有道云
+
+### 为什么不能直接跑原脚本
+`publish_3axis_extra.py` 三轴一起发、标题固定 `项目流 · {date}`、内容从 4 agent 日志抽取、默认 5 端、论坛/云笔记按标题幂等。今天已实跑过 → 重跑只会覆盖博客/Gridea 同名稿、论坛跳过，等于没发还破坏已发内容。故新建独立发布器 `publish_projects_4ends.py`（不改原脚本）。
+
+### 发布结果（4 端全部线上实测）
+| 端 | 落地 | 证据 |
+|---|---|---|
+| 博客 | `_dailylog/2026-11-14-3axis-projects-models.md` 17,635 B | push OK；`https://w662000.github.io/daily-note-blog/` HTTP 200 含新标题 |
+| Gridea | `posts/261114项目流-模型能力分选型.md` 17,679 B，id=`0izhjk` | 本地 + 线上 `api/search.json`（477,516 B）均含新标题 |
+| bbs1org #3 | topic **2106** | `solve_waf()` cookie 复查 20 条标题含新标题 |
+| phpBB #11 | topic **8950** | `solve_waf()` cookie 复查 50 条标题含新标题 |
+
+旧稿两篇（8870/8900 B，mtime 17:58:55，title `项目流 · 2026-11-14`）未被覆盖；两个论坛版块新旧两篇同日标题并存。稿件 10,673 字符，论坛 18,000 上限未截断；对外文案已把 8 处对话口吻改成中立项目记录，数字与结论未动。
+
+### 踩坑（已沉淀为 skill `publish-projects-axis`）
+1. 三轴脚本标题固定 + 按标题幂等 → 同日第二篇必须换标题**且**换博客/Gridea 文件名。
+2. Gridea 渲染日志出现 `curl 22 / 408 / send-pack unexpected disconnect`，脚本第 2 次 push 成功；不能只看脚本自报，要查 `output/api/search.json` 与线上 `api/search.json`。
+3. 论坛复查用 `FALLBACK_COOKIE` 返回 0 条（WAF 未过），必须用发布时同款 `solve_waf() or FALLBACK_COOKIE`，否则误判「没发出去」。
+4. Windows Git Bash 传中文 argv 会按 GBK 串码 → 标题/文件名/路径固化进脚本默认值，脚本用英文名，命令行只传开关。
+5. 论坛验证只做只读 `list_topics` 各 1 次 + 3 秒间隔，未重复发帖（温和红线）。
+
+### 产物
+`项目流稿_主力模型能力分选型_2026-11-14.md`、`publish_projects_4ends.py`、`进度/进度_20261114_2145_项目流4端发布.md`。
 
 ## wb-intl（WB 国际版）
 
-> 数据源：D:\workspace\workbuddyai\2026-11-13-21-01-54\.workbuddy-ai\memory\2026-11-14.md
+> 数据源：D:\workspace\workbuddyai\2026-11-03-10-29-12\.workbuddy-ai\memory\2026-11-14.md, D:\workspace\workbuddyai\2026-11-13-15-38-12\.workbuddy-ai\memory\2026-11-14.md
 
-（该 Agent 当天日志中未检出此类段落）
+## 星空图收录 clash-node-check skill（2026-11-14）
+- 项目：`D:/workspace/workbuddyai/2026-10-29-16-13-56/`
+- 备份：`2026-10-29-16-13-56_bak_20261114_1940/`（diff 校验一致后才动工）
+- 改动：projects.json 新增节点 p111「clash-node-check 节点检查 skill」（星座 H 技能与知识沉淀，w=6，st=running，path 指向 `C:/Users/Administrator/.workbuddy-ai/skills/clash-node-check`），新增边 p111→p93(evolve)、p111→p94(same)；重建 星图预览.html（111 节点 / 125 边）
+- 注意：星空图扫描器 ROOTS 不含 `~/.workbuddy-ai/skills`，skill 类项目以后要收录都得手动加节点（或改 ROOTS，会带出 28 个 skill 噪音）
+- 坑：bash 双引号里 python -c 写反斜杠路径会被转义成四重斜杠，path 一律用正斜杠
 
 ## autoclaw-115（AutoClaw 1.15）
 
