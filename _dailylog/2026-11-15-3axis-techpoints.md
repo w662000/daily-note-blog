@@ -66,64 +66,75 @@ date: 2026-11-15 23:30:00 +0800
 
 > 数据源：D:\workspace\workbuddyai\2026-11-14-23-25-11\.workbuddy-ai\memory\2026-11-15.md, D:\workspace\workbuddyai\2026-11-15-11-21-53\.workbuddy-ai\memory\2026-11-15.md
 
-## 用 WizTree CSV 分析 C 盘高频占用 + 生成清理技能
+## 修复增删 BUG + 故障退避（2026-11-15 14:25）
+用户报障：① 点+后输"贵阳"敲回车没添加；② 点红叉没删除。根因：搜索框没绑 Enter 键事件（真 bug）；用户看的是静态 preview.html，/api 请求无人接（预览本来就不能增删）。
+修复：
+- views.py JS 补 keydown Enter：添加模式=加第一个候选（无候选转 /api/search 在线搜）；普通模式=切换到第一个候选；增删模式加 mode-hint 醒目提示条（不再只闪 placeholder）；focus({preventScroll:true}) 防页面跳动
+- 新增 run_server.py（wsgiref，127.0.0.1:8734，PORT 环境变量，日志静默）本地真实联调
+- weather.py 加上游故障退避 _last_upstream_fail + config.FAILURE_BACKOFF=120s：直连失败后 N 秒内不再试上游（实测首请求 8.3s→后续 0.01s），避免每个请求干等超时，对 256M 机器和上游宕机场景都关键
+- _fill_missing 细化：页面来源为 demo 时缺城补 mock（顶栏已标注演示，不算冒充）；live/cache/stale 来源缺城走 fetch_detail，失败留空记 error
+- 实测通过：add guiyang/dali → 首页 8 城卡片+面板齐全；remove dali → 面板消失；sqlite 持久化跨重启生效
+- 当前本地关注列表：6城+贵阳+大理（留给用户测删除）
 
-用户要求：根据昨天那份 CSV 找出最容易占 C 盘的文件/文件夹，把清理流程做成 skill，以后不发 CSV 也能快速清理。
+## 修复"127.0.0.1:8734 无限转圈"（2026-11-15 14:30）
+根因：wsgiref 默认单线程，本机连不上 api.open-meteo.com 时 urlopen 的 timeout 管不住 DNS/握手等待（8~30s），一个慢请求把所有后续请求全部阻塞 → 浏览器无限转圈（curl health 正常造成"服务活着"的假象）。
+修复三件套（run_server.py + weather.py）：
+- ThreadingWSGIServer（daemon_threads）：实测首页卡 8s 期间 health/search/css 全部 4ms 秒回
+- 指数退避：window=FAILURE_BACKOFF(120s)×2^连续失败次数(封顶16倍→32min)，连续失败不再每个窗口到期都重卡一次
+- 启动预热线程 _warmup()：后台先探测一次上游（连通预热缓存/不通立即进退避），用户第一发请求实测 0.010s 秒开
+注意：后台 bash 任务可能在会话轮次间被回收，服务死时重启 python run_server.py 即可。
 
-### 数据源与结论（T0，本机快照）
-- `C:\Users\Administrator\Documents\WizTree_20261114233455.csv`（11/14 23:35，895,947 文件，223 MB）与 `WizTree_20261024115155.csv`（10/24，233 MB）。UTF-8 BOM，中文表头。
-- 基线：10/24 可用 21.06 GB → 11/14 可用 5.17 GB（CSV 的 FREESPACE 字段），20 天净增 16.65 GB。
-- CSV 列下标：文件名称0/大小1/分配2/修改时间3/属性4/文件5/文件夹6/…/FOLDERSIZE9/FOLDERALLOCATED10/**DRIVECAPACITY11/FREESPACE12/USEDSPACE13**/RESERVEDSPACE14。取错一位会把「已用」当成「可用」。
-- **目录行的「大小」是递归总大小**，类别聚合只能用文件行。
-- 最容易反复占空间的 5 类（11/14 口径）：客户端调试日志 4.78 GB（单日 +2.20，DEFER-DBG 刷屏，会回涨）、`*-updater` 升级包 4.49 GB / 仅 29 文件、Service Worker/Code Cache 5.03 GB（飞书 2.20 + Tabbit 1.40）、浏览器 Cache 2.08、包管理器缓存 2.37。合计可清 18–19 GB。
-- 增量最大但不是垃圾：Docker 5.56+3.95 GB（10/30 新装）、飞书本体 2.74、`.office-raccoon` 2.47、有道笔记库 2.28。单文件最大 `docker_data.vhdx` 5.449 GB。
-- 解析脚本（工作区）：`analyze_wiztree.py` → `wiztree_analysis.json`。
+## 修复"点下拉候选不能加入关注"（2026-11-15 14:40）
+真正根因：catalog.catalog_payload() 输出的城市 JSON 漏了 id 字段（只有 name/province/lat/lon/py）！前端下拉候选项因此没有 data-city-id，添加模式点候选拿到空 id → 走"在线乡镇不可加入"提示分支；回车添加则把 undefined 当 id 发请求被服务器 400 拒。之前"输贵阳回车没反应"同根因。
+修复：catalog_payload 补 "id"；新增回归测试 test_02b（目录必须带 id、天津专门盯住）；
+服务器端 city=undefined 已被 400 拒（验证过）。
+实测：页面内嵌目录含 "id":"tianjin"；XHR add?city=tianjin → ok；首页出现天津卡片。
+附带发现：用户之前点红叉时 API 其实删成功过（贵阳/大理被删，UI 反馈坏了导致误判"没删成"）；当前列表=6城+天津。
+用户提的备用方案（两栏输入框+查询/增加按钮）暂不需要——根因已修；若用户仍不满意交互再做。
 
-### 交付：技能 `cdisk-quick-clean`
-- 位置：`C:\Users\Administrator\.workbuddy-ai\skills\cdisk-quick-clean\`（当前生效）+ 同步一份到 `C:\Users\Administrator\.workbuddy\skills\cdisk-quick-clean\`（旧客户端，两份逐字节一致）。分发包 `cdisk-quick-clean.zip`（工作区，官方 `package_skill.py` 校验通过）。
-- 结构：`SKILL.md`（agent_created: true，中文，含触发词）、`scripts/cdisk_rules.py`（共享 P0/P1/P2 规则表 + FORBIDDEN 禁区 + 自动备份开关检测 + `\\?\` 长路径/DeleteFileW）、`scripts/scan_cdisk.py`（**主力，不依赖 CSV** 的只读扫描，quick/full 两模式）、`scripts/parse_wiztree_csv.py`（可选 CSV 增长对比）、`scripts/clean_cdisk.py`（默认 dry-run，须 `--execute`）、`references/targets.md`（本机实测清单）、`references/pitfalls.md`（自指备份等踩坑）。
-- 设计决策：只读扫描与删除拆成两个脚本，中间必须人类确认；删除用 ctypes `DeleteFileW` 不进回收站；执行前查自动备份开关 + 5–200 MB 探针（free 没涨或 modify_backup 变大就停手）；分批 ≤10、审计增量落盘、`--max-seconds` 提前退出可重跑续做。
-- **修过一个误判**：初版把 `ms-playwright`（浏览器二进制）和 `pnpm`（node_modules 硬链接 store）当缓存，实跑 `scan_cdisk.py` 才发现 0.373 GB 的 `chromium-1234\chrome-win64` 会被删 → 已从 P1 规则移除并加进 FORBIDDEN。以后新增规则必须先 dry-run 验证命中范围。
+## 预报表加日出/日落列 + 列宽收窄（2026-11-15 14:50）
+用户要求：表格"最低/区间/最高"变窄，末尾加日出日落。
+- config.DAILY_FIELDS 加 sunrise,sunset（批量接口原先没有）；weather.parse() 每日加 sunrise/sunset（[-5:] 截 HH:MM）
+- views._forecast/_MAIN_JS renderDynamic 两处同步加 d-sun 列（合并为一列"日出/日落"显示 "07:10 / 17:20"）
+- CSS：table-layout:fixed，.d-lo/.d-hi 7%、.d-bar 42%→17%、.d-sun 15%；≤640px 隐藏降水列和日出日落列、加宽剩余列
+- fixtures 补 sunrise/sunset 数组（注意必须零填充 HH:MM，否则 [-5:] 会截出"T"）
+- 21/21 测试全绿（test_04 加了批量日出日落断言）
 
-### 验证（T0，全部实跑）
-- `scan_cdisk.py --mode quick`：239,424 文件 / 24.9s，P0 0.24 GB、P1 1.43 GB、P2 0.03 GB；`env=0 / settings_enabled=False / blocking=False` → 昨天关的自动备份开关已生效。
-- `parse_wiztree_csv.py` 两份 CSV 各约 8s，基线与增长数字与手工分析一致。
-- `clean_cdisk.py --tier p0p1` dry-run：792 目标 / 预估 1.67 GB，未删任何文件。
-- 四脚本 `py_compile` 通过；`package_skill.py` → `Skill is valid!`。
-- 当前 C 盘可用 **26.05 GB**（比昨天 23.96 又涨了约 2 GB；回收站现只剩 8 个文件 ≈0 GB）。本轮**没有删除任何文件**（除技能模板示例与 `__pycache__`）。
+## 卡顿修复：load_weather 改 stale-while-revalidate（后台刷新+有界等待）
+- 用户报"刷新后转圈5-10圈才出新页面"：根因是退避窗口到期后每个请求都同步卡 8-11s 等上游
+- weather.py：load_weather 重写为 SWR——起后台线程刷上游，请求最多等 config.REFRESH_WAIT(1.5s)，
+  等不到就用缓存/演示先渲染；_fill_missing 在 _refresh_lock.locked() 时跳过网络
+- **坑1（测试失败根因）**：worker() 内 `_consecutive_upstream_fails += 1` 缺 global 声明 →
+  UnboundLocalError，失败路径全崩。抽成模块级 `_note_upstream_ok/_note_upstream_fail` 两个 helper
+- **坑2（并发缺陷）**：_refresh_done 只在启动新 worker 时 clear，刷新进行中第二个请求会立刻读到
+  上一轮旧结果。加 `_refresh_seq` 代数号，worker finally 里写回 gen，读者校验 gen 匹配才采信
+- worker 改 try/finally：任何异常都保证 set 事件 + release 锁
+- 新增 test_20b（live→cache→stale+退避→退避内不碰网络→demo 链路）、
+  test_20c（上游 sleep 模拟卡死，断言请求 ≤ REFRESH_WAIT+1s；注意断言退避前要先等锁释放）
+- 23/23 测试全绿；实测：有缓存 ~10ms，无缓存首屏最多 1.5s（后台刷完后恢复毫秒级）
 
-### 交付文档
-- `C盘高频占用分析与清理技能说明_2026-11-15.md`（结论、数据可信度、TOP 清单、禁区、技能用法、验证结果）。
+## 全球主要城市支持（用户问能否查纽约）
+- 实测：Open-Meteo 地理编码中文支持不完整（纽约 0 结果，北京/东京/伦敦正常）→ 不可靠
+- 方案：catalog.py 内置 WORLD_CITIES 90 个国际主要城市（中文名+国家+坐标+英文标识+中文别名
+  如 三藩市/雪梨/西贡/火奴鲁鲁），region="国际"，与国内城市同构（id=英文标识）
+- 搜索支持：中文名/别名包含、英文标识（忽略大小写和空格，"New York"→newyork）
+- catalog_payload 增加 alias 字段；前端 findCatalog 同步支持别名+去空格匹配
+- 国际城市也可加入关注卡片（走 by_id 校验，批量天气/AQI 接口全球坐标都支持）
+- 总目录 451 城（361 中国 + 90 国际）；test_01 坐标断言按 region 分流；新增 test_02c
+- 25/25 测试全绿；实测纽约 3.4°C 阴、西北风；已上传（需重启 uWSGI）
 
-### 未解决 / 不确定（别瞎说）
-- `DEFER-DBG` 调试日志的关闭开关没找到；只能靠重启客户端缓解回涨。
-- 自动备份配置改 false 后新会话是否
+## 内存监控页 /_mem.html（参考 searxng-render 的 mem_reporter.py）
+- 新增 mem.py：cgroup v2/v1 内存（current/limit/peak）+ 全进程 RSS 合计 + 本进程 VmRSS/VmPeak/线程
+  + 应用缓存（LRU 条目数、cache.json/hits.sqlite3 大小、目录 643 城、gc 对象数、运行时长）
+- app.py 注册 /_mem.html（卡片式页面，10 秒 meta 刷新，75%/90% 告警分级）和 /_mem.json
+- 纯标准库、读不到的指标优雅置 None（Windows 本地验证过降级）；Linux 上才有 cgroup 数据
+- deploy.sh FILES 增加 mem.py；26/26 测试全绿；已上传（需重启 uWSGI）
 
-## 追问：自动备份是什么时候来的 / 是不是新版加的 / 会不会连垃圾也备份
-
-脚本：`probe_backup.py`（删除探针）、`investigate_versions.py`（新旧包关键词对比）、`backup_code_detail.py`（排除表与阈值）。结论已写进技能 `references/pitfalls.md` 第 10 节并重新打包。
-
-- **当前状态（T0 实测）**：`settings.json` = `{"enabled":false,"maxSizeMB":1000}`（11/15 00:38 改）；环境变量 `CODEBUDDY_FILE_BACKUP_ENABLED=0`（`CODEBUDDY_SAFE_DELETE_ENABLED=1` 是另一套安全删除，别混）；客户端今天 10:17 重启（`logs\update\update-20261115.log`），昨天说的「需重启/新会话才生效」已兑现。探针：删 2 MB 临时文件 → C 盘 +1.99 MB、`modify_backup` 31 文件 / 2.345 MB 不变 → **开关已关且生效**。
-- **是不是新版加的：基本是**。旧版 `D:\Program Files\WorkBuddy`（国际版，app.asar 编译 2026-08-07）整包 `fileBackup`=0、`security_center_file_backup`=0、`shouldModifyBackupBeforeWrite`=0、shim 里 `CODEBUDDY_FILE_BACKUP_ENABLED`=0，只有 `safe-delete-common`；CLI 主程序 `dist\codebuddy.js` 21 MB 里 `fileBackup`/`modifyBackup`/`documentBackup` 全为 0。新版 5.9.4（install-manifest `generatedAt=2026-10-29T15:51:49Z`，10/31 落地）里 `fileBackup` app.asar 174 次 / CLI 24 次。
-- **但目录名不是新的**：`~\.workbuddy\workspace\sessions\4cb7837e-...\modify_backup` 建于 **2026-07-23 14:24**，28 个文件 / 2.30 MB，全是 `1.哈希.原文件名.md` 这类**文档编辑前版本快照**；旧版 `vendor\sandbox\sandbox-cli-gc.exe` 里也有 6 次 `modify_backup`。旧版只有轻量文档回滚，不会把删掉的缓存复制一份。
-- 时间线（T0 文件时间戳）：7/11 旧版装 → 7/23 最早文档快照 → 8/7 旧版最后编译 → 10/12 WorkBuddyAI 目录创建 → 10/29 5.9.4 构建 → 10/31 落地 → 11/14 备份暴涨 5.30 GB。**具体哪个版本/哪天引入没有官方变更日志，不知道**；旧包自带 `v2.93.2.md` 里那条「自动备份」是损坏文件自动备份重建，与本功能无关，已排除。
-- **会连垃圾一起备份：会**。`shouldModifyBackupBeforeWrite()` 只判断平台 + 开关 + 路径是否在排除表 + 规则 modifier，不看内容。排除表 `DEFAULT_MODIFY_BACKUP_EXCLUDED_DIRS` 只放过开发工具链（`node_modules`、`.venv`、`__pycache__`、`.pnpm-store`、`.gradle` 等）和系统临时目录；日志、`*-updater`、Service Worker、浏览器 Cache、`npm-cache` 都不在表里。常量 `FILE_BACKUP_DEFAULT_MAX_SIZE_MB=3000`、`THRESHOLD_MB=100`，但实测涨到 5.30 GB 超上限，**为何没拦住不确定**。
-- 本次只写文档/日志 + 删探针临时文件，未动任何用户数据。
-
-## 把 cdisk-quick-clean 分发到其它 agent
-
-用户说「这个skill 分发到其他agent」，按本机多套 agent 技能目录理解执行（外发到 IM/云端未做，等用户点名）。
-
-- **盘点**：本机 5 套用户级 skills 目录 —— `.workbuddy-ai`(29 技能，当前 WorkBuddy AI)、`.workbuddy`(75，旧版)、`.codebuddy`(1)、`.agents`(6)、`.openclaw`(3)。后 3 套格式都是 `SKILL.md` + YAML frontmatter(name/description)，与技能兼容，且都无同名冲突。`D:\Program Files\WorkBuddyAI\...\workbuddy-builtin\skills` 是内置目录，不动。
-- **已分发到**：`.codebuddy\skills`、`.agents\skills`、`.openclaw\skills`，加上原有的 `.workbuddy-ai` 和 `.workbuddy`，共 5 份，逐字节校验 `BYTE-IDENTICAL`（8 文件 / 56.4 KB 每份）。
-- **分发脚本** `distribute_skill.py`：只新增不覆盖、目标内容不同会跳过、`copy2` 后逐文件 `filecmp` 校验、写 `skill_distribution_record.json`、支持 `--dry-run` / `--source` / `--targets`、静默无窗口。已通用化：`HOME=expanduser('~')`、`WORKSPACE=os.getcwd()`，且脚本与解压出的 `cdisk-quick-clean/` 同级时自动用它当源（方便别的机器）。
-- **技能自带** `references/installation.md`（适用条件、安装、验证、安全须知）；`SKILL.md` Step 1 改成「Python 3.8+ 标准库、自动读 USERPROFILE、仅 Windows + C 盘」。
-- **两个包**：`cdisk-quick-clean.zip`（纯技能，官方 `package_skill.py` 校验通过）、`cdisk-quick-clean-dist.zip`（59.9 KB / 11 条目 = 技能目录 + distribute_skill.py + `CDISK_SKILL_INSTALL.md` + 纯技能 zip）。工作区另有 `CDISK_SKILL_INSTALL.md` 说明。
-- **验证**：从 `.agents\skills\cdisk-quick-clean` 直接跑 `scan_cdisk.py --mode quick --max-seconds 20` 成功（17 万文件，C 盘可用 25.99 GB，自动备份开关 blocking=False），证明脚本自包含、不依赖源目录。
-- **不确定**：各 agent 何时加载新技能（通常需新开会话/重启）未实测，不打包票；`.codebuddy`/`.openclaw` 是否分别对应 ACP peer `codebuddy`/`autoclaw` 只是推测。
-
-
-# 2026-11-15
+## 机票数据源查证结论
+- **飞猪 TOP 对个人不可行**（官方文档 2026-08：公司身份+天猫卖家+软著+聚石塔+5-10天审核）——豆包"注册就能用"是错的
+- **jisuapi 可行但收费**（约几元/月起；flight/query 返回全舱位价目表+minprice，已核实文档）
+- 机票部分改为双源降级：jisuapi（主力）→ Amadeus（免费，中国国内航线覆盖待实测）；query_flight 返回 (price, source)
+- 双源版已上传服务器实跑通过（未配 key 时优雅跳过）
 
 ## autoclaw-115（AutoClaw 1.15）
 
