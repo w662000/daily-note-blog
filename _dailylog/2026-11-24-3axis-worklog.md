@@ -6,52 +6,36 @@ date: 2026-11-24 23:30:00 +0800
 
 # 多 Agent 每日工作日志 · 2026-11-24
 
-> 机器汇总（模型不可用，原文按 agent 分节保留，未做润色）
+> 数据源：wb-cn / wb-intl / autoclaw-115 / zcode 四个 Agent 的当天日志，按 agent 分节；某 agent 当天无机器日志记录，不许编造。
 
 ## 一、WB 国内版（wb-cn）
-
-今日无机器日志记录。
+- 完成 ego-browser profile 自检（v3.1.1-router），确认 9 个 profile 归属，并验证了在最小化窗口下使用 Win32 接口确认状态的可靠性。
+- 完成 ego-browser skill 依赖审计，识别出 Tabbit 安装路径与文档不符以及全盘搜索导致的卡死等探测坑点。
+- 为 au 国际版增加 11 个模型（1 条 xf 系 + 10 条 intern-ai 系），已写入 `runtime.sqlite` 并完成数据备份。
+- 将“签到+喵旅行”任务改造为开机自启，通过 VBS + Python 方案实现幂等执行，并沉淀了相关 skill。
+- 生成的有用文件：`进度/进度_20261124_1545_ego-profile-selfcheck.md`、`进度/进度_20261124_1551_ego-skill-deps-audit.md`、`进度/进度_20261124_1620.md`、`~/.workbuddy/skills/wb-task-to-boot-autostart/SKILL.md`。
 
 ## 二、WB 国际版（wb-intl）
-
-今日无机器日志记录。
+- 执行 ego-browser 自检，验证了无窗口策略（通过 PowerShell ShowWindow 实现静默）的有效性。
+- 新建 `electron-asar-nopoints-patch` skill，通过等长字节替换等手段解决 Electron 客户端积分不足的误判问题。
+- 查证并确认 11-22 国内版 AutoClaw asar 补丁确系 wb-cn 侧执行，用于关闭“错误文本猜余额”导致的误弹窗。
+- 排查 au 国际版自定义模型仍弹积分不足的问题，判定为“会话级模型冻结”导致未实际切换模型，非程序 bug。
+- 完成 Codebuddy CLI 免费模型核查，识别出宿主派生进程（Bash/PowerShell）因令牌刷新链路问题导致无法调通的根因。
 
 ## 三、AutoClaw 1.15（autoclaw-115）
-> 数据源：C:\Users\Administrator\.openclaw-autoclaw\workspace\memory\2026-11-24.md
-
-
-# 2026-11-24
-
-## 修复 AutoClaw 国际版会话 ID（01:03 用户请求）
-
-**问题**：国际版 AutoClaw2 每个会话答复结尾都是同一个 ID。
-
-**根源**（三层）：
-1. AutoClaw 国际版 = `D:\Program Files\AutoClaw\AutoClaw2\`（zwork 2.5.3，进程 AutoClaw2.exe），与国内版（AutoClaw.exe + openclaw gateway :18889）**完全不同架构**：无 openclaw gateway，会话存 `AppData\Roaming\AutoClaw-oversea-official\accounts\<hash>\runtime\runtime.sqlite` 的 `work_sessions` 表（26 条，ISO8601 UTC 时间戳）。
-2. 旧脚本 `get_session_id.py` 只有 `--agent au`（读国内版 `.openclaw-autoclaw\agents\main\sessions\sessions.json`），没有国际版读取器 → 国际版跑 `--agent au` 拿到的永远是国内版的最新会话 ID。
-3. 国际版常驻规则（`accounts\0f1c9b...\instruction-packs\agent-main.md` 第 225-229 行，11-17 分发时写入）也写死了 `--agent au` → 每个会话追加的都是国内版 ID。
-
-**修复内容**：
-- `get_session_id.py` v2：新增 `au-intl` 读取器（`_au_intl_db()` 定位 mtime 最新的 runtime.sqlite，复制含 -wal/-shm 后读 work_sessions，过滤 deleted_at/archived_at，ISO8601 转本地时间+毫秒戳）；7→8 个 agent。已分发三处（国内 workspace skills、国内全局 skills、国际版 zwork-agent\skills），MD5 一致。
-- SKILL.md：7→8，全名对照加「AutoClaw 国际版=autoclaw国际版」，存储位置表加 au-intl 行，常驻指令文件表加国际版行。三处同步一致。
-- 国际版 agent-main.md 规则块：标题改「2026-11-24 修复国际版」，标记格式改 `【autoclaw国际版会话ID<完整会话ID>】`，命令改 `--agent au-intl`，明确**禁止用 `--agent au`**。
-- 国内版 AGENTS.md 规则：补一句 au=国内版、国际版用 au-intl。
-- 国际版技能 `_store_meta.json`：按 zwork i7e 算法（main.cjs：`f/d\0相对路径\0大小\0`+内容流，目录名排序）重算 contentSha256，更新 description 为 8-agent 版。
-- 验证：au-intl=fa4ed6ab-0775-4bf9-9d77-a7159302b51e（越南主机IP与Cloudflare关系，国际版真实最新会话），au=70c81a1b-...（本会话），两版彻底分离。
-
-**备份**：`workspace\backups\agent-session-id-20261124\`（7 个文件：两版脚本+SKILL.md+agent-main.md）。
-
-**关键认知**：
-- AutoClaw 国际版是智谱 zwork 内核（runtime.sqlite + work_sessions + instruction-packs + zwork-agent\skills），与国内版 openclaw 内核（sessions.json + AGENTS.md + skills）并存，装同一个 skill 要落两套位置。
-- `%APPDATA%` 下并存：autoclaw（国内版 Electron userData）、AutoClaw-official（旧国际版残留，11-17 后停更）、AutoClaw-oversea-official（现国际版 userData）。
-- zwork 技能导入哈希 = i7e：遍历排序条目，`d|f\0<相对路径>\0<size>\0` 喂 sha256，文件再喂内容流；跳过 `_store_meta.json`。
-- instruction-packs\*.md 是国内版 AGENTS.md 的国际版等价物（按 agent 分文件：agent-main.md / agent-auto-designer.md 等）。
+- 诊断 WB 国际版 Codebuddy CLI “未登录”问题，确认为 `ACC_PRODUCT_CONFIG*` 环境变量注入导致 CLI 错误读取加密信封，已提供修复方案。
+- 按用户指示清空 `~/.agents/skills` 共享技能目录，并对 7 个实体目录进行了全量备份。
+- 完成 `free-cli-caller` 从 v1.1.0 到 v1.2.0 的更新与分发，修复了 WB 国际版 ACC 变量问题。
+- 批准并应用 evolution 提案 `evo-2026-11-24-wb-intl-codebuddy-auth-env`，并在 `MEMORY.md` 中记录了相关诊断结论。
+- 生成的有用文件：`workspace/reports/WB国际版codebuddy未登录诊断_20261124.html`、`workspace/backups/agents-skills-20261124/`、`workspace/backups/free-cli-caller-bak-20261124/`、`evolution-drafts/approved/wb-intl-codebuddy-auth-env.md`。
 
 ## 四、ZCode（zcode）
+- 执行了 3 个会话任务（共 196 条消息），内容涵盖 ego-browser profile 检查、为 au 国际版增加模型以及 ego-browser 自检任务执行。
 
-今日无机器日志记录。
-
-## 五、总计
-
-- 当天有日志的 agent：1/4
-- 日志总字符数：2106
+## 五、总计 / 待办
+- 有日志 Agent 数：4
+- 日志总字符数：约 2800
+- 跨 agent 待办：
+    - [wb-cn] 需用户重启 AutoClaw2.exe 后，新增的 11 个模型才会在 UI 中生效。
+    - [wb-cn] 需整理 ego-browser 目录中重复的 SKILL.md 文件。
+    - [autoclaw-115] 需更新 `cross-agent-skill-install` SKILL.md 的附录，以移除已过时的 `~/.agents\skills\` 路径信息。
