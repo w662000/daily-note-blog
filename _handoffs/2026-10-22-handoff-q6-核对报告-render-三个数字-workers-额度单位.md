@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · Q6 核对报告：Render 三个数字 + Workers 额度单位
-date: 2026-11-14 23:30:00 +0800
+date: 2026-10-22 12:00:00 +0800
 ---
 
 # Q6 核对报告：Render 三个数字 + Workers 额度单位

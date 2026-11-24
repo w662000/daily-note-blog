@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · Cloudflare 针对 PHP「php2shell」两个严重漏洞的 WAF 防护 · 调研稿（Q5）
-date: 2026-11-14 23:30:00 +0800
+date: 2026-10-22 12:00:00 +0800
 ---
 
 # Cloudflare 针对 PHP「php2shell」两个严重漏洞的 WAF 防护 · 调研稿（Q5）
