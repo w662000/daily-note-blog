@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · 进度：autoclaw-add-model skill 收尾确认
-date: 2026-08-20 23:30:00 +0800
+date: 2026-08-18 12:00:00 +0800
 ---
 
 # 进度：autoclaw-add-model skill 收尾确认

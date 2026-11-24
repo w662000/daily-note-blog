@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · 5 模型测速：流式(stream) vs 推理(reasoning) 双对比报告
-date: 2026-08-16 23:30:00 +0800
+date: 2026-08-04 10:28:41 +0800
 ---
 
 # 5 模型测速：流式(stream) vs 推理(reasoning) 双对比报告

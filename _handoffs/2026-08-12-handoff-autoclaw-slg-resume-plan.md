@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · autoclaw-slg-resume-plan
-date: 2026-08-16 23:30:00 +0800
+date: 2026-08-12 12:00:00 +0800
 ---
 
 # slg-resume-plan（AutoClaw 项目表）— 交接文档

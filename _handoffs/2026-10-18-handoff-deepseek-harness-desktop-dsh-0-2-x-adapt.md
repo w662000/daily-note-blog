@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · DeepSeek Harness Desktop (dsh 0.2.x adapted build)
-date: 2026-10-19 23:30:00 +0800
+date: 2026-10-18 12:00:00 +0800
 ---
 
 # DeepSeek Harness Desktop (dsh 0.2.x adapted build)

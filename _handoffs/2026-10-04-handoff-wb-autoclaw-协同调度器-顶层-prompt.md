@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · WB ↔ AutoClaw 协同调度器（顶层 Prompt）
-date: 2026-10-05 23:30:00 +0800
+date: 2026-10-04 12:00:00 +0800
 ---
 
 # WB ↔ AutoClaw 协同调度器（顶层 Prompt）

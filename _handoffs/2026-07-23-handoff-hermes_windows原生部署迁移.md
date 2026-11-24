@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · Hermes_Windows原生部署迁移
-date: 2026-08-16 23:30:00 +0800
+date: 2026-07-23 12:00:00 +0800
 ---
 
 # Hermes Windows 原生部署迁移 + 启动器自启修复 — 交接文档（人读）

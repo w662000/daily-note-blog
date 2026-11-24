@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 交接文档 · WorkBuddy 环境下向 Windows Startup 文件夹写入文件的可行方案(实战验证)
-date: 2026-10-13 23:30:00 +0800
+date: 2026-10-12 12:00:00 +0800
 ---
 
 # WorkBuddy 环境下向 Windows Startup 文件夹写入文件的可行方案(实战验证)
